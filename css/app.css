@@ -1,0 +1,353 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins');
+body {
+    margin: 0;
+    min-width: 250px;
+   /* font-family: 'Poppins', sans-serif;*/
+}
+			stamm {
+				color: black;
+				font-family: sans-serif;
+			}
+			latin, de {
+				color: black;
+				font-family: sans-serif;
+			}
+			suffix {
+				background: white;
+				color: blue;
+				font-family: sans-serif;
+				font: bold 16px sans-serif;
+			}
+			suffix {
+				background: white;
+				color: blue;
+				font-family: sans-serif;
+				font: bold 16px sans-serif;
+			}
+			exception suffix {
+				color: red;
+			}
+			suffix::before {
+				content: "";
+				background: white;
+			}
+			infix {
+				background: white;
+				color: blue;
+				font-family: sans-serif;
+				font: italic 16px sans-serif;
+			}
+			infix::before {
+				content: "";
+				background: white;
+			}
+			mitKasus {
+				font: 16px serif;
+				color: green;
+			}
+			mitKasus::before {
+				content: "+";
+			}
+			woart {
+				color: green;
+			}
+			grundform {
+				font-weight: bold;
+			}
+			hinweis, hint, artikel, alternative {
+				font-style: italic;
+				color: grey;
+			}
+			hinweis::before, hint::before {
+				content: "(";
+			}
+			hinweis::after, hint::after {
+				content: ")";
+			}
+			alternative::before {
+				content: " (";
+			}
+			alternative::after {
+				content: ")";
+			}
+			latin:empty::after{
+				content: "---";
+				color: grey;
+			}
+h1 {
+  text-align: center;
+  border: 1px solid green;
+  max-width: 800px; 
+  margin-left: auto;
+  margin-right: auto;
+  font-variant: small-caps;
+  background: lightblue;
+  color: black;
+}
+td input[type='text'] {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	display:block;
+}	
+td select {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	display:block;
+}	
+td#outVokabelncolLektionen, td#outwArtrowWort{
+  width: 110px; 
+  max-width: 50%; 
+  overflow-wrap: break-word;
+  /*white-space: nowrap;*/
+}
+td#outVokabelncolVokabeln, td#outwArtlat{
+  width: 80%; 
+  max-width: 80%; 
+  overflow-wrap: break-word;
+ /* white-space: nowrap; */
+}
+table#tabKonjugationen {
+  table-layout: fixed;
+}
+td#outVerbcolAktiv, td#outVerbcolPassiv {
+  width: 40%; 
+}
+table{
+  width: 100%; 
+  max-width: 800px; 
+  table-layout: fixed;
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+}
+table,td, caption {
+    border: 1px solid black;
+    border-collapse: collapse;
+	padding: 0.4em;
+}
+
+td.marginal {
+  background: #ebf5d7;
+  color: #666;
+}
+div.marginalrot, rotxt {
+   -ms-writing-mode: tb-rl; 
+   writing-mode: vertical-rl; 
+   transform:rotate(180deg); 
+   text-orientation: sideways   
+}
+span.short {
+  visibility: hidden;
+  display: none;
+}
+span.full {
+  visibility: visible;
+  display: block;
+}
+td[id^=outVerbempty] {
+  width: 38px; 
+  /*overflow: hidden;*/
+  max-width: 100px; 
+  min-width: 0px;
+}
+td[id^=outVerbempty]:not(:first-of-type) {
+  border-left-style:hidden;
+}
+
+  /*IMPERATIVE, INFINITIVE*/
+    table#tabImperative tr:nth-of-type(1) td:nth-of-type(1), table#tabInfinitive tr:nth-of-type(1) td:nth-of-type(1){
+    width: 110px; 
+}
+  /*PARTIZIPIEN*/
+    table#tabPartizipien tr:nth-of-type(1) td:nth-of-type(1){
+    width: 30px; 
+}
+/* Deklination subst */
+td#outNomcolKasus {
+  width: 110px; 
+  max-width: 33%; 
+  overflow-wrap: break-word;
+}
+
+@media screen and (max-width:780px) {
+  span.full {
+    visibility: hidden;
+    display: none;
+  }
+  span.short {
+    visibility: visible;
+    display: block;
+  }
+  td#outVerbcolAktiv, td#outVerbcolPassiv {
+    width: 50%; 
+  }
+  td#outVerbempty {
+    width: 35px; 
+    max-width: 35px; 
+    min-width: 35px; 
+  }
+
+}
+
+@media screen and (max-width:640px) {
+  table, td, caption {
+    padding: 0.15em;
+  }
+  
+    table#tabKonjugationen td[col="1"], table#tabKonjugationen td[col="2"] {
+    visibility: hidden;
+    display: none;
+  }
+  table#tabKonjugationen td[id^=outVerbempty] {
+    width: 30px; 
+    max-width: 30px; 
+    min-width: 30px; 
+}  
+ td[id=outVerbcolTempus] span {
+    display: none;
+}
+
+}
+
+caption {
+  background: #666;
+  color: #c4ced3;
+  font-weight: bold;
+  caption-side: top;
+} 
+
+td.marginal {
+  /*background: #0000c7;*/
+  min-height: 1px;
+  height: 1px;
+}
+td.marginal > div,td.marginal > div > span {
+	padding: 0;
+	margin: 0;
+  width:100%;
+ /* background: #00e5c7; */
+  height: 100%;
+  text-align: center;
+}
+td.marginal > ul, td.marginal > div ul {
+	list-style: inside none;
+	padding: 0;
+	margin: 0;
+  width:100%;
+  background: #dbe5c7;
+	position: relative; /*!!!*/
+  height: 100%;
+ /* border-style: solid;
+  border-color: coral; */
+}
+td.marginal > div  ul > li.has-sub > a:before { /*arrowinmenu*/
+	content: '';
+	position: absolute;
+	right: 8px;
+	bottom: 4px;
+	border: 5px solid transparent;
+	border-right: 5px solid #1a2b3c;
+}
+td.marginal >  ul > li.has-sub > a:before { /*arrowinmenu*/
+	content: '';
+	position: absolute;
+	top: 8px;
+	right: 4px;
+	border: 5px solid transparent;
+	border-top: 5px solid #1a2b3c;
+}
+td.marginal:hover > div ul > li.has-sub > a:before { 
+  right: 2px; 
+	border: 5px solid transparent;
+	border-left: 5px solid #1a2b3c;
+} /*arrowposwhenhover*/
+td.marginal:hover > ul > li.has-sub > a:before { 
+  top: 2px; 
+	border: 5px solid transparent;
+	border-bottom: 5px solid #1a2b3c;
+} /*arrowposwhenhover*/
+td.marginal:hover ul li.has-sub > ul { 
+  display: block; 
+  visibility: visible;
+} /*!!!openmenu*/
+td.marginal > ul li > ul {
+/*	display: none; /*beginbelowmenuheader*/
+/*	width: auto;*/
+	position: absolute; /*menuheaderlesswide*/
+	top: 100%; /*beginbelowmenuheader*/
+	padding: 10px 0;
+	background: #666; /*#3b4527; /*#9C2125;*/
+	border-radius: 0 0 5px 5px;
+	z-index: 999;
+}
+td.marginal > div ul li > ul {
+/*	display: none; /*beginbelowmenuheader*/
+/*	width: auto;*/
+	position: static; /*menuheaderlesswide*/
+	top: 100%; /*beginbelowmenuheader*/
+	padding: 0px 0;
+	background: #666; /*#3b4527; /*#9C2125;*/
+	border-radius: 5px 0 0 5px;
+	z-index: 999;
+}
+td.marginal ul li > ul { 
+  display: none; /*beginbelowmenuheader*/
+  width: 100%; 
+} /*menuwidth*/
+td.marginal  ul li > ul li {
+	display: block;
+	list-style: inside none; /*nobulletpoints*/
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+td.marginal ul li > ul li a { /*menuentryformat*/
+	outline: none;
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 8px 15px;
+/*	font: 10pt Arial, Helvetica, sans-serif; */
+	color: #ffffff;
+	text-decoration: none;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+td.marginal  ul > li > a {
+	color: #666;
+  text-decoration-line: none;
+  display: block;
+  width: 100%;
+}
+
+a {
+  cursor: pointer;
+}
+
+table#tabDeklinationenAdj, table#tabKonjugationen, table {
+  overflow-wrap: break-word;
+}
+
+@media screen and (max-width:680px) {
+  td.marginal > div ul li > ul {
+    padding: 0px 0;
+  }
+/* esse futurus falsch dargestelltes PPP*/
+}
+
+/* DeklinationstabAdjektiv um genus ergänzen, ebenso dann pronom und nom*/
+
+@media screen and (min-width:680px) {
+/*  td#outVerb1SingIndPraesPas {
+    visibility: hidden;
+    display: none;
+  } */
+  table#tabKonjugationen td, table#tabPartizipien td, table#tabDeklinationenAdj td, table#tabDeklinationenPron td {
+    visibility: visible;
+    display: table-cell !important;
+  }
+  
+}
