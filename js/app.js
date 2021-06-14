@@ -3669,6 +3669,7 @@ var ireereGerundiumDeklination = [{
 					input.text = Inhalt;
 					input.name = "in"+tbtype+m[j]["id"];
 					input.setAttribute("id", "in"+tbtype+m[j]["id"]);
+					input.setAttribute("autocapitalize", "none");
 					input.onkeypress = function(event){
 						if (event.keyCode == 13 || event.which == 13){
 							pruefenweiter();
