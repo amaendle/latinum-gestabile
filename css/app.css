@@ -331,6 +331,12 @@ table#tabDeklinationenAdj, table#tabKonjugationen, table {
   overflow-wrap: break-word;
 }
 
+.lead, .my-4, .alert hr, .alert p {
+  max-width: 800px; 
+  margin-left:auto;
+  margin-right:auto;
+}
+
 @media screen and (max-width:680px) {
   td.marginal > div ul li > ul {
     padding: 0px 0;
