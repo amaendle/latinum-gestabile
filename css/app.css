@@ -337,6 +337,24 @@ table#tabDeklinationenAdj, table#tabKonjugationen, table {
   margin-right:auto;
 }
 
+/*trick*/
+body {
+  height:100vh;
+/*  margin:0;
+  display:flex;
+  flex-direction:coloumn;*/
+}
+.footer{
+  /*position:fixed;*/
+  left:0;
+  bottom:0;
+  width:100%;
+ /* background-color:red;*/
+  text-align:center;
+/*  min-height:50px;*/
+/*  background:PapayaWhip; */
+}
+
 @media screen and (max-width:680px) {
   td.marginal > div ul li > ul {
     padding: 0px 0;
