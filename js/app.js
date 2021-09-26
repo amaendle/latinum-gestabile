@@ -1,162 +1,297 @@
-﻿'use strict';
+'use strict';
+function hideEl(el) {
+  el.style.display = 'none';
+}
 
-		// empfehlenswerte Latein-Links: 
-	// Latin Word Study Tool: http://www.perseus.tufts.edu/hopper/morph?l=vivo&la=la#lexicon
-	// Latin library: http://www.perseus.tufts.edu/hopper/
-	// Latein-Wörterbuch mit automatischer Deklination/Konjugation: https://www.frag-caesar.de/, https://www.navigium.de//latein-woerterbuch.html, https://www.latein.me/ https://latin.cactus2000.de/ https://www.schindlers-software.de/?pclatein/bestimmeform.php http://www.van-der-gucht.de/index.php?menu=anwendungen&submenu=lateindeutsch https://www.albertmartin.de/latein/grammatik/doku.php/unregelmaessige_verben_sonderformen
-	// automat
-	// Latein-Wörterbuch: https://www.gottwein.de/LaWk/La01.php
-	// http://www.latein-woerterbuch.de/ shareware
-	//lernprogramme: http://www.outis.info/lernprogramme.html
-	//:: https://www.albertmartin.de/latein/  http://www.latein.at/elatein-neu/index.php
-	// Online übersetzen lernen: http://www.haudenverres.de/
-	// alte übersetzungen schulbücher: https://web.archive.org/web/20060812090904/www.8ung.at/orbis-romanus/
-	//https://de.wiktionary.org/wiki/Verzeichnis:Latein/Unregelm%C3%A4%C3%9Fige_Verben#v
-	//Übugen online http://www.lucius-hartmann.ch/unterricht/altesprachen/uebungen/index.php?sprache=latein
-	//grammatik:
-	//http://www.latein-imperium.de/include.php?path=content&type=&contentid=24
-	//http://members.aon.at/latein/Passiv.htm#top
-	//http://www.taratalla.de/grammatik/index.php?a=satzlehre&z=A414
-	//https://www.swisseduc.ch/altphilo/latein/lsprache/lgrammatik/docs/10lgener.pdf
-	//http://www.taratalla.de/grammatik/index.php?a=verben&z=A351
-	//https://www.univie.ac.at/latein/gr/grammatik.htm
-	//versmaße: http://www.irmer-inrete.de/latein/dichtung/ovid/pyramus%20et%20thisbe/ovmpyrth.htm
-	//
-	// JAVA APPLETTS http://www.lucius-hartmann.ch/java/verba/tabelle.php?word=metuere,metuo,metui,xxx,k,t,f%FCrchten
-	// http://www.latein-online.net/index.php?section=pluralwoerter.htm
-	function exSuffix(s) {
+function showEl(el) {
+  el.style.display = '';
+}
+
+function opMenu(el) { 
+  console.log("opMenu");
+  el.parentElement.getElementsByTagName("ul")[0].style.visibility='visible';
+}
+
+
+function selModus(el, mod) {
+  // hide menu
+  if (el== null)  return
+  if (mod== null)  return
+  el.parentElement.parentElement.style.visibility='hidden';
+  var kTab = el.closest("table");
+  
+  // select coloumns
+  if (mod=="Aktiv") {
+      kTab.querySelectorAll('td[col="5"], td[col="6"]').forEach(element => hideEl(element));
+      kTab.querySelectorAll('td[col="3"], td[col="4"]').forEach(element => showEl(element));
+  } else if (mod=="Passiv") {
+      kTab.querySelectorAll('td[col="3"], td[col="4"]').forEach(element => hideEl(element));
+      kTab.querySelectorAll('td[col="5"], td[col="6"]').forEach(element => showEl(element));
+
+    }
+}
+function selGenus(el, mod) {
+  // hide menu
+  if (el== null)  return
+  if (mod== null)  return
+    
+  el.parentElement.parentElement.style.visibility='hidden';
+  var kTab = el.closest("table");
+  
+  // select coloumns
+  if (mod=="M") {
+      //kTab.querySelectorAll('td[col="4"], td[col="5"]').forEach(element => hideEl(element));
+      //kTab.querySelectorAll('td[col="3"]').forEach(element => showEl(element));
+      kTab.querySelectorAll('td[genus="F"], td[genus="N"]').forEach(element => hideEl(element));
+      kTab.querySelectorAll('td[genus="M"]').forEach(element => showEl(element));
+  } else if (mod=="F") {
+     // kTab.querySelectorAll('td[col="3"], td[col="5"]').forEach(element => hideEl(element));
+     // kTab.querySelectorAll('td[col="4"]').forEach(element => showEl(element));
+    
+      kTab.querySelectorAll('td[genus="M"], td[genus="N"]').forEach(element => hideEl(element));
+      kTab.querySelectorAll('td[genus="F"]').forEach(element => showEl(element));
+
+    } else if (mod=="N") {
+     // kTab.querySelectorAll('td[col="3"], td[col="4"]').forEach(element => hideEl(element));
+     // kTab.querySelectorAll('td[col="5"]').forEach(element => showEl(element));
+      
+      kTab.querySelectorAll('td[genus="F"], td[genus="M"]').forEach(element => hideEl(element));
+      kTab.querySelectorAll('td[genus="N"]').forEach(element => showEl(element));
+    }
+}
+
+function selTempus(el, tempus) {
+  // hide menu
+  el.parentElement.parentElement.style.visibility='hidden';
+  
+  var kTab = el.closest("table");
+  // select rows
+      kTab.querySelectorAll('tr[row]:not([row="'+tempus+'"],[row="empty1"],[row="colTempus"])').forEach(element => hideEl(element));
+  kTab.querySelectorAll('tr[row="'+tempus+'"]').forEach(element => showEl(element));
+ //   var tempus="rowPraesens"; //kTab.querySelectorAll('tr[row="'+tempus+'"]').forEach(element => showEl(element));
+}
+
+function selPartizip(el, sel) {
+  // hide menu
+  el.parentElement.parentElement.style.visibility='hidden';
+  
+  var kTab = el.closest("table");
+  // select rows
+      kTab.querySelectorAll('tr[row]:not([row="'+sel+'"],[row="empty1"],[row="empty"],[row="colTempus"])').forEach(element => hideEl(element));
+  kTab.querySelectorAll('tr[row="'+sel+'"]').forEach(element => showEl(element));
+ //   var sel="rowPraesens"; //kTab.querySelectorAll('tr[row="'+sel+'"]').forEach(element => showEl(element));
+}
+
+(function () {
+  var wortliste = [];
+  
+     $("#voc-typ").change(function () {
+      if ($(this).val() == 'Sonstige') {
+        //document.getElementById("voc-typ2").value="";
+        //document.getElementById("voc-typ2").hidden=false;
+        $("#voc-typ2").val("");
+        $("#voc-typ2").show();
+        if ($(this).is(":focus")) $("#voc-typ2").focus()
+      } else {
+        //document.getElementById("voc-typ2").hidden=true;
+        //document.getElementById("voc-typ2").value=$(this).val();
+        $("#voc-typ2").hide();
+        $("#voc-typ2").val($(this).val());
+      }
+       if ($(this).val() == 'Substantiv') {
+        //document.getElementById("form-genus").hidden=false;
+         $("#form-genus").show();
+         if ($(this).is(":focus")) $("#voc-ltg").focus();
+      } else {
+        //document.getElementById("form-genus").hidden=true;
+        $("#form-genus").hide();
+      }
+       
+      // Placeholder setzen
+       if ($(this).val() == 'Substantiv') {
+         $("#voc-lat").attr("placeholder", "Nominativ, -Genitivendung");
+       } else if ($(this).val() == 'Verb') {
+         $("#voc-lat").attr("placeholder", "Infinitiv, Perfekt, PPP/PFA");
+       } else {
+         $("#voc-lat").attr("placeholder", "");
+       }
+      // Verbspezifische Anzeigen
+      if ($(this).val() == 'Verb') {
+        $("#verb_einstellung").show();
+      } else {
+        $("#verb_einstellung").hide();
+      }       
+    })
+  
+  
+     $("#voc-list").change(function () {
+      if ($(this).val() == 'neu') {
+        //document.getElementById("voc-list2").value="";
+        //document.getElementById("voc-list2").hidden=false;
+        $("#voc-list2").val("");
+        $("#voc-list2").show();
+        $("#voc-list2").focus();
+      } else {
+        //document.getElementById("voc-list2").hidden=true;
+        //document.getElementById("voc-list2").value=$(this).val();
+        $("#voc-list2").hide();
+        $("#voc-list2").val($(this).val());
+      }
+    })
+  
+  var mainvoctypes = ["Substantiv", "Adjektiv", "Verb", "Pronomen", "Adverb"];
+  
+  if (!window.indexedDB) {
+      window.alert("Ihr Browser unterstützt keine stabile Version von IndexedDB. Dieses und jenes Feature wird Ihnen nicht zur Verfügung stehen.");
+  }
+  
+  const DB_NAME = 'latinum-gestabile';
+  const DB_VERSION = 4; 
+  const DB_STORE_NAME = 'vocabulary';
+  const DB_STORE_UNITS = 'lektionen';
+  var db;
+  // Used to keep track of which view is displayed to avoid uselessly reloading it
+  var current_view_pub_key;
+  
+  function exSuffix(s) {
 		return "<exception><suffix>"+s+"</suffix></exception>";
 	}	
-	
-   var wortliste1 = [ //Lektion 1
-	[{lt:[{w:"hodiē"}],					de:[{w:"heute"}],typ:"Adverb"}],
-	[{lt:[{w:"et"}],					de:[{w:"und"}],typ:"Konjunktion"}],
-	[{lt:[{w:"forum, -ī", genus:"n"}],	de:[{w:"der Marktplatz"}],typ:"Substantiv"}], //, das Forum
-	[{lt:[{w:"in", mit:"Akk"}],			de:[{w:"in, nach, gegen, auf, zu", hinweis:"auf die Frage „wohin?“"}],typ:"Präposition"}],
-	[{lt:[{w:"properāre, -ō"}],			de:[{w:"eilen, sich beeilen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"ibī"}],					de:[{w:"da, dort"}],typ:"Adverb"}], // ibi,ibī ibī̆
-	[{lt:[{w:"amīcus, -ī", genus:"m"}],	de:[{w:"der Freund"}],typ:"Substantiv"}],
-	[{lt:[{w:"diū"}],					de:[{w:"lange, lange Zeit"}],typ:"Adverb"}],
-	[{lt:[{w:"expectāre, -ō"}],			de:[{w:"warten; erwarten"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"subitō"}],				de:[{w:"plötzlich"}],typ:"Adverb"}],
-	[{lt:[{w:"senātor, -ōris", genus:"m"}],de:[{w:"der Senator, der Ratsherr"}],typ:"Substantiv"}],
-	[{lt:[{w:"appropinquāre, -ō"}],		de:[{w:"sich nähern"}],typ:"Verb"}], //regelmäßig {w:"sich nähern", reflex:1}
-	[{lt:[{w:"itaque"}],				de:[{w:"daher, deshalb"}],typ:"Konjunktion"}],
-	[{lt:[{w:"populus, -ī", genus:"m"}],de:[{w:"das Volk"}],typ:"Substantiv"}],
-	[{lt:[{w:"clāmāre, -ō"}],			de:[{w:"rufen, schreien"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"avē"}],					de:[{w:"sei gegrüßt!"}],typ:"Interjektion"}], //Imperativ I, Singular zu avēre
-	[{lt:[{w:"sed"}],					de:[{w:"aber, sondern"}],typ:"Konjunktion"}],
-	[{lt:[{w:"interrogāre, -ō"}],		de:[{w:"fragen, befragen"}],typ:"Verb"}],  //rogare -fragen ist regelmäßig
-	[{lt:[{w:"ubī?"}],					de:[{w:"wo?"}],typ:"Interrogativadverb"}],
-	[{lt:[{w:"esse, sum, fuī"}],		de:[{w:"sein"}],typ:"Verb"}], // die Formen auf Deutsch angeben? , [ich bin, ich bin gewesen],
-	///Lektion 2,3,4
-	[{lt:[{w:"posse, possum, potuī"}],		de:[{w:"können"}],typ:"Verb"}],
-	[{lt:[{w:"regiō, -ōnis", genus:"f"}],de:[{w:"das Gebiet"}],typ:"Substantiv"}],
-	[{lt:[{w:"tempus, -oris", genus:"n"}],de:[{w:"die Zeit"}],typ:"Substantiv"}],
-	[{lt:[{w:"vīta, -ae", genus:"f"}],de:[{w:"das Leben"}],typ:"Substantiv"}],
-	[{lt:[{w:"schola, -ae", genus:"f"}],de:[{w:"die Schule"}],typ:"Substantiv"}],	
-	[{lt:[{w:"ager, agrī", genus:"m"}],de:[{w:"das Feld, der Acker"}],typ:"Substantiv"}],	
+  function tagSuffix(s) {
+		return "<suffix>"+s+"</suffix>";
+	}		
+   var lektion1a = [  // ltMit, deHinweis
+	{ltW:"hodiē",	                deW:"heute", typ:"Adverb"},
+	{ltW:"et",	                  deW:"und", typ:"Konjunktion"},
+	{ltW:"forum, -ī", ltG:"n",	  deW:"der Marktplatz", typ:"Substantiv"}, //, das Forum
+	{ltW:"in", ltCom:"mit Akk.", ltPlusKasus:"Akk",deW:"in, nach, gegen, auf, zu", deCom:"auf die Frage „wohin?“", typ:"Präposition"},
+	{ltW:"properāre, -ō",			  deW:"eilen, sich beeilen",typ:"Verb"}, //regelmäßig
+	{ltW:"ibī",					        deW:"da, dort",typ:"Adverb"}, // ibi,ibī ibī̆
+	{ltW:"amīcus, -ī", ltG:"m",	deW:"der Freund",typ:"Substantiv"},
+	{ltW:"diū",					        deW:"lange, lange Zeit",typ:"Adverb"},
+	{ltW:"expectāre, -ō",			  deW:"warten; erwarten",typ:"Verb"}, //regelmäßig
+	{ltW:"subitō",				        deW:"plötzlich",typ:"Adverb"},
+	{ltW:"senātor, -ōris", ltG:"m",deW:"der Senator, der Ratsherr",typ:"Substantiv"},
+	{ltW:"appropinquāre, -ō",		deW:"sich nähern",typ:"Verb"}, //regelmäßig {w:"sich nähern", reflex:1}
+	{ltW:"itaque",				        deW:"daher, deshalb",typ:"Konjunktion"},
+	{ltW:"populus, -ī", ltG:"m", deW:"das Volk",typ:"Substantiv"},
+	{ltW:"clāmāre, -ō",			    deW:"rufen, schreien",typ:"Verb"}, //regelmäßig
+	{ltW:"avē",					        deW:"sei gegrüßt!",typ:"Interjektion"}, //Imperativ I, Singular zu avēre
+	{ltW:"sed",					        deW:"aber, sondern",typ:"Konjunktion"},
+	{ltW:"interrogāre, -ō",		  deW:"fragen, befragen",typ:"Verb"},  //rogare -fragen ist regelmäßig
+	{ltW:"ubī?",					        deW:"wo?",typ:"Interrogativadverb"},
+	{ltW:"esse, sum, fuī",		    deW:"sein",typ:"Verb", deCom:"Im Konj. Imp. hat esse Nebenformen von einem Stamm fo-: 1.Sg. fo-rem = es-sem  ich wäre; 2.Sg. fo-rēs = es-sēs  du wärst; 3.Sg. fo-ret = es-set  er/sie/es wäre; 3.Pl. fo-rent = es-sent  sie wären."}, //  Für die 1.Pl. und 2.Pl. gibt es solche Formen nicht. Das Partizip sēns (Gen. sentis) seiend ist von dem einfachen Verb esse ausgestorben
+     //esse supin: futu futum 
+     ];
+  var lektion1b = [
+	///Lektion 2,3,4.
+	{ltW:"posse, possum, potuī",	  deW:"können",typ:"Verb"},
+	{ltW:"regiō, -ōnis", ltG:"f",   deW:"das Gebiet",typ:"Substantiv"},
+	{ltW:"tempus, -oris", ltG:"n",  deW:"die Zeit",typ:"Substantiv"},
+	{ltW:"vīta, -ae", ltG:"f",      deW:"das Leben",typ:"Substantiv"},
+	{ltW:"schola, -ae", ltG:"f",    deW:"die Schule",typ:"Substantiv"},	
+	{ltW:"ager, agrī", ltG:"m",     deW:"das Feld, der Acker",typ:"Substantiv"},	
   ];    
-   var wortliste2 = [ //Lektion 5
-	[{lt:[{w:"oppidum, -ī", genus:"n"}],				de:[{w:"die (befestigte) Stadt"}],typ:"Substantiv"}],
-	[{lt:[{w:"māgnus, -a, -um", komparativ:"māior, māius",superlativ:"maximus, -a, -um"}],						de:[{w:"groß, bedeutend"}],typ:"Adjektiv"}], //Komp Superl
-	[{lt:[{w:"vīvere, vīvō, vīxī, vīctūrus", pass:"3.Sg"}],			de:[{w:"leben"}],typ:"Verb"}], // kons. Laut wikibooks mit PPP victum, kein:"Passiv"
-	[{lt:[{w:"habitāre, habitō"}],						de:[{w:"wohnen"}],typ:"Verb"}],
-	[{lt:[{w:"in", mit:"Abl"}],							de:[{w:"in, an, auf, bei", hinweis:"auf die Frage „wo?“"}],typ:"Präposition"}],	
-	[{lt:[{w:"imperātor, imperātōris", genus:"m"}],		de:[{w:"der Kaiser, der Herrscher"}],typ:"Substantiv"}],	
-	[{lt:[{w:"quoque"}],								de:[{w:"auch"}],typ:"Adverb"}], // dem betonten Wort nachgest., nicht klass. auch vorangestellt
-	[{lt:[{w:"regere, regō, rēxī, rēctum"}],			de:[{w:"regieren, herrschen, lenken"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"venīre, veniō, vēnī, ventum"}],			de:[{w:"kommen"}],typ:"Verb"}], //unregelmäßig
-	[{lt:[{w:"audīre, audiō, audīvī, audītum"}],de:[{w:"hören"}],typ:"Verb"}], //regelmäßig, und  //unregelmäßig: "audīre, audiō, audīvī [o. audiī], audītum"
-	[{lt:[{w:"agricola, -ae", genus:"m",hint:"Genus beachten!"}],de:[{w:"der Bauer"}],typ:"Substantiv", hinweis:"Genus beachten!"}],	
-	[{lt:[{w:"multus, -a, -um"}],						de:[{w:"viele"}],typ:"Adjektiv"}], //Komp plūrēs, Superl plūrimus, Adv multum)
-	[{lt:[{w:"servus, -ī", genus:"m"}],						de:[{w:"der Sklave"}],typ:"Substantiv"}],
-	[{lt:[{w:"habēre, habeō, habuī, habitum"}],				de:[{w:"haben, halten, besitzen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"dominus, -ī", genus:"m"}],					de:[{w:"der Herr"}],typ:"Substantiv"}],	
-	[{lt:[{w:"bonus, -a, -um"}],							de:[{w:"gut"}],typ:"Adjektiv"}], //Komp melior, ius; Superl optimus, a, um [altl. optumus ]; Adv bene
-	[{lt:[{w:"scīre, sciō, scīvī, scītum"}],		de:[{w:"wissen"}],typ:"Verb"}], //regelmäßig, und  //unregelmäßig: "scīre, sciō, scīvī [o. sciī], scītum", latinum: nur unpers. passiv 3.Sg.
-	[{lt:[{w:"beātus, -a, -um"}],							de:[{w:"glücklich"}],typ:"Adjektiv"}],
+  
+   var lektion2 = [ //Lektion 5
+     {ltW:"oppidum, -ī", ltG:"n",     deW:"die (befestigte) Stadt",typ:"Substantiv"},
+     {ltW:"māgnus, -a, -um", ltCom:["komparativ: māior, māius","superlativ: maximus, -a, -um"], komparativ:"māior, māius",superlativ:"maximus, -a, -um", deW:"groß, bedeutend",typ:"Adjektiv"}, //Komp Superl
+	{ltW:"vīvere, vīvō, vīxī, vīctūrus", ltCom:"im Passiv nur 3. Person Singular", pass:"3.Sg", deW:"leben",typ:"Verb"}, // kons. Laut wikibooks mit PPP victum, kein:"Passiv"
+	{ltW:"habitāre, habitō", deW:"wohnen",typ:"Verb"},
+     {ltW:"in", ltCom:"mit Abl.", mit:"Abl", deW:"in, an, auf, bei", deCom:"auf die Frage „wo?“",typ:"Präposition"},	
+	{ltW:"imperātor, imperātōris", genus:"m",		deW:"der Kaiser, der Herrscher", typ:"Substantiv"},	
+	{ltW:"quoque",		deW:"auch",typ:"Adverb"}, // dem betonten Wort nachgest., nicht klass. auch vorangestellt
+	{ltW:"regere, regō, rēxī, rēctum",		deW:"regieren, herrschen, lenken",typ:"Verb"}, // kons.
+	{ltW:"venīre, veniō, vēnī, ventum",		deW:"kommen",typ:"Verb"}, //unregelmäßig
+	{ltW:"audīre, audiō, audīvī, audītum",		deW:"hören",typ:"Verb"}, //regelmäßig, und  //unregelmäßig: "audīre, audiō, audīvī [o. audiī], audītum"
+	{ltW:"agricola, -ae", genus:"m",ltCom:"Genus beachten!",		deW:"der Bauer",typ:"Substantiv"},	
+	{ltW:"multus, -a, -um",		deW:"viele",typ:"Adjektiv"}, //Komp plūrēs, Superl plūrimus, Adv multum)
+	{ltW:"servus, -ī", genus:"m",		deW:"der Sklave",typ:"Substantiv"},
+	{ltW:"habēre, habeō, habuī, habitum",		deW:"haben, halten, besitzen",typ:"Verb"}, //regelmäßig
+	{ltW:"dominus, -ī", genus:"m",		deW:"der Herr",typ:"Substantiv"},	
+	{ltW:"bonus, -a, -um",		deW:"gut",typ:"Adjektiv"}, //Komp melior, ius; Superl optimus, a, um [altl. optumus ]; Adv bene
+	{ltW:"scīre, sciō, scīvī, scītum",		deW:"wissen",typ:"Verb"}, //regelmäßig, und  //unregelmäßig: "scīre, sciō, scīvī [o. sciī], scītum", latinum: nur unpers. passiv 3.Sg.
+	{ltW:"beātus, -a, -um",		deW:"glücklich",typ:"Adjektiv"}, 
   ];    //vivere im passiv nur 3. pers. singular, ppp victum
-   var wortliste3 = [
-	[{lt:[{w:"cum", mit:"Abl"}],de:[{w:"(zusammen) mit"}],typ:"Präposition"}],
-	[{lt:[{w:"rūrī",hint:"Lokativ zu rūs, rūris"}],de:[{w:"auf dem Lande"}],typ:"Adverb"}],
-	[{lt:[{w:"spectāculum, -ī", genus:"n"}],de:[{w:"das Schauspiel"}],typ:"Substantiv"}],
-	[{lt:[{w:"amāre, -ō"}],de:[{w:"lieben"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"arēna, -ae", genus:"f"}],de:[{w:"die Arena, der Sand"}],typ:"Substantiv"}],
-	[{lt:[{w:"vādere, vādō"}],de:[{w:"gehen"}],typ:"Verb"}],
-	[{lt:[{w:"gladiātor, -ōris", genus:"m"}],de:[{w:"der Gladiator"}],typ:"Substantiv"}],
-	[{lt:[{w:"gladius, -ī", genus:"m"}],de:[{w:"das Schwert"}],typ:"Substantiv"}],
-	[{lt:[{w:"pūgnāre, -ō"}],de:[{w:"kämpfen"}],typ:"Verb"}],
-	[{lt:[{w:"vidēre, videō, vīdī, vīsum"}],de:[{w:"sehen"}],typ:"Verb"}], //,hint:"unregelmäßig"unregelmäßig
-	[{lt:[{w:"autem"}],de:[{w:"jedoch"}],typ:"Konjunktion"}],
-	[{lt:[{w:"timor, -ōris", genus:"m"}],de:[{w:"die Furcht, die Angst"}],typ:"Substantiv"}],
-	[{lt:[{w:"ē/ex", mit:"Abl"}],de:[{w:"aus, aus ... heraus"}],typ:"Präposition"}],	// "ē,ex" mit Komma?
-	[{lt:[{w:"dolēre, doleō, doluī, dolitūrus"}],de:[{w:"Schmerz empfinden, leiden"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"crēdere, crēdō, crēdidī, crēditum"}],de:[{w:"glauben, meinen, anvertrauen"}],typ:"Verb"}],
-	[{lt:[{w:"domī ",hint:"Lokativ zu domus, -ūs"}],de:[{w:"zu Hause, daheim"}],typ:"Adverb"}],
-	[{lt:[{w:"labōrāre, -ō"}],de:[{w:"arbeiten"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"labor, -ōris", genus:"m"}],de:[{w:"die Arbeit, die Mühe, die Anstrengung"}],typ:"Substantiv"}],
-	[{lt:[{w:"cōgitāre, -ō"}],de:[{w:"denken, überlegen"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"līberāre, -ō", mit:"Abl"}],de:[{w:"befreien"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"cupere, cupiō, cupīvī, cupītum", kein:"Passiv"}],de:[{w:"wünschen"}],typ:"Verb"}], // doch passiv?  [o. cupiī] kurzvokalische i
-	[{lt:[{w:"māne"}],de:[{w:"früh am Morgen, morgens"}],typ:"Adverb"}],
-	[{lt:[{w:"vīlla, -ae", genus:"f"}],de:[{w:"das Landhaus"}],typ:"Substantiv"}],
-	[{lt:[{w:"dīcere, dīcō, dīxī, dictum"}],de:[{w:"sagen"}],typ:"Verb"}], // kons.   // imperativ dic, nicht dice!
-	[{lt:[{w:"apud", mit:"Akk"}],de:[{w:"bei"}],typ:"Präposition"}],	
-	[{lt:[{w:"mē"}],de:[{w:"mich"}],typ:"Pronomen"}],	
+   var lektion3 = [
+	{ltW:"cum", ltCom:"mit Abl.", mit:"Abl",		deW:"(zusammen) mit",typ:"Präposition"},
+	{ltW:"rūrī",ltCom:"Lokativ zu rūs, rūris",		deW:"auf dem Lande",typ:"Adverb"},
+	{ltW:"spectāculum, -ī", genus:"n",		deW:"das Schauspiel",typ:"Substantiv"},
+	{ltW:"amāre, -ō",		deW:"lieben",typ:"Verb"},  //regelmäßig
+	{ltW:"arēna, -ae", genus:"f",		deW:"die Arena, der Sand",typ:"Substantiv"},
+	{ltW:"vādere, vādō",		deW:"gehen",typ:"Verb"},
+	{ltW:"gladiātor, -ōris", genus:"m",		deW:"der Gladiator",typ:"Substantiv"},
+	{ltW:"gladius, -ī", genus:"m",		deW:"das Schwert",typ:"Substantiv"},
+	{ltW:"pūgnāre, -ō",		deW:"kämpfen",typ:"Verb"},
+	{ltW:"vidēre, videō, vīdī, vīsum",		deW:"sehen",typ:"Verb"}, //,hint:"unregelmäßig"unregelmäßig
+	{ltW:"autem",		deW:"jedoch",typ:"Konjunktion"},
+	{ltW:"timor, -ōris", genus:"m",		deW:"die Furcht, die Angst",typ:"Substantiv"},
+	{ltW:"ē/ex", ltCom:"mit Abl.", mit:"Abl.",		deW:"aus, aus ... heraus",typ:"Präposition"},	// "ē,ex" mit Komma?
+	{ltW:"dolēre, doleō, doluī, dolitūrus",		deW:"Schmerz empfinden, leiden",typ:"Verb"}, //regelmäßig
+	{ltW:"crēdere, crēdō, crēdidī, crēditum",		deW:"glauben, meinen, anvertrauen",typ:"Verb"},
+	{ltW:"domī ",ltCom:"Lokativ zu domus, -ūs",		deW:"zu Hause, daheim",typ:"Adverb"},
+	{ltW:"labōrāre, -ō",		deW:"arbeiten",typ:"Verb"},  //regelmäßig
+	{ltW:"labor, -ōris", genus:"m",		deW:"die Arbeit, die Mühe, die Anstrengung",typ:"Substantiv"},
+	{ltW:"cōgitāre, -ō",		deW:"denken, überlegen",typ:"Verb"},  //regelmäßig
+	{ltW:"līberāre, -ō", ltCom:"mit Abl.", mit:"Abl",		deW:"befreien",typ:"Verb"},  //regelmäßig
+	{ltW:"cupere, cupiō, cupīvī, cupītum", ltCom:"kein Passiv", kein:"Passiv",		deW:"wünschen",typ:"Verb"}, // doch passiv?  [o. cupiī] kurzvokalische i
+	{ltW:"māne",		deW:"früh am Morgen, morgens",typ:"Adverb"},
+	{ltW:"vīlla, -ae", genus:"f",		deW:"das Landhaus",typ:"Substantiv"},
+	{ltW:"dīcere, dīcō, dīxī, dictum",		deW:"sagen",typ:"Verb"}, // kons.   // imperativ dic, nicht dice!
+	{ltW:"apud", ltCom:"mit Akk.", mit:"Akk",		deW:"bei",typ:"Präposition"},	
+	{ltW:"mē",		deW:"mich",typ:"Pronomen"},	
   ];
-   var wortliste4 = [
-	[{lt:[{w:"lūdus, -i", genus:"m"}],de:[{w:"das Spiel"}],typ:"Substantiv"}],
-	[{lt:[{w:"lūdere, lūdō, lūsī, lūsum"}],de:[{w:"spielen, sich vergnügen"}],typ:"Verb"}], // kons. //intransitiv
-	[{lt:[{w:"amīca, -ae", genus:"f"}],de:[{w:"die Freundin"}],typ:"Substantiv"}],
-	[{lt:[{w:"domina, -ae", genus:"f"}],de:[{w:"die Herrin"}],typ:"Substantiv"}],
-	[{lt:[{w:"vocāre, -ō"}],de:[{w:"rufen, nennen"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"aedificāre, -ō"}],de:[{w:"bauen"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"currere, currō, cucurrī, cursum"}],de:[{w:"laufen"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"circā", mit:"Akk"}],de:[{w:"um...herum"}],typ:"Präposition"}],
-	[{lt:[{w:"equitāre, -ō"}],de:[{w:"reiten"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"equus, -i", genus:"m"}],de:[{w:"das Pferd"}],typ:"Substantiv"}],
-	[{lt:[{w:"eques, equitis", genus:"m"}],de:[{w:"der Reiter"}],typ:"Substantiv"}],
-	[{lt:[{w:"quaerere, quaerō, quaesīvī, quaesītum"}],de:[{w:"suchen, fragen (nach)"}],typ:"Verb"}], // kons. [o. quaesiī]: , hint:"[o. quaesiī]"
-	[{lt:[{w:"parvus, -a, -um"}],de:[{w:"klein"}],typ:"Adjektiv"}],
-	[{lt:[{w:"ōrātor, -ōris", genus:"m"}],de:[{w:"der Redner"}],typ:"Substantiv"}],
-	[{lt:[{w:"etiam"}],de:[{w:"auch, sogar, noch"}],typ:"Konjunktion"}],
-	[{lt:[{w:"vīsitāre, -ō"}],de:[{w:"besuchen"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"tum"}],de:[{w:"dann, da, darauf, damals"}],typ:"Adverb"}],
-	[{lt:[{w:"saepe"}],de:[{w:"oft"}],typ:"Adverb"}],
-	[{lt:[{w:"portāre, -ō"}],de:[{w:"tragen"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"via, -ae", genus:"f"}],de:[{w:"der Weg, die Straße"}],typ:"Substantiv"}],
-	[{lt:[{w:"laetus, -a, -um"}],de:[{w:"froh, fröhlich"}],typ:"Adjektiv"}],
-	[{lt:[{w:"laetitia, -ae", genus:"f"}],de:[{w:"die Freude"}],typ:"Substantiv"}],
-	[{lt:[{w:"novus, -a, -um"}],de:[{w:"neu"}],typ:"Adjektiv"}],
-	[{lt:[{w:"manēre, maneō, mānsī, mānsum"}],de:[{w:"bleiben"}],typ:"Verb"}],
+   var lektion4 = [
+	{ltW:"lūdus, -i", genus:"m",		deW:"das Spiel",typ:"Substantiv"},
+	{ltW:"lūdere, lūdō, lūsī, lūsum",		deW:"spielen, sich vergnügen",typ:"Verb"},
+	{ltW:"amīca, -ae", genus:"f",		deW:"die Freundin",typ:"Substantiv"},
+	{ltW:"domina, -ae", genus:"f",		deW:"die Herrin",typ:"Substantiv"},
+	{ltW:"vocāre, -ō",		deW:"rufen, nennen",typ:"Verb"},  //regelmäßig
+	{ltW:"aedificāre, -ō",		deW:"bauen",typ:"Verb"},  //regelmäßig
+	{ltW:"currere, currō, cucurrī, cursum",		deW:"laufen",typ:"Verb"}, // kons.
+	{ltW:"circā", ltCom:"mit Akk.", mit:"Akk",		deW:"um...herum",typ:"Präposition"},
+	{ltW:"equitāre, -ō",		deW:"reiten",typ:"Verb"},  //regelmäßig
+	{ltW:"equus, -i", genus:"m",		deW:"das Pferd",typ:"Substantiv"},
+	{ltW:"eques, equitis", genus:"m",		deW:"der Reiter",typ:"Substantiv"},
+	{ltW:"quaerere, quaerō, quaesīvī, quaesītum",		deW:"suchen, fragen (nach)",typ:"Verb"}, // kons. [o. quaesiī]: , hint:"[o. quaesiī]"
+	{ltW:"parvus, -a, -um",		deW:"klein",typ:"Adjektiv"},
+	{ltW:"ōrātor, -ōris", genus:"m",		deW:"der Redner",typ:"Substantiv"},
+	{ltW:"etiam",		deW:"auch, sogar, noch",typ:"Konjunktion"},
+	{ltW:"vīsitāre, -ō",		deW:"besuchen",typ:"Verb"},  //regelmäßig
+	{ltW:"tum",		deW:"dann, da, darauf, damals",typ:"Adverb"},
+	{ltW:"saepe",		deW:"oft",typ:"Adverb"},
+	{ltW:"portāre, -ō",		deW:"tragen",typ:"Verb"},  //regelmäßig
+	{ltW:"via, -ae", genus:"f",		deW:"der Weg, die Straße",typ:"Substantiv"},
+	{ltW:"laetus, -a, -um",		deW:"froh, fröhlich",typ:"Adjektiv"},
+	{ltW:"laetitia, -ae", genus:"f",		deW:"die Freude",typ:"Substantiv"},
+	{ltW:"novus, -a, -um",		deW:"neu",typ:"Adjektiv"},
+	{ltW:"manēre, maneō, mānsī, mānsum",		deW:"bleiben",typ:"Verb"},
   ];
    var wortliste5 = [
-	[{lt:[{w:"urbs, urbis", genus:"f"}],de:[{w:"die Stadt"}],typ:"Substantiv", hinweis: "Gen. Pl. -ium"}], // mischdeklination erkennen Sie daran, dass im Vokabelverzeichnis mit angegeben ist, dass die Endung im Genetiv Plural "-ium" ist
-	[{lt:[{w:"Rōma, -ae", genus:"f"}],de:[{w:"Rom"}],typ:"Substantiv"}], //nomen?
-	[{lt:[{w:"apud", mit:"Akk"}],de:[{w:"bei, in der Nähe von"}],typ:"Präposition"}],
-	[{lt:[{w:"flūmen, -minis", genus:"n"}],de:[{w:"der Fluss"}],typ:"Substantiv"}],
-	[{lt:[{w:"situs, -a, -um"}],de:[{w:"gelegen"}],typ:"Adjektiv"}],
-	[{lt:[{w:"bellum, -ī", genus:"n"}],de:[{w:"der Krieg"}],typ:"Substantiv"}],
-	[{lt:[{w:"gerere, gerō, gessī, gestum"}],de:[{w:"tragen, führen, ausführen"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"bellum gerere"}],de:[{w:"einen Krieg führen"}],typ:"Verbalphrase"}], //idiomatische Wendung
-	[{lt:[{w:"adversus", mit:"Akk"}],de:[{w:"gegen, gegenüber"}],typ:"Präposition"}],
-	[{lt:[{w:"Rōmānus, -a, -um"}],de:[{w:"römisch"}],typ:"Adjektiv"}],
-	[{lt:[{w:"cōpia, -ae", genus:"f", nursingular:"1"}],de:[{w:"die Menge, der Vorrat", hinweis:"im Plural: Vorräte, Truppen, Streitkräfte"}],typ:"Substantiv"}],
-	[{lt:[{w:"cōpiae, -arum", genus:"f", nurplural:"1",hint:"Plural zu copia, -ae"}],de:[{w:"Vorräte, Truppen, Streitkräfte"}],typ:"Substantiv"}],
-	[{lt:[{w:"pūgnāre, -ō"}],de:[{w:"kämpfen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"calamitās, -ātis", genus:"f"}],de:[{w:"die Niederlage, das Unglück, das Unheil"}],typ:"Substantiv"}],
-	[{lt:[{w:"ā/ab", mit:"Abl"}],de:[{w:"von, von ... weg, seit"}],typ:"Präposition"}], //besser:? von...her
-	[{lt:[{w:"tolerāre, -ō"}],de:[{w:"ertragen, erdulden"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"dēbēre, dēbeō, dēbuī, dēbitum"}],de:[{w:"müssen, schulden, verdanken"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"animal, -ālis", genus:"n"}],de:[{w:"das Tier, das Lebewesen"}],typ:"Substantiv"}],
-	[{lt:[{w:"captāre, -ō"}],de:[{w:"fangen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"sinere, sinō, sīvī, situm"}],de:[{w:"lassen, zulassen"}],typ:"Verb"}], // kons. sinere, sīvī [o. (altl.) siī], situm> (Perf.-Formen oft synk.: sīstī, sīris, sīrit, sīritis, sīsse(m) u. a.)
-	[{lt:[{w:"expūgnāre, -ō"}],de:[{w:"erobern, einnehmen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"studēre, studeō, studuī, -", mit:"Dativ", pass:"3.Sg"}],de:[{w:"sich bemühen (um), sich widmen"}],typ:"Verb"}],  //regelmäßig//Ist ein Verb intransitiv, so wird im Vokabelverzeichnis in Klammern der Kasus angegeben (z.B. studere, studeo (mit Dativ)
-	[{lt:[{w:"autem"}],de:[{w:"jedoch, aber"}],typ:"Konjunktion"}],
-	[{lt:[{w:"mīles, -litis", genus:"m"}],de:[{w:"der Soldat"}],typ:"Substantiv"}],
-	[{lt:[{w:"nūllus, -a, -um",hint:"Sg. Gen.: nūllīus, Sg. Dat.: nūllī",
+	{ltW:"urbs, urbis", genus:"f",		deW:"die Stadt",typ:"Substantiv", ltCom: "Gen. Pl. -ium"}, // mischdeklination erkennen Sie daran, dass im Vokabelverzeichnis mit angegeben ist, dass die Endung im Genetiv Plural "-ium" ist
+	{ltW:"Rōma, -ae", genus:"f",		deW:"Rom",typ:"Substantiv"}, //nomen?
+	{ltW:"apud", ltCom:"mit Akk.", mit:"Akk",		deW:"bei, in der Nähe von",typ:"Präposition"},
+	{ltW:"flūmen, -minis", genus:"n",		deW:"der Fluss",typ:"Substantiv"},
+	{ltW:"situs, -a, -um",		deW:"gelegen",typ:"Adjektiv"},
+	{ltW:"bellum, -ī", genus:"n",		deW:"der Krieg",typ:"Substantiv"},
+	{ltW:"gerere, gerō, gessī, gestum",		deW:"tragen, führen, ausführen",typ:"Verb"}, // kons.
+	{ltW:"bellum gerere",		deW:"einen Krieg führen",typ:"Verbalphrase"}, //idiomatische Wendung
+	{ltW:"adversus", ltCom:"mit Akk.",mit:"Akk",		deW:"gegen, gegenüber",typ:"Präposition"},
+	{ltW:"Rōmānus, -a, -um",		deW:"römisch",typ:"Adjektiv"},
+	{ltW:"cōpia, -ae", genus:"f", ltCom:"im Singular",nursingular:"1",		deW:"die Menge, der Vorrat", deCom:"im Plural: Vorräte, Truppen, Streitkräfte",typ:"Substantiv"},
+	{ltW:"cōpiae, -arum", genus:"f", ltCom:"im Plural",nurplural:"1",deCom:"Plural zu copia, -ae",		deW:"Vorräte, Truppen, Streitkräfte",typ:"Substantiv"},
+	{ltW:"pūgnāre, -ō",		deW:"kämpfen",typ:"Verb"}, //regelmäßig
+	{ltW:"calamitās, -ātis", genus:"f",		deW:"die Niederlage, das Unglück, das Unheil",typ:"Substantiv"},
+	{ltW:"ā/ab", ltCom:"mit Abl.",mit:"Abl",		deW:"von, von ... weg, seit",typ:"Präposition"}, //besser:? von...her
+	{ltW:"tolerāre, -ō",		deW:"ertragen, erdulden",typ:"Verb"}, //regelmäßig
+	{ltW:"dēbēre, dēbeō, dēbuī, dēbitum",		deW:"müssen, schulden, verdanken",typ:"Verb"}, //regelmäßig
+	{ltW:"animal, -ālis", genus:"n",		deW:"das Tier, das Lebewesen",typ:"Substantiv"},
+	{ltW:"captāre, -ō",		deW:"fangen",typ:"Verb"}, //regelmäßig
+	{ltW:"sinere, sinō, sīvī, situm",		deW:"lassen, zulassen",typ:"Verb"}, // kons. sinere, sīvī [o. (altl.) siī], situm> (Perf.-Formen oft synk.: sīstī, sīris, sīrit, sīritis, sīsse(m) u. a.)
+	{ltW:"expūgnāre, -ō",		deW:"erobern, einnehmen",typ:"Verb"}, //regelmäßig
+	{ltW:"studēre, studeō, studuī, -", ltCom:["mit Dat.","im Passiv nur 3. Person Singular"], mit:"Dativ", pass:"3.Sg",		deW:"sich bemühen (um), sich widmen", typ:"Verb"},  //regelmäßig//Ist ein Verb intransitiv, so wird im Vokabelverzeichnis in Klammern der Kasus angegeben (z.B. studere, studeo (mit Dativ)
+	{ltW:"autem",		deW:"jedoch, aber", typ:"Konjunktion"},
+	{ltW:"mīles, -litis", genus:"m",		deW:"der Soldat", typ:"Substantiv"},
+	{ltW:"nūllus, -a, -um", ltCom:"Sg. Gen.: nūllīus, Sg. Dat.: nūllī",
 			flektion:{
 				M:{
 					Singular:{
@@ -176,63 +311,63 @@
 						Dativ:"-"+exSuffix("ī")
 					}
 				}
-			}}],de:[{w:"kein"}],typ:"Adjektiv"}], //Pronominaladjektiv //(Gen Sg nūllīus u. nūllī, Dat nūllī u. nūllō, nūllae)
-	[{lt:[{w:"mittere, mittō, mīsī, missum"}],de:[{w:"schicken, senden"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"interim"}],de:[{w:"inzwischen, mittlerweile"}],typ:"Adverb"}],
-	[{lt:[{w:"ōrātiō, -ōnis", genus:"f"}],de:[{w:"die Rede"}],typ:"Substantiv"}],
-	[{lt:[{w:"ōrātiōnem habēre"}],de:[{w:"eine Rede halten"}],typ:"Verbalphrase"}], // idiomatische Wendung orationem habēre
-	[{lt:[{w:"prohibēre, prohibeō, prohibuī, prohibitum"}],de:[{w:"fernhalten, abhalten, hindern"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"vir, virī", genus:"m"}],de:[{w:"der Mann"}],typ:"Substantiv"}],
-	[{lt:[{w:"prōspicere, prōspiciō, prōspexī, prōspectum", pass:"3.Sg"}],de:[{w:"sorgen für"}],typ:"Verb"}], //kurzvokalische i (hin)ausschauen Vorsicht anwenden, Vorsorge treffen, (vor)sorgen (abs.; m. Dat; m. ut, ne) 
-	[{lt:[{w:"iubēre, iubeō, iussī, iussum", pass:"3.Sg"}],de:[{w:"befehlen, beauftragen"}],typ:"Verb"}], //unregelmäßig, hint:"unregelmäßig"
-	[{lt:[{w:"auxilium, -ī", genus:"n", nursingular:"1"}],de:[{w:"die Hilfe", hinweis:"im Plural: Hilfstruppen"}],typ:"Substantiv"}],
-	[{lt:[{w:"auxila, -ōrum", genus:"n", nurplural:"1",hint:"Plural zu auxilium, -ī"}],de:[{w:"Hilfstruppen"}],typ:"Substantiv"}],
-	[{lt:[{w:"Rōmānus, -ī", genus:"m"}],de:[{w:"der Römer"}],typ:"Substantiv"}],
+			},		deW:"kein",typ:"Adjektiv"}, //Pronominaladjektiv //(Gen Sg nūllīus u. nūllī, Dat nūllī u. nūllō, nūllae)
+	{ltW:"mittere, mittō, mīsī, missum",		deW:"schicken, senden",typ:"Verb"}, // kons.
+	{ltW:"interim",		deW:"inzwischen, mittlerweile",typ:"Adverb"},
+	{ltW:"ōrātiō, -ōnis", genus:"f",		deW:"die Rede",typ:"Substantiv"},
+	{ltW:"ōrātiōnem habēre",		deW:"eine Rede halten",typ:"Verbalphrase"}, // idiomatische Wendung orationem habēre
+	{ltW:"prohibēre, prohibeō, prohibuī, prohibitum",		deW:"fernhalten, abhalten, hindern",typ:"Verb"}, //regelmäßig
+	{ltW:"vir, virī", genus:"m",		deW:"der Mann",typ:"Substantiv"},
+	{ltW:"prōspicere, prōspiciō, prōspexī, prōspectum", ltCom:"im Passiv nur 3. Person Singular", pass:"3.Sg",		deW:"sorgen für",typ:"Verb"}, //kurzvokalische i (hin)ausschauen Vorsicht anwenden, Vorsorge treffen, (vor)sorgen (abs.; m. Dat; m. ut, ne) 
+	{ltW:"iubēre, iubeō, iussī, iussum", ltCom:"im Passiv nur 3. Person Singular", pass:"3.Sg",		deW:"befehlen, beauftragen",typ:"Verb"}, //unregelmäßig, hint:"unregelmäßig"
+	{ltW:"auxilium, -ī", genus:"n", ltCom:"im Singular", nursingular:"1",		deW:"die Hilfe", deCom:"im Plural: Hilfstruppen",typ:"Substantiv"},
+	{ltW:"auxila, -ōrum", genus:"n", nurplural:"1",ltCom:"Plural zu auxilium, -ī",		deW:"Hilfstruppen",typ:"Substantiv"},
+	{ltW:"Rōmānus, -ī", genus:"m",		deW:"der Römer",typ:"Substantiv"},
 	//[{lt:[{w:"saepe"}],de:[{w:"oft"}],typ:"Adverb"}],
-	[{lt:[{w:"conciliāre, -ō"}],de:[{w:"gewinnen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"quī, quae, quod"}],de:[{w:"der, die, das; welcher, welche, welches"}],typ:"Relativpronomen, Interrogativpronomen"}],
+	{ltW:"conciliāre, -ō",		deW:"gewinnen",typ:"Verb"}, //regelmäßig
+	{ltW:"quī, quae, quod",		deW:"der, die, das; welcher, welche, welches",typ:"Relativpronomen, Interrogativpronomen"},
 	
-	[{lt:[{w:"egō",hint:"meī, mihi, mē, mecum"}],de:[{w:"ich",hinweis:"meiner, mir, mich, mit mir"}],typ:"Personalpronomen (reflexiv)"}], //lektion 13, mē in lektion 11 
-	[{lt:[{w:"tū",hint:"tuī, tibi, tē, tecum"}],de:[{w:"du",hinweis:"deiner, dir, dich, mit dir"}],typ:"Personalpronomen"}],	
+	{ltW:"egō",ltCom:"meī, mihi, mē, mecum",		deW:"ich",deCom:"meiner, mir, mich, mit mir",typ:"Personalpronomen (reflexiv)"}, //lektion 13, mē in lektion 11 
+	{ltW:"tū",ltCom:"tuī, tibi, tē, tecum",		deW:"du",deCom:"deiner, dir, dich, mit dir",typ:"Personalpronomen"},	
   ];
-   var wortliste6 = [
-	[{lt:[{w:"semper"}],de:[{w:"immer"}],typ:"Adverb"}],
-	[{lt:[{w:"nunc"}],de:[{w:"jetzt, nun"}],typ:"Adverb"}],
-	[{lt:[{w:"causa, -ae", genus:"f"}],de:[{w:"der Grund, die Ursache, das Gerichtsverfahren"}],typ:"Substantiv"}],
-	[{lt:[{w:"pecūnia, -ae", genus:"f"}],de:[{w:"das Geld"}],typ:"Substantiv"}],
-	[{lt:[{w:"accipere, accipiō, accēpī, acceptum"}],de:[{w:"annehmen, empfangen"}],typ:"Verb"}],// kurzvokalische i
-	[{lt:[{w:"īgnōtus, -a, -um"}],de:[{w:"unbekannt"}],typ:"Adjektiv"}],
-	[{lt:[{w:"aedificium, -ī", genus:"n"}],de:[{w:"das Gebäude"}],typ:"Substantiv"}],
-	[{lt:[{w:"clārus, -a, -um"}],de:[{w:"hell, berühmt"}],typ:"Adjektiv"}],
-	[{lt:[{w:"mōnstrāre, -ō"}],de:[{w:"zeigen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"gaudium, -ī", genus:"n"}],de:[{w:"die Freude"}],typ:"Substantiv"}],
-	[{lt:[{w:"spectāre, -ō"}],de:[{w:"betrachten"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"nōmen, -minis", genus:"n"}],de:[{w:"der Name"}],typ:"Substantiv"}],
-	[{lt:[{w:"opus, operis", genus:"n"}],de:[{w:"das Werk, die Arbeit, die Mühe"}],typ:"Substantiv"}],
-	[{lt:[{w:"tabula, -ae", genus:"f"}],de:[{w:"die Tafel"}],typ:"Substantiv"}],
+    var wortliste6 = [
+	{ltW:"semper",deW:"immer",typ:"Adverb"},
+	{ltW:"nunc", deW:"jetzt, nun",typ:"Adverb"},
+	{ltW:"causa, -ae", genus:"f",deW:"der Grund, die Ursache, das Gerichtsverfahren",typ:"Substantiv"},
+	{ltW:"pecūnia, -ae", genus:"f",deW:"das Geld",typ:"Substantiv"},
+	{ltW:"accipere, accipiō, accēpī, acceptum",deW:"annehmen, empfangen",typ:"Verb"}, // kurzvokalische i
+	{ltW:"īgnōtus, -a, -um",deW:"unbekannt",typ:"Adjektiv"},
+	{ltW:"aedificium, -ī", genus:"n",deW:"das Gebäude",typ:"Substantiv"},
+	{ltW:"clārus, -a, -um",deW:"hell, berühmt",typ:"Adjektiv"},
+	{ltW:"mōnstrāre, -ō",deW:"zeigen",typ:"Verb"}, //regelmäßig
+	{ltW:"gaudium, -ī", genus:"n",deW:"die Freude",typ:"Substantiv"},
+	{ltW:"spectāre, -ō",deW:"betrachten",typ:"Verb"}, //regelmäßig
+	{ltW:"nōmen, -minis", genus:"n",deW:"der Name",typ:"Substantiv"},
+	{ltW:"opus, operis", genus:"n",deW:"das Werk, die Arbeit, die Mühe",typ:"Substantiv"},
+	{ltW:"tabula, -ae", genus:"f",deW:"die Tafel",typ:"Substantiv"},
    
-	[{lt:[{w:"memoria, -ae", genus:"f"}],de:[{w:"Gedächtnis, Andenken"}],typ:"Substantiv"}],
-	[{lt:[{w:"servāre, -ō"}],de:[{w:"retten, bewahren"}],typ:"Verb"}],  //regelmäßig
-	[{lt:[{w:"fābula, -ae", genus:"f"}],de:[{w:"die Geschichte, die Erzählung"}],typ:"Substantiv"}],
-	[{lt:[{w:"antīquus, -a, -um"}],de:[{w:"alt, antik"}],typ:"Adjektiv"}],
-	[{lt:[{w:"solum"}],de:[{w:"allein, nur"}],typ:"Adverb"}],
-	[{lt:[{w:"dēlectāre, -ō"}],de:[{w:"erfreuen, Freude machen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"īgnōrāre, -ō", mit:"Dativ"}],de:[{w:"nicht kennen, nicht wissen"}],typ:"Verb"}],  //regelmäßig//Ist ein Verb intransitiv, so wird im Vokabelverzeichnis in Klammern der Kasus angegeben (z.B. studere, studeo (mit Dativ)
-	[{lt:[{w:"nōn īgnōrāre"}],de:[{w:"gut kennen, genau wissen"}],typ:"Verbalphrase"}], //idiomatische Wendung
-	[{lt:[{w:"nārrāre, -ō"}],de:[{w:"erzählen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"errāre, -ō"}],de:[{w:"irren"}],typ:"Verb"}],
-	[{lt:[{w:"hūmānus, -a, -um"}],de:[{w:"menschlich"}],typ:"Adjektiv"}],	
+	{ltW:"memoria, -ae", genus:"f",deW:"Gedächtnis, Andenken",typ:"Substantiv"},
+	{ltW:"servāre, -ō",deW:"retten, bewahren",typ:"Verb"}, //regelmäßig
+	{ltW:"fābula, -ae", genus:"f",deW:"die Geschichte, die Erzählung",typ:"Substantiv"},
+	{ltW:"antīquus, -a, -um",deW:"alt, antik",typ:"Adjektiv"},
+	{ltW:"solum",deW:"allein, nur",typ:"Adverb"},
+	{ltW:"dēlectāre, -ō",deW:"erfreuen, Freude machen",typ:"Verb"}, //regelmäßig
+	{ltW:"īgnōrāre, -ō", ltCom:"mit Dat.", mit:"Dativ",deW:"nicht kennen, nicht wissen",typ:"Verb"}, //regelmäßig//Ist ein Verb intransitiv, so wird im Vokabelverzeichnis in Klammern der Kasus angegeben (z.B. studere, studeo (mit Dativ)
+	{ltW:"nōn īgnōrāre",deW:"gut kennen, genau wissen",typ:"Verbalphrase"}, //idiomatische Wendung
+	{ltW:"nārrāre, -ō",deW:"erzählen",typ:"Verb"}, //regelmäßig
+	{ltW:"errāre, -ō",deW:"irren",typ:"Verb"},
+	{ltW:"hūmānus, -a, -um",deW:"menschlich",typ:"Adjektiv"}	
   ];  
    var wortliste7 = [
-	[{lt:[{w:"turris, turris", genus:"f", hint:"(Akk. Sg. -im, Abl. Sg. -ī, Gen. Pl. -ium",
+	{ltW:"turris, turris", genus:"f", ltCom:"Akk. Sg. -im, Abl. Sg. -ī, Gen. Pl. -ium",
 		flektion:{ name:"i-Deklination",
 				Singular:{
 					Akkusativ:"-"+tagSuffix("im"),
 					Ablativ:"-"+tagSuffix("ī")
 				}
-			}}],de:[{w:"der Turm"}],typ:"Substantiv"}], //lektion 16
-	[{lt:[{w:"sitis, sitis", genus:"f", hint:"Akk. -im, Abl. -ī"}],de:[{w:"der Durst"}],typ:"Substantiv"}],
-	[{lt:[{w:"vīs", genus:"f", hint:"kein Gen. Sg. u. Dat. Sg.; Plural: vires, -ium", //Sg Akk vim, Abl vī; Pl Nom u. Akk vīrēs, Gen vīrium, Dat u. Abl vīribus
+			},deW:"der Turm",typ:"Substantiv"}, //lektion 16
+	{ltW:"sitis, sitis", genus:"f", ltCom:"Akk. -im, Abl. -ī",deW:"der Durst",typ:"Substantiv"},
+	{ltW:"vīs", genus:"f", ltCom:"kein Gen. Sg. u. Dat. Sg.; Plural: vires, -ium", //Sg Akk vim, Abl vī; Pl Nom u. Akk vīrēs, Gen vīrium, Dat u. Abl vīribus
 			flektion:{
 				Singular:{
 					Genitiv:"",
@@ -245,353 +380,334 @@
 					Akkusativ:"vīr"+tagSuffix("ēs"),
 					Ablativ:"vīr"+tagSuffix("ibus")
 				}
-			}}],de:[{w:"die Kraft, die Gewalt", hinweis:"im Plural auch: Streitkräfte"}],typ:"Substantiv"}],
-	[{lt:[{w:"pār, paris", genus:"n"}],de:[{w:"das Gleiche"}],typ:"Substantiv"}],
-	[{lt:[{w:"mare, maris", genus:"n"}],de:[{w:"das Meer"}],typ:"Substantiv"}],
-	[{lt:[{w:"esse", mit:"Dat. der Person"}],de:[{w:"jmdm. gehören, haben, besitzen"}],typ:"Verb"}], // dativus possessivus , lektion 17
-	[{lt:[{w:"ante", mit:"Akk"}],de:[{w:"vor"}],typ:"Präposition"}], //lektion 19
-	[{lt:[{w:"porta, -ae", genus:"f"}],de:[{w:"das Tor"}],typ:"Substantiv"}],
-	[{lt:[{w:"patria, -ae", genus:"f"}],de:[{w:"die Heimat, das Vaterland"}],typ:"Substantiv"}],
-	[{lt:[{w:"metuere, metuō, metuī, -", mit:"Dat"}],de:[{w:"fürchten, befürchten"}],typ:"Verb"}], // kons. intransitiv
-	[{lt:[{w:"invādere, invādō, invāsī, invāsum"}],de:[{w:"eindringen, einfallen, erobern"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"mūrus, -ī", genus:"m"}],de:[{w:"die Mauer, die Stadtmauer"}],typ:"Substantiv"}],
-	[{lt:[{w:"circā", mit:"Akk"}],de:[{w:"um, um ... herum"}],typ:"Präposition"}],
+			},deW:"die Kraft, die Gewalt", deCom:"im Plural auch: Streitkräfte",typ:"Substantiv"},
+	{ltW:"pār, paris", genus:"n",deW:"das Gleiche",typ:"Substantiv"},
+	{ltW:"mare, maris", genus:"n",deW:"das Meer",typ:"Substantiv"},
+	{ltW:"esse", ltCom:"mit Dat. der Person", mit:"Dat. der Person",deW:"jmdm. gehören, haben, besitzen",typ:"Verb"}, // dativus possessivus , lektion 17
+	{ltW:"ante", ltCom:"mit Akk.", mit:"Akk",deW:"vor",typ:"Präposition"}, //lektion 19
+	{ltW:"porta, -ae", genus:"f",deW:"das Tor",typ:"Substantiv"},
+	{ltW:"patria, -ae", genus:"f",deW:"die Heimat, das Vaterland",typ:"Substantiv"},
+	{ltW:"metuere, metuō, metuī, -", ltCom:"mit Dat.", mit:"Dat",deW:"fürchten, befürchten",typ:"Verb"}, // kons. intransitiv
+	{ltW:"invādere, invādō, invāsī, invāsum",deW:"eindringen, einfallen, erobern",typ:"Verb"}, // kons.
+	{ltW:"mūrus, -ī", genus:"m",deW:"die Mauer, die Stadtmauer",typ:"Substantiv"},
+	{ltW:"circā", ltCom:"mit Akk.", mit:"Akk",deW:"um, um ... herum",typ:"Präposition"}
   ];  
    var wortliste8 = [
-	[{lt:[{w:"īnsula, -ae", genus:"f"}],de:[{w:"die Insel"}],typ:"Substantiv"}],
-	[{lt:[{w:"habitāre, -ō"}],de:[{w:"wohnen"}],typ:"Verb"}],
-	[{lt:[{w:"frāter, -tris", genus:"m"}],de:[{w:"der Bruder	"}],typ:"Substantiv"}],
-	[{lt:[{w:"pūgna, -ae", genus:"f"}],de:[{w:"der Kampf, die Schlacht"}],typ:"Substantiv"}],
-	[{lt:[{w:"laedere, laedō, laesī, laesum"}],de:[{w:"verletzen, beleidigen"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"laetus, -a, -um"}],de:[{w:"fröhlich"}],typ:"Adjektiv"}],
-	[{lt:[{w:"invītus, -a, -um"}],de:[{w:"widerwillig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"cadere, cadō, cecidī, cāsūrus", pass:"3.Sg"}],de:[{w:"fallen, sterben"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"uxor, -ōris", genus:"f"}],de:[{w:"die Gattin, die Ehefrau"}],typ:"Substantiv"}],
-	[{lt:[{w:"cēna, -ae", genus:"f"}],de:[{w:"das Essen, die Mahlzeit"}],typ:"Substantiv"}],
-	[{lt:[{w:"parāre, -ō"}],de:[{w:"bereiten, vorbereiten"}],typ:"Verb"}],
-	[{lt:[{w:"solēre, soleō, -, solitus"}],de:[{w:"pflegen, gewohnt sein"}],typ:"Verb"}],
-	[{lt:[{w:"merx, mercis", genus:"f"}],de:[{w:"die Ware"}],typ:"Substantiv"}],
-	[{lt:[{w:"vendere, vendō, vendidī, venditum"}],de:[{w:"verkaufen"}],typ:"Verb"}], // kons. Pass. (klass.) nur venditus u. vendendus; sonst Ersatz durch veneo (venus¹; < venum do, eigtl. „zum Verkauf geben“)
-	[{lt:[{w:"līberī, -ōrum", genus:"m"}],de:[{w:"die Kinder"}],typ:"Substantiv"}], //PLURAL
-	[{lt:[{w:"ēducāre, -ō"}],de:[{w:"erziehen"}],typ:"Verb"}],
-	[{lt:[{w:"puer, -erī", genus:"m"}],de:[{w:"der Junge, der Knabe"}],typ:"Substantiv"}],
-	[{lt:[{w:"pater, patris", genus:"m"}],de:[{w:"der Vater"}],typ:"Substantiv"}], //Gen Pl -trum
-	[{lt:[{w:"anteā"}],de:[{w:"früher"}],typ:"Adverb"}],
-	[{lt:[{w:"puella, -ae", genus:"f"}],de:[{w:"das Mädchen"}],typ:"Substantiv"}],
-	[{lt:[{w:"iuvāre, -ō, iūvī, iūtum, iuvātūrus"}],de:[{w:"helfen"}],typ:"Verb"}],
-	[{lt:[{w:"pārentēs , -tium", genus:"m"}],de:[{w:"die Eltern"}],typ:"Substantiv"}],  //PLURAL
-	//[{lt:[{w:"ante", mit:"Akk"}],de:[{w:"vor"}],typ:"Präposition"}],
-	[{lt:[{w:"annus, -ī", genus:"m"}],de:[{w:"das Jahr"}],typ:"Substantiv"}],
+	{ltW:"īnsula, -ae", genus:"f",deW:"die Insel",typ:"Substantiv"},
+	{ltW:"habitāre, -ō",deW:"wohnen",typ:"Verb"},
+	{ltW:"frāter, -tris", genus:"m",deW:"der Bruder	",typ:"Substantiv"},
+	{ltW:"pūgna, -ae", genus:"f",deW:"der Kampf, die Schlacht",typ:"Substantiv"},
+	{ltW:"laedere, laedō, laesī, laesum",deW:"verletzen, beleidigen",typ:"Verb"}, // kons.
+	{ltW:"laetus, -a, -um",deW:"fröhlich",typ:"Adjektiv"},
+	{ltW:"invītus, -a, -um",deW:"widerwillig",typ:"Adjektiv"},
+	{ltW:"cadere, cadō, cecidī, cāsūrus", ltCom:"im Passiv nur 3. Person Singular", pass:"3.Sg",deW:"fallen, sterben",typ:"Verb"}, // kons.
+	{ltW:"uxor, -ōris", genus:"f",deW:"die Gattin, die Ehefrau",typ:"Substantiv"},
+	{ltW:"cēna, -ae", genus:"f",deW:"das Essen, die Mahlzeit",typ:"Substantiv"},
+	{ltW:"parāre, -ō",deW:"bereiten, vorbereiten",typ:"Verb"},
+	{ltW:"solēre, soleō, -, solitus",deW:"pflegen, gewohnt sein",typ:"Verb"},
+	{ltW:"merx, mercis", genus:"f",deW:"die Ware",typ:"Substantiv"},
+	{ltW:"vendere, vendō, vendidī, venditum",deW:"verkaufen",typ:"Verb"}, // kons. Pass. (klass.) nur venditus u. vendendus; sonst Ersatz durch veneo (venus¹; < venum do, eigtl. „zum Verkauf geben“)
+	{ltW:"līberī, -ōrum", genus:"m",deW:"die Kinder",typ:"Substantiv"}, //PLURAL
+	{ltW:"ēducāre, -ō",deW:"erziehen",typ:"Verb"},
+	{ltW:"puer, -erī", genus:"m",deW:"der Junge, der Knabe",typ:"Substantiv"},
+	{ltW:"pater, patris", genus:"m",deW:"der Vater",typ:"Substantiv"}, //Gen Pl -trum
+	{ltW:"anteā",deW:"früher",typ:"Adverb"},
+	{ltW:"puella, -ae", genus:"f",deW:"das Mädchen",typ:"Substantiv"},
+	{ltW:"iuvāre, -ō, iūvī, iūtum, iuvātūrus",deW:"helfen",typ:"Verb"},
+	{ltW:"pārentēs , -tium", genus:"m",deW:"die Eltern",typ:"Substantiv"}, //PLURAL
+	//{ltW:"ante", mit:"Akk",deW:"vor",typ:"Präposition"},
+	{ltW:"annus, -ī", genus:"m",deW:"das Jahr",typ:"Substantiv"}
   ];  
    var wortliste9 = [
-	[{lt:[{w:"nam"}],de:[{w:"denn, nämlich"}],typ:"Konjunktion"}],
-	[{lt:[{w:"appārēre, appāreō, appāruī, appāritūrus"}],de:[{w:"erscheinen, sich zeigen"}],typ:"Verb"}],//ap-pāreō <pārēre, pāruī, (pāritūrus)>
-	[{lt:[{w:"appellāre, -ō"}],de:[{w:"anreden, nennen, benennen"}],typ:"Verb"}],
-	[{lt:[{w:"turba, -ae", genus:"f"}],de:[{w:"die (Menschen-)Menge, die Verwirrung, das Durcheinander"}],typ:"Substantiv"}],
-	[{lt:[{w:"prōmittere, prōmittō, prōmīsī, prōmissum"}],de:[{w:"versprechen"}],typ:"Verb"}], // kons. //infinitive mit 3 t????
-	[{lt:[{w:"deus, -ī", genus:"m"}],de:[{w:"der Gott"}],typ:"Substantiv"}],
-	[{lt:[{w:"dea, -ae", genus:"f"}],de:[{w:"die Göttin"}],typ:"Substantiv"}],
-	[{lt:[{w:"homō, hominis", genus:"m"}],de:[{w:"der Mensch"}],typ:"Substantiv"}], 
-	[{lt:[{w:"plaudere, plaudō, plausī, plausum"}],de:[{w:"Beifall klatschen"}],typ:"Verb"}], // kons. intransitiv
-	[{lt:[{w:"salūtāre, -ō"}],de:[{w:"grüßen"}],typ:"Verb"}],
-	[{lt:[{w:"clāmor -ōris", genus:"m"}],de:[{w:"das Geschrei"}],typ:"Substantiv"}],
-	[{lt:[{w:"enim"}],de:[{w:"nämlich"}],typ:"Konjunktion"}],
-	[{lt:[{w:"rīdēre, rideō, rīsī, rīsum"}],de:[{w:"lachen"}],typ:"Verb"}], //,hint:"unregelmäßig"unregelmäßig
-	[{lt:[{w:"placēre, placeō, placuī, placitum"}],de:[{w:"gefallen"}],typ:"Verb"}], //regelmäßig
-	[{lt:[{w:"quō?"}],de:[{w:"wohin?"}],typ:"Interrogativadverb"}],// in anderer Bedeutung:Konjunktion/?
-	[{lt:[{w:"basilica, -ae", genus:"f"}],de:[{w:"die Basilika, die Kirche"}],typ:"Substantiv"}],  
-	[{lt:[{w:"agere, -agō, ēgī, āctum"}],de:[{w:"treiben, betreiben, handeln, verhandeln"}],typ:"Verb"}], // kons.
-	[{lt:[{w:"causam agere"}],de:[{w:"einen Prozess führen"}],typ:"Verbalphrase"}],
-	[{lt:[{w:"prō", mit:"Abl"}],de:[{w:"vor, für, anstelle (von)"}],typ:"Präposition"}],
-	[{lt:[{w:"quid?"}],de:[{w:"was?"}],typ:"Interrogativpronomen"}],
-	[{lt:[{w:"sedēre, sedeō, sēdī, sessum"}],de:[{w:"sitzen"}],typ:"Verb"}], //unregelmäßig,hint:"unregelmäßig"
-	[{lt:[{w:"ut"}],de:[{w:"wie"}],typ:"Adverb"}],
-	[{lt:[{w:"cūr?"}],de:[{w:"warum?"}],typ:"Interrogativadverb"}],
-	[{lt:[{w:"prīmus, -a, -um"}],de:[{w:"der erste"}],typ:"Adjektiv"}],
-	[{lt:[{w:"summus, -a, -um"}],de:[{w:"der höchste, der oberste"}],typ:"Adjektiv"}],
-	[{lt:[{w:"quis?"}],de:[{w:"wer?"}],typ:"Interrogativpronomen"}],
+	{ltW:"nam",deW:"denn, nämlich",typ:"Konjunktion"},
+	{ltW:"appārēre, appāreō, appāruī, appāritūrus",deW:"erscheinen, sich zeigen",typ:"Verb"},//ap-pāreō <pārēre, pāruī, (pāritūrus)>
+	{ltW:"appellāre, -ō",deW:"anreden, nennen, benennen",typ:"Verb"},
+	{ltW:"turba, -ae", genus:"f",deW:"die (Menschen-)Menge, die Verwirrung, das Durcheinander",typ:"Substantiv"},
+	{ltW:"prōmittere, prōmittō, prōmīsī, prōmissum",deW:"versprechen",typ:"Verb"}, // kons. //infinitive mit 3 t????
+	{ltW:"deus, -ī", genus:"m",deW:"der Gott",typ:"Substantiv"},
+	{ltW:"dea, -ae", genus:"f",deW:"die Göttin",typ:"Substantiv"},
+	{ltW:"homō, hominis", genus:"m",deW:"der Mensch",typ:"Substantiv"}, 
+	{ltW:"plaudere, plaudō, plausī, plausum",deW:"Beifall klatschen",typ:"Verb"}, // kons. intransitiv
+	{ltW:"salūtāre, -ō",deW:"grüßen",typ:"Verb"},
+	{ltW:"clāmor -ōris", genus:"m",deW:"das Geschrei",typ:"Substantiv"},
+	{ltW:"enim",deW:"nämlich",typ:"Konjunktion"},
+	{ltW:"rīdēre, rīdeō, rīsī, rīsum",deW:"lachen",typ:"Verb"}, //,hint:"unregelmäßig"unregelmäßig
+	{ltW:"placēre, placeō, placuī, placitum",deW:"gefallen",typ:"Verb"}, //regelmäßig
+	{ltW:"quō?",deW:"wohin?",typ:"Interrogativadverb"},// in anderer Bedeutung:Konjunktion/?
+	{ltW:"basilica, -ae", genus:"f",deW:"die Basilika, die Kirche",typ:"Substantiv"},  
+	{ltW:"agere, agō, ēgī, āctum",deW:"treiben, betreiben, handeln, verhandeln",typ:"Verb"}, // kons.
+	{ltW:"causam agere",deW:"einen Prozess führen",typ:"Verbalphrase"},
+	{ltW:"prō", mit:"Abl",deW:"vor, für, anstelle (von)",typ:"Präposition"},
+	{ltW:"quid?",deW:"was?",typ:"Interrogativpronomen"},
+	{ltW:"sedēre, sedeō, sēdī, sessum",deW:"sitzen",typ:"Verb"}, //unregelmäßig,hint:"unregelmäßig"
+	{ltW:"ut",deW:"wie",typ:"Adverb"},
+	{ltW:"cūr?",deW:"warum?",typ:"Interrogativadverb"},
+	{ltW:"prīmus, -a, -um",deW:"der erste",typ:"Adjektiv"},
+	{ltW:"summus, -a, -um",deW:"der höchste, der oberste",typ:"Adjektiv"},
+	{ltW:"quis?",deW:"wer?",typ:"Interrogativpronomen"}
   ]; 
 //mortuus, -a, -um	tot
 //primus, -a, -um	der Erste
 //summus, -a, -um	zuoberst, auf der Spitze
    var wortliste10 = [  // Lektion 24a
-	[{lt:[{w:"postquam", mit:"Ind. Per."}],de:[{w:"nachdem"}],typ:"Konjunktion"}], // auf Deutsch mit Plusquamperfekt
-	[{lt:[{w:"rēx, rēgis", genus:"m"}],de:[{w:"der König"}],typ:"Substantiv"}],
-	[{lt:[{w:"lēx, lēgis", genus:"f"}],de:[{w:"das Gesetz"}],typ:"Substantiv"}],
-	[{lt:[{w:"ēnūntiāre, -ō"}],de:[{w:"aussagen, aussprechen"}],typ:"Verb"}],
-	[{lt:[{w:"plēbs, plēbis", genus:"f"}],de:[{w:"die Plebs, das Bauernvolk, der Pöbel"}],typ:"Substantiv"}],  
-	[{lt:[{w:"indīgnātus, -a, -um"}],de:[{w:"empört"}],typ:"Adjektiv"}],
-	[{lt:[{w:"cēdere, cēdō, cessī, cessum"}],de:[{w:"weichen, abtreten, hinausgehen"}],typ:"Verb"}],
-	[{lt:[{w:"scrībere, scrībō, scrīpsī, scrīptum"}],de:[{w:"schreiben"}],typ:"Verb"}],
-	[{lt:[{w:"tōtus, -a, -um"}],de:[{w:"ganz, gesamt"}],typ:"Adjektiv"}],
-	[{lt:[{w:"poscere, poscō, poposcī, -"}],de:[{w:"fordern, verlangen"}],typ:"Verb"}],
-	[{lt:[{w:"requīrere, requīrō, requīsīvī, requīsītum"}],de:[{w:"verlangen, erfordern, aufsuchen"}],typ:"Verb"}],
-	[{lt:[{w:"ideō"}],de:[{w:"deshalb, deswegen"}],typ:"Adverb"}],
-	[{lt:[{w:"lēgātus -ī", genus:"m"}],de:[{w:"der Abgesandte"}],typ:"Substantiv"}],
-	[{lt:[{w:"Graecia, -ae", genus:"f"}],de:[{w:"Griechenland"}],typ:"Substantiv"}], //??nomen
-	[{lt:[{w:"prūdentia, -ae", genus:"f"}],de:[{w:"die Klugheit"}],typ:"Substantiv"}],
-	[{lt:[{w:"iam"}],de:[{w:"schon, bereits"}],typ:"Adverb"}],
-	[{lt:[{w:"cīvitās, -ātis", genus:"f"}],de:[{w:"der Bürger, das Bürgertum"}],typ:"Substantiv"}],
-	[{lt:[{w:"ratus, -a, -um"}],de:[{w:"gültig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"dēlēre, dēleō, dēlēvī, dēlētum"}],de:[{w:"zerstören, vernichten"}],typ:"Verb"}],
-	[{lt:[{w:"crēdere, crēdō, crēdidī, crēditum"}],de:[{w:"glauben, anvertrauen"}],typ:"Verb"}],	
-	[{lt:[{w:"revertere, reverto, revertī, reversum"}],de:[{w:"zurückkehren, umkehren"}],typ:"Verb"}], //re-verto <vertī (vortī), versum (vorsum), revertere>, re-vertor <vertī, Perf. revertī> (nicht klass. reversus sum; Part, Perf [auch klass. ] reversus)
+	{ltW:"postquam", ltCom:"mit Ind. Per.", mit:"Ind. Per.",deW:"nachdem",typ:"Konjunktion"}, // auf Deutsch mit Plusquamperfekt
+	{ltW:"rēx, rēgis", genus:"m",deW:"der König",typ:"Substantiv"},
+	{ltW:"lēx, lēgis", genus:"f",deW:"das Gesetz",typ:"Substantiv"},
+	{ltW:"ēnūntiāre, -ō",deW:"aussagen, aussprechen",typ:"Verb"},
+	{ltW:"plēbs, plēbis", genus:"f",deW:"die Plebs, das Bauernvolk, der Pöbel",typ:"Substantiv"},
+	{ltW:"indīgnātus, -a, -um",deW:"empört",typ:"Adjektiv"},
+	{ltW:"cēdere, cēdō, cessī, cessum",deW:"weichen, abtreten, hinausgehen",typ:"Verb"},
+	{ltW:"scrībere, scrībō, scrīpsī, scrīptum",deW:"schreiben",typ:"Verb"},
+	{ltW:"tōtus, -a, -um",deW:"ganz, gesamt",typ:"Adjektiv"},
+	{ltW:"poscere, poscō, poposcī, -",deW:"fordern, verlangen",typ:"Verb"},
+	{ltW:"requīrere, requīrō, requīsīvī, requīsītum",deW:"verlangen, erfordern, aufsuchen",typ:"Verb"},
+	{ltW:"ideō",deW:"deshalb, deswegen",typ:"Adverb"},
+	{ltW:"lēgātus -ī", genus:"m",deW:"der Abgesandte",typ:"Substantiv"},
+	{ltW:"Graecia, -ae", genus:"f",deW:"Griechenland",typ:"Substantiv"}, //??nomen
+	{ltW:"prūdentia, -ae", genus:"f",deW:"die Klugheit",typ:"Substantiv"},
+	{ltW:"iam",deW:"schon, bereits",typ:"Adverb"},
+	{ltW:"cīvitās, -ātis", genus:"f",deW:"der Bürger, das Bürgertum",typ:"Substantiv"},
+	{ltW:"ratus, -a, -um",deW:"gültig",typ:"Adjektiv"},
+	{ltW:"dēlēre, dēleō, dēlēvī, dēlētum",deW:"zerstören, vernichten",typ:"Verb"},
+	{ltW:"crēdere, crēdō, crēdidī, crēditum",deW:"glauben, anvertrauen",typ:"Verb"},	
+	{ltW:"revertere, reverto, revertī, reversum",deW:"zurückkehren, umkehren",typ:"Verb"} //re-verto <vertī (vortī), versum (vorsum), revertere>, re-vertor <vertī, Perf. revertī> (nicht klass. reversus sum; Part, Perf [auch klass. ] reversus)
   ]; 
    var wortliste11 = [  // Lektion 24b
-	[{lt:[{w:"nōndum"}],de:[{w:"noch nicht"}],typ:"Adverb"}],
-	[{lt:[{w:"fortasse"}],de:[{w:"vielleicht"}],typ:"Adverb"}],
-	[{lt:[{w:"sine", mit:"Abl"}],de:[{w:"ohne"}],typ:"Präposition"}],
-	[{lt:[{w:"intellegere, intellegō, intellēxī, intellēctum"}],de:[{w:"erkennen, verstehen, einsehen"}],typ:"Verb"}],
-	[{lt:[{w:"dum"}],de:[{w:"während"}],typ:"Konjunktion"}],
-	[{lt:[{w:"petere, petō, petīvī, petītum",mit:"Akk."}],de:[{w:"aufsuchen, angreifen, verlangen, bitten"}],typ:"Verb"}],//petō <petere, petīvī (petiī), petītum> (m. Akk), (auch synk. Perf.-Formen: petīsse (m) = petīvisse(m), petīstī = petīvistī u. Ä.)
-	[{lt:[{w:"vacāre, -ō", mit:"Abl"}],de:[{w:"frei sein (von etw.), (etw.) nicht haben"}],typ:"Verb"}],
-	[{lt:[{w:"occīdere, occīdō , occīdī, occīsum"}],de:[{w:"töten, niederschlagen"}],typ:"Verb"}],
-	[{lt:[{w:"tamen"}],de:[{w:"dennoch, doch, trotzdem"}],typ:"Partikel"}], //??wortart
-	[{lt:[{w:"dubitāre, -ō"}],de:[{w:"zögern, zweifeln"}],typ:"Verb"}],
-	[{lt:[{w:"observāre, -ō"}],de:[{w:"beobachten, einhalten"}],typ:"Verb"}],
-	[{lt:[{w:"tandem"}],de:[{w:"endlich, schließlich"}],typ:"Adverb"}],	
-	[{lt:[{w:"malus, -a, -um"}],de:[{w:"schlecht, schlimm, böse"}],typ:"Adjektiv"}],
-	[{lt:[{w:"hīc"}],de:[{w:"hier"}],typ:"Adverb"}],
-	[{lt:[{w:"locus, -ī", genus:"m",hint:"Plural: siehe locī, -orum und loca, -orum", nursingular:"1"}],de:[{w:"der Ort, der Platz, die Stelle"}],typ:"Substantiv"}],
-	[{lt:[{w:"locī, -orum", genus:"m"}],de:[{w:"Stellen (in Büchern)"}],typ:"Substantiv"}],
-	[{lt:[{w:"loca, -orum", genus:"n"}],de:[{w:"Orte, Gegenden"}],typ:"Substantiv"}],  
-	[{lt:[{w:"cavēre, caveō, cāvī, cautum"}],de:[{w:"sich in Acht nehmen, sich hüten (vor)"}],typ:"Verb"}],
-	[{lt:[{w:"neque enim"}],de:[{w:"denn nicht"}],typ:"Phrase"}],
-	[{lt:[{w:"vulnerāre, -ō"}],de:[{w:"verwunden"}],typ:"Verb"}],	
-	[{lt:[{w:"dē", mit:"Abl"}],de:[{w:"von, von...herab, über"}],typ:"Präposition"}],
-	[{lt:[{w:"dēlīberāre, -ō"}],de:[{w:"erwägen, überlegen"}],typ:"Verb"}],	
-	[{lt:[{w:"dēlīberāre, -ō",mit:"Infinitiv"}],de:[{w:"sich entscheiden, beschließen"}],typ:"Verb"}],	//?
+	{ltW:"nōndum",deW:"noch nicht",typ:"Adverb"},
+	{ltW:"fortasse",deW:"vielleicht",typ:"Adverb"},
+	{ltW:"sine", ltCom:"mit Abl.", mit:"Abl",deW:"ohne",typ:"Präposition"},
+	{ltW:"intellegere, intellegō, intellēxī, intellēctum",deW:"erkennen, verstehen, einsehen",typ:"Verb"},
+	{ltW:"dum",deW:"während",typ:"Konjunktion"},
+	{ltW:"petere, petō, petīvī, petītum",ltCom:"mit Akk.", mit:"Akk.",deW:"aufsuchen, angreifen, verlangen, bitten",typ:"Verb"},//petō <petere, petīvī (petiī), petītum> (m. Akk), (auch synk. Perf.-Formen: petīsse (m) = petīvisse(m), petīstī = petīvistī u. Ä.)
+	{ltW:"vacāre, -ō", ltCom:"mit Abl.",mit:"Abl",deW:"frei sein (von etw.), (etw.) nicht haben",typ:"Verb"},
+	{ltW:"occīdere, occīdō , occīdī, occīsum",deW:"töten, niederschlagen",typ:"Verb"},
+	{ltW:"tamen",deW:"dennoch, doch, trotzdem",typ:"Partikel"}, //??wortart
+	{ltW:"dubitāre, -ō",deW:"zögern, zweifeln",typ:"Verb"},
+	{ltW:"observāre, -ō",deW:"beobachten, einhalten",typ:"Verb"},
+	{ltW:"tandem",deW:"endlich, schließlich",typ:"Adverb"},
+	{ltW:"malus, -a, -um",deW:"schlecht, schlimm, böse",typ:"Adjektiv"},
+	{ltW:"hīc",deW:"hier",typ:"Adverb"},
+	{ltW:"locus, -ī", genus:"m",ltCom:["im Singular","Plural: siehe locī, -orum und loca, -orum"], nursingular:"1",deW:"der Ort, der Platz, die Stelle",typ:"Substantiv"},
+	{ltW:"locī, -orum", genus:"m",deW:"Stellen (in Büchern)",typ:"Substantiv"},
+	{ltW:"loca, -orum", genus:"n",deW:"Orte, Gegenden",typ:"Substantiv"},
+	{ltW:"cavēre, caveō, cāvī, cautum",deW:"sich in Acht nehmen, sich hüten (vor)",typ:"Verb"},
+	{ltW:"neque enim",deW:"denn nicht",typ:"Phrase"},
+	{ltW:"vulnerāre, -ō",deW:"verwunden",typ:"Verb"},
+	{ltW:"dē", ltCom:"mit Abl.",mit:"Abl",deW:"von, von...herab, über",typ:"Präposition"},
+	{ltW:"dēlīberāre, -ō",deW:"erwägen, überlegen",typ:"Verb"},
+	{ltW:"dēlīberāre, -ō",ltCom:"mit Infinitiv",mit:"Infinitiv",deW:"sich entscheiden, beschließen",typ:"Verb"}	//?
   ]; 
    var wortliste12 = [  // Lektion 28a
-	[{lt:[{w:"rēs, reī", genus:"f"}],de:[{w:"die Sache, das Ding"}],typ:"Substantiv"}],
-	[{lt:[{w:"pūblicus, -a, -um"}],de:[{w:"öffentlich"}],typ:"Adjektiv"}],
-	[{lt:[{w:"rēs pūblica", genus:"f"}],de:[{w:"der Staat, die Republik	"}],typ:"Substantiv"}],  
-	[{lt:[{w:"mūtāre, -ō"}],de:[{w:"ändern, verändern"}],typ:"Verb"}],
-	[{lt:[{w:"quia"}],de:[{w:"weil"}],typ:"Konjunktion"}],
-	[{lt:[{w:"fidēs, -eī", genus:"f"}],de:[{w:"das Vertrauen, die Treue"}],typ:"Substantiv"}],
-	[{lt:[{w:"cīvis, -is (Gen. Pl. -ium)", genus:" m./f."}],de:[{w:"der Bürger, die Bürgerin"}],typ:"Substantiv"}],
-	[{lt:[{w:"āmittere, āmittō, āmīsī, āmissum"}],de:[{w:"verlieren, weglassen, loslassen"}],typ:"Verb"}],
-	[{lt:[{w:"senātor -ōris", genus:"m"}],de:[{w:"der Senator"}],typ:"Substantiv"}],
-	[{lt:[{w:"tribūnus, -ī", genus:"m"}],de:[{w:"der Tribun"}],typ:"Substantiv"}],
-	[{lt:[{w:"-que", hint:"angehängt"}],de:[{w:"und"}],typ:"Konjunktion"}],
-	[{lt:[{w:"creāre, -ō", mit:"doppeltem Akkusativ"}],de:[{w:"wählen zu"}],typ:"Verb"}],
-	[{lt:[{w:"magistrātus, ūs", genus:"m"}],de:[{w:"das Amt, Beamter"}],typ:"Substantiv"}],
-	[{lt:[{w:"valēre, valeō, valuī, valitūrus"}],de:[{w:"Einfluss haben, gesund/stark sein, gelten"}],typ:"Verb"}],
-	[{lt:[{w:"auctōritās, -ātis", genus:"f"}],de:[{w:"das Ansehen, der Einfluss"}],typ:"Substantiv"}],
-	[{lt:[{w:"spēs, speī", genus:"f"}],de:[{w:"die Hoffnung, die Erwartung"}],typ:"Substantiv"}],
-	[{lt:[{w:"augēre, augeō, auxī, auctum"}],de:[{w:"steigern, vergrößern"}],typ:"Verb"}],
-	[{lt:[{w:"homō, hominis", genus:"m"}],de:[{w:"der Mensch"}],typ:"Substantiv"}],
-	[{lt:[{w:"agere, agō, ēgī, āctum"}],de:[{w:"handeln, behandeln, treiben, betreiben, tun	"}],typ:"Verb"}],
-	[{lt:[{w:"vītam agere"}],de:[{w:"ein Leben führen"}],typ:"Verbalphrase"}],
-	[{lt:[{w:"pāx, pācis", genus:"f"}],de:[{w:"der Friede"}],typ:"Substantiv"}],
-	[{lt:[{w:"imperium, -ī", genus:"n"}],de:[{w:"das Reich"}],typ:"Substantiv"}],
-	[{lt:[{w:"is, ea, id"}],de:[{w:"er, sie, es; dieser, diese, dieses (was vorher genannt wurde); derjenige, diejenige, dasjenige"}],typ:"Demonstrativ- u. Personalpronomen"}],
-	[{lt:[{w:"hic, haec, hoc", genus:"mfn"}],de:[{w:"dieser, diese, dieses (was den Sprecher betrifft)"}],typ:"Demonstrativpronomen"}], //???
-  ]; 
+	{ltW:"rēs, reī", genus:"f",deW:"die Sache, das Ding",typ:"Substantiv"},
+	{ltW:"pūblicus, -a, -um",deW:"öffentlich",typ:"Adjektiv"},
+	{ltW:"rēs pūblica", genus:"f",deW:"der Staat, die Republik	",typ:"Substantiv"},
+	{ltW:"mūtāre, -ō",deW:"ändern, verändern",typ:"Verb"},
+	{ltW:"quia",deW:"weil",typ:"Konjunktion"},
+	{ltW:"fidēs, -eī", genus:"f",deW:"das Vertrauen, die Treue",typ:"Substantiv"},
+	{ltW:"cīvis, -is", ltCom:"Gen. Pl. -ium", genus:" m./f.",deW:"der Bürger, die Bürgerin",typ:"Substantiv"},
+	{ltW:"āmittere, āmittō, āmīsī, āmissum",deW:"verlieren, weglassen, loslassen",typ:"Verb"},
+	{ltW:"senātor -ōris", genus:"m",deW:"der Senator",typ:"Substantiv"},
+	{ltW:"tribūnus, -ī", genus:"m",deW:"der Tribun",typ:"Substantiv"},
+	{ltW:"-que", ltCom:"angehängt",deW:"und",typ:"Konjunktion"},
+	{ltW:"creāre, -ō", ltCom:"mit doppeltem Akkusativ",mit:"doppeltem Akkusativ",deW:"wählen zu",typ:"Verb"},
+	{ltW:"magistrātus, ūs", genus:"m",deW:"das Amt, Beamter",typ:"Substantiv"},
+	{ltW:"valēre, valeō, valuī, valitūrus",deW:"Einfluss haben, gesund/stark sein, gelten",typ:"Verb"},
+	{ltW:"auctōritās, -ātis", genus:"f",deW:"das Ansehen, der Einfluss",typ:"Substantiv"},
+	{ltW:"spēs, speī", genus:"f",deW:"die Hoffnung, die Erwartung",typ:"Substantiv"},
+	{ltW:"augēre, augeō, auxī, auctum",deW:"steigern, vergrößern",typ:"Verb"},
+	{ltW:"homō, hominis", genus:"m",deW:"der Mensch",typ:"Substantiv"},
+	{ltW:"agere, agō, ēgī, āctum",deW:"handeln, behandeln, treiben, betreiben, tun	",typ:"Verb"},
+	{ltW:"vītam agere",deW:"ein Leben führen",typ:"Verbalphrase"},
+	{ltW:"pāx, pācis", genus:"f",deW:"der Friede",typ:"Substantiv"},
+	{ltW:"imperium, -ī", genus:"n",deW:"das Reich",typ:"Substantiv"},
+	{ltW:"is, ea, id",deW:"er, sie, es; dieser, diese, dieses (was vorher genannt wurde); derjenige, diejenige, dasjenige",typ:"Demonstrativ- u. Personalpronomen"},
+	{ltW:"hic, haec, hoc", genus:"mfn",deW:"dieser, diese, dieses (was den Sprecher betrifft)",typ:"Demonstrativpronomen"} //???
+  ];
    var wortliste13 = [  // Lektion 28b
-	[{lt:[{w:"unde"}],de:[{w:"woher"}],typ:"Adverb"}],
-	[{lt:[{w:"īra, -ae", genus:"f"}],de:[{w:"der Zorn"}],typ:"Substantiv"}],  
-	[{lt:[{w:"lībertus, -ī", genus:"m"}],de:[{w:"Freigelassener"}],typ:"Substantiv"}],
-	[{lt:[{w:"mercātor, -ōris", genus:"m"}],de:[{w:"der Kaufmann"}],typ:"Substantiv"}],	
-	[{lt:[{w:"inter", mit:"Akk"}],de:[{w:"zwischen, unter, während"}],typ:"Präposition"}],
-	[{lt:[{w:"fīlius, -ī", genus:"m"}],de:[{w:"der Sohn"}],typ:"Substantiv"}],
-	[{lt:[{w:"fīlia, -ae", genus:"f"}],de:[{w:"die Tochter"}],typ:"Substantiv"}],
-	[{lt:[{w:"honestus, -a, -um"}],de:[{w:"angesehen, ehrenhaft, anständig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"nihil, nīl", genus:"n", hint:"als Nom. und Akk. (Gen., Dat. und Abl. ergänzt durch: nullius rei, nulli rei, nulla re"}],de:[{w:"nichts"}],typ:"Substantiv"}],	//???
-	[{lt:[{w:"tacēre, taceō, tacuī, tacitum"}],de:[{w:"schweigen"}],typ:"Verb"}],
-	[{lt:[{w:"pārēre, pāreō, pāruī, -"}],de:[{w:"gehorchen"}],typ:"Verb"}],//pāreō <pārēre, pāruī, (pāritūrus)
-	[{lt:[{w:"nōn  dēbēre"}],de:[{w:"nicht dürfen"}],typ:"Verbalphrase"}],
-	[{lt:[{w:"vix"}],de:[{w:"kaum"}],typ:"Adverb"}],
-	[{lt:[{w:"tenēre, teneō, tenuī, tentum"}],de:[{w:"halten, festhalten"}],typ:"Verb"}],
-	[{lt:[{w:"familia, -ae", genus:"f"}],de:[{w:"die Familie, die Hausgemeinschaft"}],typ:"Substantiv"}],
-	[{lt:[{w:"reprehendere, reprehendō, reprehendī, reprehensum"}],de:[{w:"tadeln"}],typ:"Verb"}],
-	[{lt:[{w:"sermō, -ōnis", genus:"m"}],de:[{w:"das Gespräch, die Sprache"}],typ:"Substantiv"}],
-	[{lt:[{w:"neque ... neque"}],de:[{w:"weder ... noch"}],typ:"Konjunktion"}],
-	[{lt:[{w:"cūrāre, -ō", mit:"Akk"}],de:[{w:"besorgen, sorgen (für)"}],typ:"Verb"}],
-	[{lt:[{w:"igitur"}],de:[{w:"folglich, daher, also"}],typ:"Konjunktion"}],
-	[{lt:[{w:"hospes, -pitis", genus:"m"}],de:[{w:"der Gast, Fremder"}],typ:"Substantiv"}],
-	[{lt:[{w:"dēsinere, dēsinō, dēsiī, dēsitum"}],de:[{w:"ablassen, aufhören"}],typ:"Verb"}],
-	[{lt:[{w:"diēs, diēī", genus:"m/f"}],de:[{w:"der Tag (m), der Termin (f)"}],typ:"Substantiv"}], //altl. Gen Sg diē diī, Dat diē m
-  ]; 
+	{ltW:"unde",deW:"woher",typ:"Adverb"},
+	{ltW:"īra, -ae", genus:"f",deW:"der Zorn",typ:"Substantiv"},
+	{ltW:"lībertus, -ī", genus:"m",deW:"Freigelassener",typ:"Substantiv"},
+	{ltW:"mercātor, -ōris", genus:"m",deW:"der Kaufmann",typ:"Substantiv"},
+	{ltW:"inter", ltCom:"mit Akk.",mit:"Akk",deW:"zwischen, unter, während",typ:"Präposition"},
+	{ltW:"fīlius, -ī", genus:"m",deW:"der Sohn",typ:"Substantiv"},
+	{ltW:"fīlia, -ae", genus:"f",deW:"die Tochter",typ:"Substantiv"},
+	{ltW:"honestus, -a, -um",deW:"angesehen, ehrenhaft, anständig",typ:"Adjektiv"},
+	{ltW:"nihil, nīl", genus:"n", ltCom:"als Nom. und Akk. (Gen., Dat. und Abl. ergänzt durch: nullius rei, nulli rei, nulla re",deW:"nichts",typ:"Substantiv"}, //???
+	{ltW:"tacēre, taceō, tacuī, tacitum",deW:"schweigen",typ:"Verb"},
+	{ltW:"pārēre, pāreō, pāruī, -",deW:"gehorchen",typ:"Verb"},//pāreō <pārēre, pāruī, (pāritūrus)
+	{ltW:"nōn  dēbēre",deW:"nicht dürfen",typ:"Verbalphrase"},
+	{ltW:"vix",deW:"kaum",typ:"Adverb"},
+	{ltW:"tenēre, teneō, tenuī, tentum",deW:"halten, festhalten",typ:"Verb"},
+	{ltW:"familia, -ae", genus:"f",deW:"die Familie, die Hausgemeinschaft",typ:"Substantiv"},
+	{ltW:"reprehendere, reprehendō, reprehendī, reprehensum",deW:"tadeln",typ:"Verb"},
+	{ltW:"sermō, -ōnis", genus:"m",deW:"das Gespräch, die Sprache",typ:"Substantiv"},
+	{ltW:"neque ... neque",deW:"weder ... noch",typ:"Konjunktion"},
+	{ltW:"cūrāre, -ō", ltCom:"mit Akk.", mit:"Akk",deW:"besorgen, sorgen (für)",typ:"Verb"},
+	{ltW:"igitur",deW:"folglich, daher, also",typ:"Konjunktion"},
+	{ltW:"hospes, -pitis", genus:"m",deW:"der Gast, Fremder",typ:"Substantiv"},
+	{ltW:"dēsinere, dēsinō, dēsiī, dēsitum",deW:"ablassen, aufhören",typ:"Verb"},
+	{ltW:"diēs, diēī", genus:"m/f",deW:"der Tag (m), der Termin (f)",typ:"Substantiv"} //altl. Gen Sg diē diī, Dat diē m
+  ];
    var wortliste14 = [  // Lektion 33a
-	[{lt:[{w:"incolumis, -is, -e"}],de:[{w:"heil, unverletzt"}],typ:"Adjektiv"}],
-	[{lt:[{w:"salūtāre, -ō"}],de:[{w:"grüßen, begrüßen"}],typ:"Verb"}],
-	[{lt:[{w:"diēs fēstus", genus:"m"}],de:[{w:"[das Fest,] der Festtag"}],typ:"Substantivphrase"}], //dies <-ei> m festus
-	[{lt:[{w:"celebrāre, -ō"}],de:[{w:"feiern"}],typ:"Verb"}],
-	[{lt:[{w:"hōra, -ae", genus:"f"}],de:[{w:"die Stunde"}],typ:"Substantiv"}],
-	[{lt:[{w:"frūctus, -ūs", genus:"m"}],de:[{w:"der Ertrag, die Frucht"}],typ:"Substantiv"}],
-	[{lt:[{w:"apportāre, -ō"}],de:[{w:"herbeitragen, -bringen, -schaffen"}],typ:"Verb"}],
-	[{lt:[{w:"edere, edō, ēdī, ēsum"}],de:[{w:"essen"}],typ:"Verb"}],
-	[{lt:[{w:"animus, -ī", genus:"m"}],de:[{w:"die Seele, der Mut, der Geist, die Gesinnung"}],typ:"Substantiv"}],
-	[{lt:[{w:"bonō animō esse"}],de:[{w:"guten Mutes sein, gut gelaunt sein"}],typ:"Verbalphrase"}],
-	[{lt:[{w:"lūctus, -ūs", genus:"m"}],de:[{w:"die Trauer"}],typ:"Substantiv"}],
-	[{lt:[{w:"exercitus, -ūs", genus:"m"}],de:[{w:"das Heer"}],typ:"Substantiv"}],
-	[{lt:[{w:"imprīmīs"}],de:[{w:"besonders"}],typ:"Adverb"}],
-	[{lt:[{w:"vertere, vertō, vertī, versum"}],de:[{w:"wenden, drehen"}],typ:"Verb"}],
-	[{lt:[{w:"tribuere, tribuō, tribuī, tribūtum"}],de:[{w:"zuteilen, zuweisen"}],typ:"Verb"}],
-	[{lt:[{w:"mulier, -eris", genus:"f"}],de:[{w:"die Frau"}],typ:"Substantiv"}],
-	[{lt:[{w:"trīstis, -is, -e"}],de:[{w:"traurig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"mors, mortis", genus:"f"}],de:[{w:"der Tod"}],typ:"Substantiv"}],
-	[{lt:[{w:"omnis, -is, -e"}],de:[{w:"alle, jeder"}],typ:"???"}], //adj?
-	[{lt:[{w:"quod"}],de:[{w:"da, weil"}],typ:"Konjunktion"}],		// kann auch was anderes sein	
-	[{lt:[{w:"praesidium, -ī", genus:"n"}],de:[{w:"der Schutz, die Hilfe"}],typ:"Substantiv"}],
-	[{lt:[{w:"relinquere, relinquō, relīquī, relictum"}],de:[{w:"zurücklassen, aufgeben, verlassen"}],typ:"Verb"}],
-	[{lt:[{w:"ūsus, -ūs", genus:"m"}],de:[{w:"der Nutzen, der Gebrauch, der Bedarf"}],typ:"Substantiv"}], 
-	[{lt:[{w:"inops, inopis"}],de:[{w:"hilflos, arm"}],typ:"Adjektiv"}],
-	[{lt:[{w:"gravis, -is, -e"}],de:[{w:"schwer"}],typ:"Adjektiv"}], //. gravis <e> is, e+adj statt is,is, e!? 
-	[{lt:[{w:"imperium, -ī", genus:"n"}],de:[{w:"das Reich"}],typ:"Substantiv"}], 
-	[{lt:[{w:"facere, faciō, fēcī, factum"}],de:[{w:"tun, machen, erledigen"}],typ:"Verb"}],
-	[{lt:[{w:"vendere, vendō, vendidī, venditum"}],de:[{w:"verkaufen"}],typ:"Verb"}],
+	{ltW:"incolumis, -is, -e",deW:"heil, unverletzt",typ:"Adjektiv"},
+	{ltW:"salūtāre, -ō",deW:"grüßen, begrüßen",typ:"Verb"},
+	{ltW:"diēs fēstus", genus:"m",deW:"[das Fest,] der Festtag",typ:"Substantivphrase"}, //dies <-ei> m festus
+	{ltW:"celebrāre, -ō",deW:"feiern",typ:"Verb"},
+	{ltW:"hōra, -ae", genus:"f",deW:"die Stunde",typ:"Substantiv"},
+	{ltW:"frūctus, -ūs", genus:"m",deW:"der Ertrag, die Frucht",typ:"Substantiv"},
+	{ltW:"apportāre, -ō",deW:"herbeitragen, -bringen, -schaffen",typ:"Verb"},
+	{ltW:"edere, edō, ēdī, ēsum",deW:"essen",typ:"Verb"},
+	{ltW:"animus, -ī", genus:"m",deW:"die Seele, der Mut, der Geist, die Gesinnung",typ:"Substantiv"},
+	{ltW:"bonō animō esse",deW:"guten Mutes sein, gut gelaunt sein",typ:"Verbalphrase"},
+	{ltW:"lūctus, -ūs", genus:"m",deW:"die Trauer",typ:"Substantiv"},
+	{ltW:"exercitus, -ūs", genus:"m",deW:"das Heer",typ:"Substantiv"},
+	{ltW:"imprīmīs",deW:"besonders",typ:"Adverb"},
+	{ltW:"vertere, vertō, vertī, versum",deW:"wenden, drehen",typ:"Verb"},
+	{ltW:"tribuere, tribuō, tribuī, tribūtum",deW:"zuteilen, zuweisen",typ:"Verb"},
+	{ltW:"mulier, -eris", genus:"f",deW:"die Frau",typ:"Substantiv"},
+	{ltW:"trīstis, -is, -e",deW:"traurig",typ:"Adjektiv"},
+	{ltW:"mors, mortis", genus:"f",deW:"der Tod",typ:"Substantiv"},
+	{ltW:"omnis, -is, -e",deW:"alle, jeder",typ:"???"}, //adj?
+	{ltW:"quod",deW:"da, weil",typ:"Konjunktion"}, // kann auch was anderes sein	
+	{ltW:"praesidium, -ī", genus:"n",deW:"der Schutz, die Hilfe",typ:"Substantiv"},
+	{ltW:"relinquere, relinquō, relīquī, relictum",deW:"zurücklassen, aufgeben, verlassen",typ:"Verb"},
+	{ltW:"ūsus, -ūs", genus:"m",deW:"der Nutzen, der Gebrauch, der Bedarf",typ:"Substantiv"},
+	{ltW:"inops, inopis",deW:"hilflos, arm",typ:"Adjektiv"},
+	{ltW:"gravis, -is, -e",deW:"schwer",typ:"Adjektiv"}, //. gravis <e> is, e+adj statt is,is, e!? 
+	{ltW:"imperium, -ī", genus:"n",deW:"das Reich",typ:"Substantiv"},
+	{ltW:"facere, faciō, fēcī, factum",deW:"tun, machen, erledigen",typ:"Verb"},
+	{ltW:"vendere, vendō, vendidī, venditum",deW:"verkaufen",typ:"Verb"}
   ]; 
-   var wortliste15 = [  // Lektion 33b
-	[{lt:[{w:"per", mit:"Akk"}],de:[{w:"durch...hindurch, durch, über...hin"}],typ:"Präposition"}],
-	[{lt:[{w:"ambulāre, -ō"}],de:[{w:"spazieren gehen"}],typ:"Verb"}],
-	[{lt:[{w:"ubīque"}],de:[{w:"überall"}],typ:"Adverb"}],
-	[{lt:[{w:"quot"}],de:[{w:"wie viele"}],typ:"Interrogativadverb"}],// (adjektivisch, selten subst)
-	[{lt:[{w:"quantus, -a, -um"}],de:[{w:"wie groß, wie viel"}],typ:"Adjektiv"}], 
-	[{lt:[{w:"tot"}],de:[{w:"so viele"}],typ:"Zahlwort"}], //??
-	[{lt:[{w:"bibliothēca, -ae", genus:"f"}],de:[{w:"die Bibliothek"}],typ:"Substantiv"}],
-	[{lt:[{w:"legere, legō1, lēgī, lēctum"}],de:[{w:"lesen, sammeln"}],typ:"Verb"}],
-	[{lt:[{w:"celer, celeris, celere"}],de:[{w:"schnell, rasch"}],typ:"Adjektiv"}],
-	[{lt:[{w:"ācer, ācris, ācre"}],de:[{w:"scharf, heftig, spitz"}],typ:"Adjektiv"}],
-	[{lt:[{w:"satis"}],de:[{w:"genug"}],typ:"Adverb"}],
-	[{lt:[{w:"genū, -ūs", genus:"n"}],de:[{w:"das Knie"}],typ:"Substantiv"}], // Dat. Sing. auch -ui ???
-	[{lt:[{w:"dare, dō, dedī, datum"}],de:[{w:"geben"}],typ:"Verb"}],
-	[{lt:[{w:"dēpōnere, dēpōnō, dēposuī, dēpositum"}],de:[{w:"ablegen, niederlegen, aufgeben"}],typ:"Verb"}],
-	[{lt:[{w:"aqua, -ae", genus:"f"}],de:[{w:"das Wasser"}],typ:"Substantiv"}],
-	[{lt:[{w:"spoliāre, -ō"}],de:[{w:"rauben, wegnehmen, plündern"}],typ:"Verb"}],
-	[{lt:[{w:"nōn  iam"}],de:[{w:"nicht mehr"}],typ:"???"}], //?phrase
-	[{lt:[{w:"frūstrā"}],de:[{w:"vergeblich"}],typ:"Adverb"}], // auch irrtümlich //frūstrā, frūstra (altl.)
-	[{lt:[{w:"pārentēs, -tium", genus:"m"}],de:[{w:"die Eltern"}],typ:"Substantiv"}], //Plural
-	[{lt:[{w:"statim"}],de:[{w:"sofort, auf der Stelle"}],typ:"Adverb"}],
-	[{lt:[{w:"invenīre, inveniō, invēnī, inventum"}],de:[{w:"finden, erfinden"}],typ:"Verb"}],
-	[{lt:[{w:"quamquam"}],de:[{w:"obwohl, obgleich"}],typ:"Konjunktion"}],
-	[{lt:[{w:"cornū, -ūs", genus:"n"}],de:[{w:"das Horn"}],typ:"Substantiv"}], // Dat. Sing. auch -ui ???
-	[{lt:[{w:"āra, -ae", genus:"f"}],de:[{w:"der Altar"}],typ:"Substantiv"}],
-	[{lt:[{w:"ipse/ipsa/ipsum",hint:"Gen. ipsius, Dat. ipsi"}],de:[{w:"selbst"}],typ:"???"}], //????
-	[{lt:[{w:"pulcher, -chra, -chrum"}],de:[{w:"schön, hübsch"}],typ:"Adjektiv"}],
-	[{lt:[{w:"honōs, honōris", hint:"bzw. honor, honōris", genus:"m"}],de:[{w:"die Ehre, das Ehrenamt"}],typ:"Substantiv"}],
+   var wortliste15 = [ // Lektion 33b
+	{ltW:"per", ltCom:"mit Akk.", mit:"Akk",deW:"durch...hindurch, durch, über...hin",typ:"Präposition"},
+	{ltW:"ambulāre, -ō",deW:"spazieren gehen",typ:"Verb"},
+	{ltW:"ubīque",deW:"überall",typ:"Adverb"},
+	{ltW:"quot",deW:"wie viele",typ:"Interrogativadverb"},// (adjektivisch, selten subst)
+	{ltW:"quantus, -a, -um",deW:"wie groß, wie viel",typ:"Adjektiv"},
+	{ltW:"tot",deW:"so viele",typ:"Zahlwort"}, //??
+	{ltW:"bibliothēca, -ae", genus:"f",deW:"die Bibliothek",typ:"Substantiv"},
+	{ltW:"legere, legō1, lēgī, lēctum",deW:"lesen, sammeln",typ:"Verb"},
+	{ltW:"celer, celeris, celere",deW:"schnell, rasch",typ:"Adjektiv"},
+	{ltW:"ācer, ācris, ācre",deW:"scharf, heftig, spitz",typ:"Adjektiv"},
+	{ltW:"satis",deW:"genug",typ:"Adverb"},
+	{ltW:"genū, -ūs", genus:"n",deW:"das Knie",typ:"Substantiv"}, // Dat. Sing. auch -ui ???
+	{ltW:"dare, dō, dedī, datum",deW:"geben",typ:"Verb"},
+	{ltW:"dēpōnere, dēpōnō, dēposuī, dēpositum",deW:"ablegen, niederlegen, aufgeben",typ:"Verb"},
+	{ltW:"aqua, -ae", genus:"f",deW:"das Wasser",typ:"Substantiv"},
+	{ltW:"spoliāre, -ō",deW:"rauben, wegnehmen, plündern",typ:"Verb"},
+	{ltW:"nōn  iam",deW:"nicht mehr",typ:"???"}, //?phrase
+	{ltW:"frūstrā",deW:"vergeblich",typ:"Adverb"}, // auch irrtümlich //frūstrā, frūstra (altl.)
+	{ltW:"pārentēs, -tium", genus:"m",deW:"die Eltern",typ:"Substantiv"}, //Plural
+	{ltW:"statim",deW:"sofort, auf der Stelle",typ:"Adverb"},
+	{ltW:"invenīre, inveniō, invēnī, inventum",deW:"finden, erfinden",typ:"Verb"},
+	{ltW:"quamquam",deW:"obwohl, obgleich",typ:"Konjunktion"},
+	{ltW:"cornū, -ūs", genus:"n",deW:"das Horn",typ:"Substantiv"}, // Dat. Sing. auch -ui ???
+	{ltW:"āra, -ae", genus:"f",deW:"der Altar",typ:"Substantiv"},
+	{ltW:"ipse/ipsa/ipsum",ltCom:"Gen. ipsius, Dat. ipsi",deW:"selbst",typ:"???"}, //????
+	{ltW:"pulcher, -chra, -chrum",deW:"schön, hübsch",typ:"Adjektiv"},
+	{ltW:"honōs, honōris", ltCom:"bzw. honor, honōris", genus:"m",deW:"die Ehre, das Ehrenamt",typ:"Substantiv"}
   ];  //  "esse"+Dat+Dat erhält hier die Bedeutung "dienen zu, gereichen zu".
     var wortliste16 = [  // Lektion 35
 // Zahlen
-	[{lt:[{w:"ūnus, -a, -um"}],de:[{w:"einer, ein, eins"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"duo, duae, duo"}],de:[{w:"zwei"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"trēs, trēs, tria"}],de:[{w:"drei"}],typ:"Kardinalzahladjektiv"}], //(Gen trium, Dat u. Abl tribus, Akk trēs u. trīs, nt tria)
-	[{lt:[{w:"quattuor"}],de:[{w:"vier"}],typ:"Kardinalzahladjektiv"}], //ADJ undekl
-	[{lt:[{w:"quīnque1 "}],de:[{w:"fünf"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"sex"}],de:[{w:"sechs"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"septem"}],de:[{w:"sieben"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"octō"}],de:[{w:"acht"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"novem"}],de:[{w:"neun"}],typ:"Kardinalzahladjektiv"}],
-	[{lt:[{w:"decem"}],de:[{w:"zehn"}],typ:"Kardinalzahladjektiv"}],
+	{ltW:"ūnus, -a, -um",deW:"einer, ein, eins",typ:"Kardinalzahladjektiv"},
+	{ltW:"duo, duae, duo",deW:"zwei",typ:"Kardinalzahladjektiv"},
+	{ltW:"trēs, trēs, tria",deW:"drei",typ:"Kardinalzahladjektiv"}, //(Gen trium, Dat u. Abl tribus, Akk trēs u. trīs, nt tria)
+	{ltW:"quattuor",deW:"vier",typ:"Kardinalzahladjektiv"}, //ADJ undekl
+	{ltW:"quīnque1 ",deW:"fünf",typ:"Kardinalzahladjektiv"},
+	{ltW:"sex",deW:"sechs",typ:"Kardinalzahladjektiv"},
+	{ltW:"septem",deW:"sieben",typ:"Kardinalzahladjektiv"},
+	{ltW:"octō",deW:"acht",typ:"Kardinalzahladjektiv"},
+	{ltW:"novem",deW:"neun",typ:"Kardinalzahladjektiv"},
+	{ltW:"decem",deW:"zehn",typ:"Kardinalzahladjektiv"},
 	
-	[{lt:[{w:"prīmus, -a, -um"}],de:[{w:"erste/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"secundus, -a, -um"}],de:[{w:"zweite/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"tertius, -a, -um"}],de:[{w:"dritte/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"quārtus , -a, -um"}],de:[{w:"vierte/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"quīntus , -a, -um"}],de:[{w:"fünfte/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"sextus, -a, -um"}],de:[{w:"sechste/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"septimus, -a, -um"}],de:[{w:"siebente/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"octāvus , -a, -um"}],de:[{w:"achte/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"nōnus, -a, -um"}],de:[{w:"neunte/r/s"}],typ:"Ordinalzahladjektiv"}],
-	[{lt:[{w:"decimus, -a, -um"}],de:[{w:"zehnte/r/s"}],typ:"Ordinalzahladjektiv"}], //decimus, decumus
+	{ltW:"prīmus, -a, -um",deW:"erste/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"secundus, -a, -um",deW:"zweite/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"tertius, -a, -um",deW:"dritte/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"quārtus , -a, -um",deW:"vierte/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"quīntus , -a, -um",deW:"fünfte/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"sextus, -a, -um",deW:"sechste/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"septimus, -a, -um",deW:"siebente/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"octāvus , -a, -um",deW:"achte/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"nōnus, -a, -um",deW:"neunte/r/s",typ:"Ordinalzahladjektiv"},
+	{ltW:"decimus, -a, -um",deW:"zehnte/r/s",typ:"Ordinalzahladjektiv"} //decimus, decumus
   ];  
   var wortliste17 = [  // Lektion 37a
-	[{lt:[{w:"thermae, -ārum", genus:"f"}],de:[{w:"Bäder, die Therme"}],typ:"Substantiv"}], //therma, -ae
-	[{lt:[{w:"occurrere, occurrō, occurrī, occursum"}],de:[{w:"begegnen, entgegenlaufen"}],typ:"Verb"}],
-	[{lt:[{w:"sermonem habēre"}],de:[{w:"ein Gespräch führen"}],typ:"Verbalphrase"}], //sermonem betonungen?
-	[{lt:[{w:"aliquis, aliqua, aliquid"}],de:[{w:"irgendjemand, irgendetwas"}],typ:"Indefinitpronomen"}],
-	[{lt:[{w:"aliquis"}],de:[{w:"irgendjemand"}],typ:"Indefinitpronomen"}],
-	[{lt:[{w:"aliquid"}],de:[{w:"irgendetwas"}],typ:"Indefinitpronomen"}],
-	[{lt:[{w:"fūr, fūris", genus:"m"}],de:[{w:"der Dieb"}],typ:"Substantiv"}],
-	[{lt:[{w:"capere, capiō, cēpī, captum"}],de:[{w:"fassen, greifen, fangen"}],typ:"Verb"}],
-	[{lt:[{w:"negāre, -ō"}],de:[{w:"verneinen, leugnen"}],typ:"Verb"}],
-	[{lt:[{w:"reddere, reddō, reddidī, redditum"}],de:[{w:"wiedergeben, zurückgeben"}],typ:"Verb"}], ///, redidi, reditumßßßßßß????
-	[{lt:[{w:"-ne",hint:"angehängt"}],de:[{w:"?, (Fragesignal)",hinweis:"unübersetzt"}],typ:"Partikel"}], // enklitische Fragepartikel (oft apokopiert zu -n, wobei auch ein davor stehendes s ausfällt: viden = videsne, ain = aisne, vin = visne, satin = satisne) in einfachen Fragen
+	{ltW:"thermae, -ārum", genus:"f",deW:"Bäder, die Therme",typ:"Substantiv"}, //therma, -ae
+	{ltW:"occurrere, occurrō, occurrī, occursum",deW:"begegnen, entgegenlaufen",typ:"Verb"},
+	{ltW:"sermonem habēre",deW:"ein Gespräch führen",typ:"Verbalphrase"}, //sermonem betonungen?
+	{ltW:"aliquis, aliqua, aliquid",deW:"irgendjemand, irgendetwas",typ:"Indefinitpronomen"},
+	{ltW:"aliquis",deW:"irgendjemand",typ:"Indefinitpronomen"},
+	{ltW:"aliquid",deW:"irgendetwas",typ:"Indefinitpronomen"},
+	{ltW:"fūr, fūris", genus:"m",deW:"der Dieb",typ:"Substantiv"},
+	{ltW:"capere, capiō, cēpī, captum",deW:"fassen, greifen, fangen",typ:"Verb"},
+	{ltW:"negāre, -ō",deW:"verneinen, leugnen",typ:"Verb"},
+	{ltW:"reddere, reddō, reddidī, redditum",deW:"wiedergeben, zurückgeben",typ:"Verb"}, ///, redidi, reditumßßßßßß????
+	{ltW:"-ne",ltCom:"angehängt",deW:"?, (Fragesignal)",deCom:"unübersetzt",typ:"Partikel"}, // enklitische Fragepartikel (oft apokopiert zu -n, wobei auch ein davor stehendes s ausfällt: viden = videsne, ain = aisne, vin = visne, satin = satisne) in einfachen Fragen
 	//zweite Hälfte
-	[{lt:[{w:"ōrnāre, -ō"}],de:[{w:"ausstatten, schmücken"}],typ:"Verb"}],
-	[{lt:[{w:"nepōs, -ōtis", genus:"m"}],de:[{w:"der Enkel"}],typ:"Substantiv"}], 
-	[{lt:[{w:"vīta cēdere (cēdō, cessī, cessum)"}],de:[{w:"sterben"}],typ:"Verbalphrase"}],
-	[{lt:[{w:"adulēscēns, -centis",hint:"(Gen.Pl. adulescentium???)", genus:"m"}],de:[{w:"junger Mann"}],typ:"Substantiv"}],
-	[{lt:[{w:"post", mit:"Akk"}],de:[{w:"nach, hinter"}],typ:"Präposition"}],
-	[{lt:[{w:"mors, mortis", genus:"f"}],de:[{w:"der Tod"}],typ:"Substantiv"}],
-	[{lt:[{w:"nōnnūllī, -ae, -a"}],de:[{w:"einige, manche"}],typ:"Adjektiv"}], //????
-	[{lt:[{w:"līber, -era, -erum"}],de:[{w:"frei, unabhängig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"nex, necis", genus:"f"}],de:[{w:"der	Mord, der Tod"}],typ:"Substantiv"}],
-	[{lt:[{w:"parvus, -a, -um"}],de:[{w:"klein, gering"}],typ:"Adjektiv"}],
-	[{lt:[{w:"trānsportāre, -ō"}],de:[{w:"hinüberbringen, hinüberschaffen"}],typ:"Verb"}],
-	[{lt:[{w:"miser, -era, -erum"}],de:[{w:"elend, unglücklich, armselig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"paucī, -ae, -a"}],de:[{w:"wenige"}],typ:"Adjektiv"}],  // plural von paucus
-	[{lt:[{w:"post"}],de:[{w:"später, darauf"}],typ:"Adverb"}], 
-	[{lt:[{w:"venia, -ae", genus:"f"}],de:[{w:"die Verzeihung, die Nachsicht"}],typ:"Substantiv"}],
-	[{lt:[{w:"immō (vērō)"}],de:[{w:"ja sogar, vielmehr, im Gegenteil"}],typ:"Adverb"}], // immo vero verstärkt
-	[{lt:[{w:"vērō"}],de:[{w:"wirklich, tatsächlich; aber"}],typ:"Adverb"}],//wirklich, tatsächlich
-	[{lt:[{w:"tam"}],de:[{w:"so"}],typ:"Adverb"}],
-	[{lt:[{w:"sevērus , -a, -um"}],de:[{w:"ernst, streng"}],typ:"Adjektiv"}],
-	[{lt:[{w:"aliter"}],de:[{w:"anders, sonst"}],typ:"Adverb"}],
-	[{lt:[{w:"nox, noctis",hint:"???Gen.Pl. noctium)", genus:"f"}],de:[{w:"die Nacht"}],typ:"Substantiv"}],
-	[{lt:[{w:"somnus, -ī", genus:"m"}],de:[{w:"der Schlaf"}],typ:"Substantiv"}],
-	[{lt:[{w:"sē somnō dare"}],de:[{w:"sich schlafen legen"}],typ:"Verbalphrase"}],
-	[{lt:[{w:"imāgō, -inis", genus:"f"}],de:[{w:"das Bild, das Abbild"}],typ:"Substantiv"}],
-	[{lt:[{w:"fugere, fugiō, fūgī, fugitum"}],de:[{w:"fliehen, meiden"}],typ:"Verb"}], //fugitūrus ohne PPP(pons, navigium, aber nicht latinum)
-	[{lt:[{w:"hostis, hostis (Gen. Pl. hostium)", genus:"m"}],de:[{w:"der Feind"}],typ:"Substantiv"}],
-	[{lt:[{w:"mūrus, -ī", genus:"m"}],de:[{w:"die Mauer"}],typ:"Substantiv"}],
-	[{lt:[{w:"sacrum, -ī", genus:"n"}],de:[{w:"das Heiligtum, das Opfer"}],typ:"Substantiv"}],
-	[{lt:[{w:"iacere, iaciō, iēcī, iactum"}],de:[{w:"werfen, schleudern"}],typ:"Verb"}],
-	[{lt:[{w:"tēlum, -ī", genus:"n"}],de:[{w:"das Geschoss, die Waffe"}],typ:"Substantiv"}],//(Wurf-)Waffe
-	[{lt:[{w:"virgō, -ginis", genus:"f"}],de:[{w:"das Mädchen, junge Frau"}],typ:"Substantiv"}],
-	[{lt:[{w:"rapere, rapiō, rapuī, raptum"}],de:[{w:"rauben, fortreißen"}],typ:"Verb"}],
-	[{lt:[{w:"senex, senis", genus:"m"}],de:[{w:"Adj: alt; Sub: alter Mann, der Greis"}],typ:"Adjektiv/Substantiv"}],
-	[{lt:[{w:"senex, senis", genus:"m"}],de:[{w:"alt"}],typ:"Adjektiv"}],
-	[{lt:[{w:"senex, senis", genus:"m"}],de:[{w:"alter Mann, der Greis"}],typ:"Substantiv"}],
-	[{lt:[{w:"aspicere, aspiciō, aspexī, aspectum"}],de:[{w:"erblicken, ansehen"}],typ:"Verb"}],
-	[{lt:[{w:"arx, arcis (Gen.Pl arcium)", genus:"f"}],de:[{w:"die Burg"}],typ:"Substantiv"}],
-	[{lt:[{w:"malum, -ī", genus:"n"}],de:[{w:"das Übel, das Leid"}],typ:"Substantiv"}],
-	[{lt:[{w:"verbum, -ī", genus:"n"}],de:[{w:"das Wort"}],typ:"Substantiv"}],
-	[{lt:[{w:"movēre, moveō, mōvī, mōtum"}],de:[{w:"bewegen, erregen, beinflussen"}],typ:"Verb"}],
-	[{lt:[{w:"flamma, -ae", genus:"f"}],de:[{w:"die Flamme"}],typ:"Substantiv"}],
-	[{lt:[{w:"sīgnum, -ī", genus:"n"}],de:[{w:"das Zeichen, das Merkmal"}],typ:"Substantiv"}],
-	[{lt:[{w:"monere"}],de:[{w:"mahnen, auffordern, erinnern, warnen"}],typ:"Verb"}],//moneō <monēre, monuī, monitum
+	{ltW:"ōrnāre, -ō",deW:"ausstatten, schmücken",typ:"Verb"},
+	{ltW:"nepōs, -ōtis", genus:"m",deW:"der Enkel",typ:"Substantiv"},
+	{ltW:"vīta cēdere (cēdō, cessī, cessum)",deW:"sterben",typ:"Verbalphrase"},
+	{ltW:"adulēscēns, -centis",ltCom:"Gen.Pl. adulescentium???", genus:"m",deW:"junger Mann",typ:"Substantiv"},
+	{ltW:"post", ltCom:"mit Akk.",mit:"Akk",deW:"nach, hinter",typ:"Präposition"},
+	{ltW:"mors, mortis", genus:"f",deW:"der Tod",typ:"Substantiv"},
+	{ltW:"nōnnūllī, -ae, -a",deW:"einige, manche",typ:"Adjektiv"}, //????
+	{ltW:"līber, -era, -erum",deW:"frei, unabhängig",typ:"Adjektiv"},
+	{ltW:"nex, necis", genus:"f",deW:"der	Mord, der Tod",typ:"Substantiv"},
+	{ltW:"parvus, -a, -um",deW:"klein, gering",typ:"Adjektiv"},
+	{ltW:"trānsportāre, -ō",deW:"hinüberbringen, hinüberschaffen",typ:"Verb"},
+	{ltW:"miser, -era, -erum",deW:"elend, unglücklich, armselig",typ:"Adjektiv"},
+	{ltW:"paucī, -ae, -a",deW:"wenige",typ:"Adjektiv"}, // plural von paucus
+	{ltW:"post",deW:"später, darauf",typ:"Adverb"},
+	{ltW:"venia, -ae", genus:"f",deW:"die Verzeihung, die Nachsicht",typ:"Substantiv"},
+	{ltW:"immō (vērō)",deW:"ja sogar, vielmehr, im Gegenteil",typ:"Adverb"}, // immo vero verstärkt
+	{ltW:"vērō",deW:"wirklich, tatsächlich; aber",typ:"Adverb"},//wirklich, tatsächlich
+	{ltW:"tam",deW:"so",typ:"Adverb"},
+	{ltW:"sevērus , -a, -um",deW:"ernst, streng",typ:"Adjektiv"},
+	{ltW:"aliter",deW:"anders, sonst",typ:"Adverb"},
+	{ltW:"nox, noctis",ltCom:"???Gen.Pl. noctium", genus:"f",deW:"die Nacht",typ:"Substantiv"},
+	{ltW:"somnus, -ī", genus:"m",deW:"der Schlaf",typ:"Substantiv"},
+	{ltW:"sē somnō dare",deW:"sich schlafen legen",typ:"Verbalphrase"},
+	{ltW:"imāgō, -inis", genus:"f",deW:"das Bild, das Abbild",typ:"Substantiv"},
+	{ltW:"fugere, fugiō, fūgī, fugitum",deW:"fliehen, meiden",typ:"Verb"}, //fugitūrus ohne PPP(pons, navigium, aber nicht latinum)
+	{ltW:"hostis, hostis",ltCom:"Gen. Pl. hostium", genus:"m",deW:"der Feind",typ:"Substantiv"},
+	{ltW:"mūrus, -ī", genus:"m",deW:"die Mauer",typ:"Substantiv"},
+	{ltW:"sacrum, -ī", genus:"n",deW:"das Heiligtum, das Opfer",typ:"Substantiv"},
+	{ltW:"iacere, iaciō, iēcī, iactum",deW:"werfen, schleudern",typ:"Verb"},
+	{ltW:"tēlum, -ī", genus:"n",deW:"das Geschoss, die Waffe",typ:"Substantiv"},//(Wurf-)Waffe
+	{ltW:"virgō, -ginis", genus:"f",deW:"das Mädchen, junge Frau",typ:"Substantiv"},
+	{ltW:"rapere, rapiō, rapuī, raptum",deW:"rauben, fortreißen",typ:"Verb"},
+	{ltW:"senex, senis", genus:"m",deW:"Adj: alt; Sub: alter Mann, der Greis",typ:"Adjektiv/Substantiv"},
+	{ltW:"senex, senis", genus:"m",deW:"alt",typ:"Adjektiv"},
+	{ltW:"senex, senis", genus:"m",deW:"alter Mann, der Greis",typ:"Substantiv"},
+	{ltW:"aspicere, aspiciō, aspexī, aspectum",deW:"erblicken, ansehen",typ:"Verb"},
+	{ltW:"arx, arcis (Gen.Pl arcium)", genus:"f",deW:"die Burg",typ:"Substantiv"},
+	{ltW:"malum, -ī", genus:"n",deW:"das Übel, das Leid",typ:"Substantiv"},
+	{ltW:"verbum, -ī", genus:"n",deW:"das Wort",typ:"Substantiv"},
+	{ltW:"movēre, moveō, mōvī, mōtum",deW:"bewegen, erregen, beinflussen",typ:"Verb"},
+	{ltW:"flamma, -ae", genus:"f",deW:"die Flamme",typ:"Substantiv"},
+	{ltW:"sīgnum, -ī", genus:"n",deW:"das Zeichen, das Merkmal",typ:"Substantiv"},
+	{ltW:"monere",deW:"mahnen, auffordern, erinnern, warnen",typ:"Verb"}//moneō <monēre, monuī, monitum
   ]; 
     var wortliste18 = [  // extra wörter
-	[{lt:[{w:"ūtilis, -is, -e"}],de:[{w:"nützlich"}],typ:"Adjektiv"}],//is,e
-	[{lt:[{w:"ingēns, ingentis"}],de:[{w:"ungeheuer, gewaltig"}],typ:"Adjektiv"}],
-	[{lt:[{w:"dīves, dīvitis"}],de:[{w:"reich, fruchtbar"}],typ:"Adjektiv"}],
-	[{lt:[{w:"mōs, mōris", genus:"m"}],de:[{w:"die Sitte, die Gewohnheit, der Brauch"}],typ:"Substantiv"}],
-	[{lt:[{w:"sōl,sōlis", genus:"m"}],de:[{w:"die Sonne"}],typ:"Substantiv"}],
-	[{lt:[{w:"aetās, -ātis", genus:"f"}],de:[{w:"das Lebensalter, das Zeitalter"}],typ:"Substantiv"}],
-	[{lt:[{w:"lūx, lūcis", genus:"f"}],de:[{w:"das Licht"}],typ:"Substantiv"}],
-	[{lt:[{w:"sīdus, -eris", genus:"n"}],de:[{w:"das Sternbild, das Gestirn"}],typ:"Substantiv"}],//-deris
-	[{lt:[{w:"carmen, -minis", genus:"n"}],de:[{w:"das Lied, das Gedicht, der Zauberspruch"}],typ:"Substantiv"}],
-	[{lt:[{w:"nāvis, -is", genus:"f"}],de:[{w:"das Schiff"}],typ:"Substantiv"}],
-	[{lt:[{w:"terra, -ae", genus:"f"}],de:[{w:"die Erde, das Land"}],typ:"Substantiv"}],
-	[{lt:[{w:"manus, -ūs", genus:"f"}],de:[{w:"die Hand"}],typ:"Substantiv"}],
-	[{lt:[{w:"domus, -ūs", genus:"f"}],de:[{w:"das Haus"}],typ:"Substantiv"}],
-
+	{ltW:"ūtilis, -is, -e",deW:"nützlich",typ:"Adjektiv"},//is,e
+	{ltW:"ingēns, ingentis",deW:"ungeheuer, gewaltig",typ:"Adjektiv"},
+	{ltW:"dīves, dīvitis",deW:"reich, fruchtbar",typ:"Adjektiv"},
+	{ltW:"mōs, mōris", genus:"m",deW:"die Sitte, die Gewohnheit, der Brauch",typ:"Substantiv"},
+	{ltW:"sōl,sōlis", genus:"m",deW:"die Sonne",typ:"Substantiv"},
+	{ltW:"aetās, -ātis", genus:"f",deW:"das Lebensalter, das Zeitalter",typ:"Substantiv"},
+	{ltW:"lūx, lūcis", genus:"f",deW:"das Licht",typ:"Substantiv"},
+	{ltW:"sīdus, -eris", genus:"n",deW:"das Sternbild, das Gestirn",typ:"Substantiv"},//-deris
+	{ltW:"carmen, -minis", genus:"n",deW:"das Lied, das Gedicht, der Zauberspruch",typ:"Substantiv"},
+	{ltW:"nāvis, -is", genus:"f",deW:"das Schiff",typ:"Substantiv"},
+	{ltW:"terra, -ae", genus:"f",deW:"die Erde, das Land",typ:"Substantiv"},
+	{ltW:"manus, -ūs", genus:"f",deW:"die Hand",typ:"Substantiv"},
+	{ltW:"domus, -ūs", genus:"f",deW:"das Haus",typ:"Substantiv"}
   ];
-  
-  var wortliste=wortliste1;
-
-  <!-- function formatArticle(s) { -->
-  <!-- var tag="artikel"; -->
-  <!-- s=s.replace(/der |die |das /gi, function (x) { -->
-		<!-- return "<"+tag+">"+x+" </"+tag+">"; -->
-	<!-- }); -->
-  <!-- return s; -->
-  <!-- } -->
   function formatArticle(s) {
   var tag="artikel";
   s=s.replace(/(, |; |^|\/)(der |die |das )/gi, "$1<"+tag+">$2</"+tag+">");
   return s;
   }
-  <!-- function formatREArtikel(s) { -->
-  <!-- //var regExp = /(?:der )?Marktplatz, (?:das )?Forum/; -->
-  <!-- //var tag="artikel"; -->
-  <!-- s=s.replace(/der|die|das/gi, function (x) { -->
-		<!-- return "("+x+")"; -->
-	<!-- }); -->
-  <!-- return s; -->
-  <!-- } -->
   function formatREArtikel(s) {
   s=s.replace(/(, |; |^|\/)(der |die |das )/gi, "$1($2)");
   return s;
@@ -641,8 +757,7 @@
 		return s.substr(0,i) + shortVok(s[i]) + s.substr(i+1);
 	}
 }
-  
-   var DeklinationstabNomen = [
+var DeklinationstabNomen = [
   {
     Deklination: "Deklination",
 	head: { Kasus: "Kasus", Singular: "Singular", Plural: "Plural"},
@@ -664,9 +779,11 @@
   ];
 
    var Vokabellistetab = [
-	[{id:"colLektionen", text:"Lektionen", type:2},   {id:"colVokabeln", text:"Vokabeln", text:"Vokabeln", type:2}],
-	[{id:"Lektionen", type:4},       {id:"Vokabeln", text:"", type:4}],
-	[{id:"Abfragen", text:"", colspan:2, type:5}],
+	[{id:"colLektionen", text:"Lektionen", type:2},   {id:"colVokabeln", text:"Vokabeln", type:2}],/**/
+	[{id:"Lektionen", text:'<div id="lektion-select"><input id="inVokabelnLektionen" type="hidden" name="events" value=""><ul class="select" id="ulVokabelnLektionen"  tabindex="1", inputid="inVokabelnLektionen">  <li>keine Einträge</li>  </ul></div>', type:1},       {id:"Vokabeln", text:'<div id="voc-select"><input id="inVokabelnVokabeln" type="hidden" name="events" value=""><ul class="select" id="ulVokabelnVokabeln"  tabindex="1", inputid="inVokabelnVokabeln">  <li>keine Einträge</li>  </ul></div>', type:1}],
+     [{id:"VListSummary", text:'<div id="voc-msg"></div>', colspan:2}],
+/*	[{id:"Abfragen", text:'<div id="msg">dddd</div>', colspan:2, type:5}], */
+	[{id:"Abfragen", text:'<div class="button-pane"><input type="button" value="Abfragen" name="inVokabelnAbfragen" id="inVokabelnAbfragen"><input type="reset" id="register-form-reset" value="Neue Vokabel"/><input type="button" id="edit-voc-button" value="Vokabel bearbeiten"/><input type="button" class="destructive" id="delete-button" value="Vokabel entfernen" /></div><span  id="msg"></span><input type="button" id="test-button" value="Test"/>', colspan:2}],
   ];
 
   var Abfragetab = [
@@ -677,20 +794,19 @@
   ];
   
    var Infotab = [
-	[{id:"rowWort", text:"Wort", type:2},   {id:"lat", text:""}],
-	[{id:"rowWortart", text:"Wortart", type:2},     {id:"type", text:""}],
+	[{id:"rowWort", text:"Vokabel", type:2},   {id:"latX", text:"<div id='outwArtlat'></div><div id='outwArttype'></div>"}],
+	//[{id:"rowWortart", text:"Wortart", type:2},     {id:"type", text:""}],
 	[{id:"rowGenus", text:"Genus", type:2},     {id:"genus", text:""}],
 	[{id:"rowBedeutung", text:"Bedeutung", type:2},       {id:"de", text:""}],
   ];
   
     var Ergebnistab = [
-	[{id:"colAufAnhieb", text:"Gekonnt", type:2},   {id:"colGewusst", text:"Unsicher", type:2},   {id:"colNGewusst", text:"Nicht gewusst", type:2}],
-	[{id:"AufAnhieb", text:'<select id="rAntwortenSelect" size="10" onchange="selDeklinieren(this)"></select>'},     {id:"Gewusst", text:'<select id="lAntwortenSelect" size="10" onchange="selDeklinieren(this)"></select>'},     {id:"NGewusst", text:'<select id="fAntwortenSelect" size="10" onchange="selDeklinieren(this)"></select>'}],
+/*	[{id:"colAufAnhieb", text:"Gekonnt", type:2},   {id:"colGewusst", text:"Unsicher", type:2},   {id:"colNGewusst", text:"Nicht gewusst", type:2}],
+	[{id:"AufAnhieb", text:'<select id="rAntwortenSelect" size="10" onchange="selDeklinieren(this)"></select>'},     {id:"Gewusst", text:'<select id="lAntwortenSelect" size="10" onchange="selDeklinieren(this)"></select>'},     {id:"NGewusst", text:'<select id="fAntwortenSelect" size="10" onchange="selDeklinieren(this)"></select>'}], */
+		[{id:"Resultate", text:'<div id="voc-result"><input id="inAntwortenResult" type="hidden" name="events" value=""><ul class="select" id="ulAntwortenResult"  tabindex="1", inputid="inAntwortenResult">  <li class="op_header">Gekonnt</li> <div id="inAntwortenResultAufAnhieb"></div><li class="empty"></li><li class="op_header">Unsicher</li> <div id="inAntwortenResultUnsicher"></div><li class="empty"></li><li class="op_header">Nicht gewusst</li> <div id="inAntwortenResultNichtGewusst"></div>  </ul></div>', colspan:3}],
 		[{id:"Lektionen", text:"", colspan:3, type:5}],
-  ]; //
-  /// 
-  
-    function sModus(s) {
+  ];
+ function sModus(s) {
       return '<ul><li class="has-sub"><a onclick="void(0)" onmouseover="opMenu(this)">'+s+'</a>					<ul><li><a onclick="selModus(this,\'Aktiv\')">Aktiv</a></li><li><a onclick="selModus(this,\'Passiv\')">Passiv</a></li></ul></li></ul>';
     }  
     function sGenus(s) {
@@ -703,8 +819,7 @@ function sPartizip(s) {
 function sTempus(s) {
   return '<ul><li class="has-sub"><a onclick="void(0)" onmouseover="opMenu(this)">'+s+'</a>					<ul><li><a onclick="selTempus(this,\'Präsens\')">Präsens</a></li><li><a onclick="selTempus(this,\'Imperfekt\')">Imperfekt</a></li><li><a onclick="selTempus(this,\'Perfekt\')">Perfekt</a></li><li><a onclick="selTempus(this,\'Plusquamperfekt\')">Plusquamperfekt</a></li><li><a onclick="selTempus(this,\'Futur I\')">Futur I</a></li><li><a onclick="selTempus(this,\'Futur II\')">Futur II</a></li></ul></li></ul>'
 }
-
-    var Konjugationstab = [
+var Konjugationstab = [
 	[{id:"empty1", text:"", colspan:1, type:2},
    {id:"empty2", text:"", colspan:1, type:2},
    {id:"empty3", text:"", colspan:1, type:2},     
@@ -1114,7 +1229,7 @@ var kInfinitive = [{Praesens:[{Aktiv:"WORTSTAMM"+"e"+tagSuffix("re"),	Passiv:"WO
 					Perfekt:[{Aktiv:"PERFEKT"+tagSuffix("isse"),		Passiv:"PPP"+"us, -a, um esse"}],
 					Futur:[{Aktiv:"PFA"+"urus, -a, um esse",			Passiv:"PPP"+"um īrī"}]
 }];
-var esseInfinitive = [{Praesens:[{Aktiv:"ess"+"e",	Passiv:"-"}],
+var esseInfinitive = [{Praesens:[{Aktiv:"ess"+"e",	Passiv:"-"}], 
 					Perfekt:[{Aktiv:"PERFEKT"+tagSuffix("isse"),		Passiv:"-"}],
 					Futur:[{Aktiv:"fut"+"ūrus, -a, um esse / fore",			Passiv:"-"}]
 }];
@@ -1998,628 +2113,6 @@ var iDeklinationAdj2eMF = {
 		Akkusativ: "-"+tagSuffix("ēs"),
 		Ablativ: "-"+tagSuffix("ibus") }
  };
-
-					  
-  <!-- var aDeklination = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("a"), -->
-    <!-- Genitiv: tagSuffix("ae"), -->
-    <!-- Dativ: tagSuffix("ae"), -->
-    <!-- Akkusativ: tagSuffix("am"), -->
-    <!-- Ablativ: tagSuffix("ā")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ae"), -->
-    <!-- Genitiv: tagSuffix("ārum"), -->
-    <!-- Dativ: tagSuffix("īs"), -->
-    <!-- Akkusativ: tagSuffix("ās"), -->
-    <!-- Ablativ: tagSuffix("īs")} -->
-  <!-- } -->
-  <!-- ]; -->
-  <!-- var aDeklination2 = JSON.parse(JSON.stringify(aDeklination)); -->
-  <!-- aDeklination2[1]["Kasus"]["Dativ"] = tagSuffix("abus"); -->
-  <!-- aDeklination2[1]["Kasus"]["Ablativ"] = tagSuffix("abus"); -->
-  
-  <!-- var oDeklinationM = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("us"), -->
-    <!-- Genitiv: tagSuffix("ī"), -->
-    <!-- Dativ: tagSuffix("ō"), -->
-    <!-- Akkusativ: tagSuffix("um"), -->
-    <!-- Ablativ: tagSuffix("ō")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ī"), -->
-    <!-- Genitiv: tagSuffix("ōrum"), -->
-    <!-- Dativ: tagSuffix("īs"), -->
-    <!-- Akkusativ: tagSuffix("ōs"), -->
-    <!-- Ablativ: tagSuffix("īs")} -->
-  <!-- } -->
-  <!-- ];  -->
-   <!-- var oDeklinationM_er_ri = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "er", -->
-    <!-- Genitiv: "r"+tagSuffix("ī"), -->
-    <!-- Dativ: "r"+tagSuffix("ō"), -->
-    <!-- Akkusativ: "r"+tagSuffix("um"), -->
-    <!-- Ablativ: "r"+tagSuffix("ō")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: "r"+tagSuffix("ī"), -->
-    <!-- Genitiv: "r"+tagSuffix("ōrum"), -->
-    <!-- Dativ: "r"+tagSuffix("īs"), -->
-    <!-- Akkusativ: "r"+tagSuffix("ōs"), -->
-    <!-- Ablativ: "r"+tagSuffix("īs")} -->
-  <!-- } -->
-  <!-- ];  -->
-   <!-- var oDeklinationM_er_eri = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "er", -->
-    <!-- Genitiv: "er"+tagSuffix("ī"), -->
-    <!-- Dativ: "er"+tagSuffix("ō"), -->
-    <!-- Akkusativ: "er"+tagSuffix("um"), -->
-    <!-- Ablativ: "er"+tagSuffix("ō")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: "er"+tagSuffix("ī"), -->
-    <!-- Genitiv: "er"+tagSuffix("ōrum"), -->
-    <!-- Dativ: "er"+tagSuffix("īs"), -->
-    <!-- Akkusativ: "er"+tagSuffix("ōs"), -->
-    <!-- Ablativ: "er"+tagSuffix("īs")} -->
-  <!-- } -->
-  <!-- ];  -->
-  <!-- var oDeklinationN = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("um"), -->
-    <!-- Genitiv: tagSuffix("ī"), -->
-    <!-- Dativ: tagSuffix("ō"), -->
-    <!-- Akkusativ: tagSuffix("um"), -->
-    <!-- Ablativ: tagSuffix("ō")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("a"), -->
-    <!-- Genitiv: tagSuffix("ōrum"), -->
-    <!-- Dativ: tagSuffix("īs"), -->
-    <!-- Akkusativ: tagSuffix("a"), -->
-    <!-- Ablativ: tagSuffix("īs")} -->
-  <!-- } -->
-  <!-- ];  -->
-   <!-- var oDeklinationN_us = JSON.parse(JSON.stringify(oDeklinationN)); -->
-  <!-- oDeklinationN_us[0]["Kasus"]["Nominativ"] = "us"; -->
-  <!-- oDeklinationN_us[0]["Kasus"]["Akkusativ"] = "ī"; -->
-  
-  <!-- var eDeklination = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ēs"), -->
-    <!-- Genitiv: tagSuffix("eī"), -->
-    <!-- Dativ: tagSuffix("eī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("ē")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ēs"), -->
-    <!-- Genitiv: tagSuffix("ērum"), -->
-    <!-- Dativ: tagSuffix("ēbus"), -->
-    <!-- Akkusativ: tagSuffix("ēs"), -->
-    <!-- Ablativ: tagSuffix("ēbus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-  <!-- var uDeklination = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("us"), -->
-    <!-- Genitiv: tagSuffix("ūs"), -->
-    <!-- Dativ: tagSuffix("uī"), -->
-    <!-- Akkusativ: tagSuffix("um"), -->
-    <!-- Ablativ: tagSuffix("ū")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ūs"), -->
-    <!-- Genitiv: tagSuffix("uum"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ūs"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-     <!-- var uDeklination_domus = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("us"), -->
-    <!-- Genitiv: tagSuffix("ūs"), -->
-    <!-- Dativ: tagSuffix("uī"), -->
-    <!-- Akkusativ: tagSuffix("um"), -->
-    <!-- Ablativ: tagSuffix("ō")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ūs"), -->
-    <!-- Genitiv: tagSuffix("ōrum"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ōs"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-     <!-- var uDeklination_cornu = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ū"), -->
-    <!-- Genitiv: tagSuffix("ūs"), -->
-    <!-- Dativ: tagSuffix("ū"), -->
-    <!-- Akkusativ: tagSuffix("ū"), -->
-    <!-- Ablativ: tagSuffix("ū")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ua"), -->
-    <!-- Genitiv: tagSuffix("uum"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ua"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-
-  <!-- var iDeklinationMF = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("is"), -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("im"), -->
-    <!-- Ablativ: tagSuffix("ī")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ēs"), -->
-    <!-- Genitiv: tagSuffix("ium"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ēs"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-   <!-- var iDeklinationN = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "", -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: "", -->
-    <!-- Ablativ: tagSuffix("ī")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ia"), -->
-    <!-- Genitiv: tagSuffix("ium"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ia"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ]; -->
-
-		
-  <!-- var iDeklinationN_e_is = JSON.parse(JSON.stringify(iDeklinationN)); -->
-  <!-- iDeklinationN_e_is[0]["Kasus"]["Nominativ"] = "e" -->
-  <!-- iDeklinationN_e_is[0]["Kasus"]["Akkusativ"] = "e"  -->
-  
-
-  <!-- var iDeklinationAdj3eM = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "", -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("ī")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ēs"), -->
-    <!-- Genitiv: tagSuffix("ium"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ēs"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  <!-- var iDeklinationAdj3eF = JSON.parse(JSON.stringify(iDeklinationAdj3eM)); -->
-  <!-- iDeklinationAdj3eF[0]["Kasus"]["Nominativ"] = tagSuffix("is") -->
-  <!-- var iDeklinationAdj3eN = JSON.parse(JSON.stringify(iDeklinationAdj3eM)); -->
-  <!-- iDeklinationAdj3eN[0]["Kasus"]["Nominativ"] = tagSuffix("e") -->
-  <!-- iDeklinationAdj3eN[0]["Kasus"]["Akkusativ"] = tagSuffix("e")  -->
-  <!-- iDeklinationAdj3eN[1]["Kasus"]["Nominativ"] = tagSuffix("ia")  -->
-  <!-- iDeklinationAdj3eN[1]["Kasus"]["Akkusativ"] = tagSuffix("ia")  -->
-  
-  <!-- var iDeklinationAdj2eMF = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("is"), -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("ī")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ēs"), -->
-    <!-- Genitiv: tagSuffix("ium"), -->
-    <!-- Dativ: tagSuffix("ibus"), -->
-    <!-- Akkusativ: tagSuffix("ēs"), -->
-    <!-- Ablativ: tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  <!-- var iDeklinationAdj2eN = JSON.parse(JSON.stringify(iDeklinationAdj2eMF)); -->
-  <!-- iDeklinationAdj2eN[0]["Kasus"]["Nominativ"] = tagSuffix("e") -->
-  <!-- iDeklinationAdj2eN[0]["Kasus"]["Akkusativ"] = tagSuffix("e")  -->
-  <!-- iDeklinationAdj2eN[1]["Kasus"]["Nominativ"] = tagSuffix("ia")  -->
-  <!-- iDeklinationAdj2eN[1]["Kasus"]["Akkusativ"] = tagSuffix("ia")  -->
-  
-  <!-- var iDeklinationAdj1eMF = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "ns", -->
-    <!-- Genitiv: "nt"+tagSuffix("is"), -->
-    <!-- Dativ: "nt"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "nt"+tagSuffix("em"), -->
-    <!-- Ablativ: "nt"+tagSuffix("ī")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: "nt"+tagSuffix("ēs"), -->
-    <!-- Genitiv: "nt"+tagSuffix("ium"), -->
-    <!-- Dativ: "nt"+tagSuffix("ibus"), -->
-    <!-- Akkusativ: "nt"+tagSuffix("ēs"), -->
-    <!-- Ablativ: "nt"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  <!-- var iDeklinationAdj1eN = JSON.parse(JSON.stringify(iDeklinationAdj1eMF)); -->
-  <!-- iDeklinationAdj1eN[0]["Kasus"]["Akkusativ"] = "ns"  -->
-  <!-- iDeklinationAdj1eN[1]["Kasus"]["Nominativ"] = "nt"+tagSuffix("ia")  -->
-  <!-- iDeklinationAdj1eN[1]["Kasus"]["Akkusativ"] = "nt"+tagSuffix("ia")  -->
-    <!-- var iDeklinationAdj1eMF2 = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "x", -->
-    <!-- Genitiv: "c"+tagSuffix("is"), -->
-    <!-- Dativ: "c"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "c"+tagSuffix("em"), -->
-    <!-- Ablativ: "c"+tagSuffix("ī")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: "c"+tagSuffix("ēs"), -->
-    <!-- Genitiv: "c"+tagSuffix("ium"), -->
-    <!-- Dativ: "c"+tagSuffix("ibus"), -->
-    <!-- Akkusativ: "c"+tagSuffix("ēs"), -->
-    <!-- Ablativ: "c"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  <!-- var iDeklinationAdj1eN2 = JSON.parse(JSON.stringify(iDeklinationAdj1eMF)); -->
-  <!-- iDeklinationAdj1eN2[0]["Kasus"]["Akkusativ"] = "x"  -->
-  <!-- iDeklinationAdj1eN2[1]["Kasus"]["Nominativ"] = "c"+tagSuffix("ia")  -->
-  <!-- iDeklinationAdj1eN2[1]["Kasus"]["Akkusativ"] = "c"+tagSuffix("ia")  -->
-  
-
-  <!-- var kDeklinationAdjMF = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "*", -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("e")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ: tagSuffix("ēs"), -->
-    <!-- Genitiv: tagSuffix("um"), -->
-    <!-- Dativ: "c"+tagSuffix("ibus"), -->
-    <!-- Akkusativ: "c"+tagSuffix("ēs"), -->
-    <!-- Ablativ: "c"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  <!-- var kDeklinationAdjN = JSON.parse(JSON.stringify(kDeklinationAdjMF)); -->
-  <!-- kDeklinationAdjN[0]["Kasus"]["Akkusativ"] = "*"  -->
-  <!-- kDeklinationAdjN[1]["Kasus"]["Nominativ"] = tagSuffix("a")  -->
-  <!-- kDeklinationAdjN[1]["Kasus"]["Akkusativ"] = tagSuffix("a")  -->
-  
-   <!-- var kDeklinationM = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "", -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("e")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  tagSuffix("ēs"), -->
-    <!-- Genitiv:  tagSuffix("um"), -->
-    <!-- Dativ:  tagSuffix("ibus"), -->
-    <!-- Akkusativ:  tagSuffix("ēs"), -->
-    <!-- Ablativ:  tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-
-    <!-- var kDeklinationM_es_itis = [  // brauchen wir wirklich getrennte Sätze für jede Endung??? verinheitlichung? (eques equitis) -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "es", -->
-    <!-- Genitiv: "it"+tagSuffix("is"), -->
-    <!-- Dativ: "it"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "it"+tagSuffix("em"), -->
-    <!-- Ablativ: "it"+tagSuffix("e")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "it"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "it"+tagSuffix("um"), -->
-    <!-- Dativ:  "it"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "it"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "it"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-   <!-- var kDeklinationM_er_ris = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "er", -->
-    <!-- Genitiv: "r"+tagSuffix("is"), -->
-    <!-- Dativ: "r"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "r"+tagSuffix("em"), -->
-    <!-- Ablativ: "r"+tagSuffix("e")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "r"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "r"+tagSuffix("um"), -->
-    <!-- Dativ:  "r"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "r"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "r"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-
-   <!-- var kDeklinationM_os_oris = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "os", -->
-    <!-- Genitiv: "or"+tagSuffix("is"), -->
-    <!-- Dativ: "or"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "or"+tagSuffix("em"), -->
-    <!-- Ablativ: "or"+tagSuffix("e")} -->
-  <!-- }, -->
-  <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "or"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "or"+tagSuffix("um"), -->
-    <!-- Dativ:  "or"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "or"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "or"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-   <!-- var kDeklinationF_o_onis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "ō", -->
-    <!-- Genitiv: "on"+tagSuffix("is"), -->
-    <!-- Dativ: "on"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "on"+tagSuffix("em"), -->
-    <!-- Ablativ: "on"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "in"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "on"+tagSuffix("um"), -->
-    <!-- Dativ:  "on"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "on"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "on"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  
-   <!-- var kDeklinationF_o_inis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "ō", -->
-    <!-- Genitiv: "in"+tagSuffix("is"), -->
-    <!-- Dativ: "in"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "in"+tagSuffix("em"), -->
-    <!-- Ablativ: "in"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "in"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "in"+tagSuffix("um"), -->
-    <!-- Dativ:  "in"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "in"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "in"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  
-    <!-- var kDeklinationF_as_atis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "ās", -->
-    <!-- Genitiv: "āt"+tagSuffix("is"), -->
-    <!-- Dativ: "āt"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "āt"+tagSuffix("em"), -->
-    <!-- Ablativ: "āt"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "āt"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "āt"+tagSuffix("um"), -->
-    <!-- Dativ:  "āt"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "āt"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "āt"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];    -->
-  
-    <!-- var kDeklinationF_us_utis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "us", -->
-    <!-- Genitiv: "ut"+tagSuffix("is"), -->
-    <!-- Dativ: "ut"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "ut"+tagSuffix("em"), -->
-    <!-- Ablativ: "ut"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "ut"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "ut"+tagSuffix("um"), -->
-    <!-- Dativ:  "ut"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "ut"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "ut"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  
-     <!-- var kDeklinationF_x_cis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "x", -->
-    <!-- Genitiv: "c"+tagSuffix("is"), -->
-    <!-- Dativ: "c"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "c"+tagSuffix("em"), -->
-    <!-- Ablativ: "c"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "c"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "c"+tagSuffix("um"), -->
-    <!-- Dativ:  "c"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "c"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "c"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  
-     <!-- var kDeklinationF_x_gis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "x", -->
-    <!-- Genitiv: "g"+tagSuffix("is"), -->
-    <!-- Dativ: "g"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "g"+tagSuffix("em"), -->
-    <!-- Ablativ: "g"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "g"+tagSuffix("ēs"), -->
-    <!-- Genitiv:  "g"+tagSuffix("um"), -->
-    <!-- Dativ:  "g"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "g"+tagSuffix("ēs"), -->
-    <!-- Ablativ:  "g"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-      <!-- var kDeklinationN_us_eris = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "us", -->
-    <!-- Genitiv: "er"+tagSuffix("is"), -->
-    <!-- Dativ: "er"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "us", -->
-    <!-- Ablativ: "er"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "er"+tagSuffix("a"), -->
-    <!-- Genitiv:  "er"+tagSuffix("um"), -->
-    <!-- Dativ:  "er"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "er"+tagSuffix("a"), -->
-    <!-- Ablativ:  "er"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  
-      <!-- var kDeklinationN_us_oris = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "us", -->
-    <!-- Genitiv: "or"+tagSuffix("is"), -->
-    <!-- Dativ: "or"+tagSuffix("ī"), -->
-    <!-- Akkusativ: "us", -->
-    <!-- Ablativ: "or"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "or"+tagSuffix("a"), -->
-    <!-- Genitiv:  "or"+tagSuffix("um"), -->
-    <!-- Dativ:  "or"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "or"+tagSuffix("a"), -->
-    <!-- Ablativ:  "or"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];  -->
-  
-      <!-- var kDeklinationN_men_minis = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: "men", -->
-    <!-- Genitiv: "min"+tagSuffix("is"), -->
-    <!-- Dativ: "min"+tagSuffix("e"), //wirklich? -->
-    <!-- Akkusativ: "men", -->
-    <!-- Ablativ: "min"+tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  "min"+tagSuffix("a"), -->
-    <!-- Genitiv:  "min"+tagSuffix("um"), -->
-    <!-- Dativ:  "min"+tagSuffix("ibus"), -->
-    <!-- Akkusativ:  "min"+tagSuffix("a"), -->
-    <!-- Ablativ:  "min"+tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-
-  <!-- var gDeklination = [ -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("is"), -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  tagSuffix("ēs"), -->
-    <!-- Genitiv:  tagSuffix("ium"), -->
-    <!-- Dativ:  tagSuffix("ibus"), -->
-    <!-- Akkusativ:  tagSuffix("ēs"), -->
-    <!-- Ablativ:  tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];   -->
-  <!-- var gDeklination_s_is = [ // urbs urbis -->
-  <!-- { -->
-    <!-- Numerus: "Singular", -->
-    <!-- Kasus: {Nominativ: tagSuffix("s"), -->
-    <!-- Genitiv: tagSuffix("is"), -->
-    <!-- Dativ: tagSuffix("ī"), -->
-    <!-- Akkusativ: tagSuffix("em"), -->
-    <!-- Ablativ: tagSuffix("e")} -->
-  <!-- }, -->
-   <!-- { -->
-    <!-- Numerus: "Plural", -->
-    <!-- Kasus: {Nominativ:  tagSuffix("ēs"), -->
-    <!-- Genitiv:  tagSuffix("ium"), -->
-    <!-- Dativ:  tagSuffix("ibus"), -->
-    <!-- Akkusativ:  tagSuffix("ēs"), -->
-    <!-- Ablativ:  tagSuffix("ibus")} -->
-  <!-- } -->
-  <!-- ];    -->
   
  var aoAdjDeklination = { M: oDeklinationM, F: aDeklination, N: oDeklinationN} //magnus, -a, -um
  var iDeklinationAdj2 = { M: iDeklinationAdj2eMF, F: iDeklinationAdj2eMF, N: iDeklinationAdj2eN}
@@ -3369,8 +2862,7 @@ var ireereGerundiumDeklination = [{
 		Akkusativ: "PRAESENS"+tagSuffix("endum"),
 		Ablativ: "PRAESENS"+tagSuffix("endo"),
 }]
-  
-  var Deklinationen = [
+var Deklinationen = [
  	// verbkonjugationen
 	{
 	  id: "esse",
@@ -3669,7 +3161,6 @@ var ireereGerundiumDeklination = [{
 					input.text = Inhalt;
 					input.name = "in"+tbtype+m[j]["id"];
 					input.setAttribute("id", "in"+tbtype+m[j]["id"]);
-					input.setAttribute("autocapitalize", "none");
 					input.onkeypress = function(event){
 						if (event.keyCode == 13 || event.which == 13){
 							pruefenweiter();
@@ -3689,32 +3180,63 @@ var ireereGerundiumDeklination = [{
 					select.name = "in"+tbtype+m[j]["id"];
 					select.setAttribute("id", "in"+tbtype+m[j]["id"]);
 			} else if (m[j]["type"]!=null & m[j]["type"]==5) { //[{id:"Abfragen", text:"", colspan:3, type:5}],
-				var select = document.createElement("button");
+				//var select = document.createElement("button");
+				//Zelle.appendChild(select);
+				//	select.innerHTML = m[j]["id"];
+				//	select.name = "in"+tbtype+m[j]["id"];
+				//	select.setAttribute("id", "in"+tbtype+m[j]["id"]);
+        // input statt button
+        var select = document.createElement("input");
 				Zelle.appendChild(select);
-					select.innerHTML = m[j]["id"];
+          select.setAttribute("type","button");
+					select.setAttribute("value", m[j]["id"]);
 					select.name = "in"+tbtype+m[j]["id"];
 					select.setAttribute("id", "in"+tbtype+m[j]["id"]);
 			} else if (m[j]["type"]!=null & m[j]["type"]==6) {
-				var select = document.createElement("button");
+				//var select = document.createElement("button");
+				//Zelle.appendChild(select);
+				//select.innerHTML = "Hinweis";
+				//select.name = "bhinweis"+tbtype+m[j]["id"];
+				//select.setAttribute("id", "bhinweis"+tbtype+m[j]["id"]);
+        var select = document.createElement("input");
 				Zelle.appendChild(select);
-				select.innerHTML = "Hinweis";
-				select.name = "bhinweis"+tbtype+m[j]["id"];
-				select.setAttribute("id", "bhinweis"+tbtype+m[j]["id"]);
-				var select = document.createElement("button");
+          select.setAttribute("type","button");
+					select.setAttribute("value", "Hinweis");
+					select.name = "bhinweis"+tbtype+m[j]["id"];
+					select.setAttribute("id", "bhinweis"+tbtype+m[j]["id"]);
+				//var select = document.createElement("button");
+				//Zelle.appendChild(select);
+				//select.innerHTML = "Lösung";
+				//select.name = "bloesung"+tbtype+m[j]["id"];
+				//select.setAttribute("id", "bloesung"+tbtype+m[j]["id"]);
+                var select = document.createElement("input");
 				Zelle.appendChild(select);
-				select.innerHTML = "Lösung";
-				select.name = "bloesung"+tbtype+m[j]["id"];
-				select.setAttribute("id", "bloesung"+tbtype+m[j]["id"]);
-				var select = document.createElement("button");
+          select.setAttribute("type","button");
+					select.setAttribute("value", "Lösung");
+					select.name = "bloesung"+tbtype+m[j]["id"];
+					select.setAttribute("id", "bloesung"+tbtype+m[j]["id"]);
+				//var select = document.createElement("button");
+				//Zelle.appendChild(select);
+				//select.innerHTML = "Prüfen";
+				//select.name = "bpruefen"+tbtype+m[j]["id"];
+				//select.setAttribute("id", "bpruefen"+tbtype+m[j]["id"]);
+        var select = document.createElement("input");
 				Zelle.appendChild(select);
-				select.innerHTML = "Prüfen";
-				select.name = "bpruefen"+tbtype+m[j]["id"];
-				select.setAttribute("id", "bpruefen"+tbtype+m[j]["id"]);
-				var select = document.createElement("button");
+          select.setAttribute("type","button");
+					select.setAttribute("value", "Prüfen");
+					select.name = "bpruefen"+tbtype+m[j]["id"];
+					select.setAttribute("id", "bpruefen"+tbtype+m[j]["id"]);
+				//var select = document.createElement("button");
+				//Zelle.appendChild(select);
+				//select.innerHTML = "Beenden";
+				//select.name = "bbeenden"+tbtype+m[j]["id"];
+				//select.setAttribute("id", "bbeenden"+tbtype+m[j]["id"]);
+        var select = document.createElement("input");
 				Zelle.appendChild(select);
-				select.innerHTML = "Beenden";
-				select.name = "bbeenden"+tbtype+m[j]["id"];
-				select.setAttribute("id", "bbeenden"+tbtype+m[j]["id"]);
+          select.setAttribute("type","button");
+					select.setAttribute("value", "Beenden");
+					select.name = "bbeenden"+tbtype+m[j]["id"];
+					select.setAttribute("id", "bbeenden"+tbtype+m[j]["id"]);
 			} else if (m[j]["rot"]!=null & m[j]["rot"]==1) {
 				//Zelle.setAttribute("id", "nout"+tbtype+m[j]["id"]);
 				var div = document.createElement('div');
@@ -3757,25 +3279,9 @@ var ireereGerundiumDeklination = [{
 		createTab(Imperativtab,"ausgabe","tabImperative","none","Verb","");
 		createTab(Infinitivtab,"ausgabe","tabInfinitive","none","Verb","");
 		createTab(Partiziptab,"ausgabe","tabPartizipien","none","Verb","");
-		lWorliste(wortliste);
-		initLektionSelect();
-		var sel = document.getElementById("inVokabelnAbfragen");
-		sel.setAttribute("onclick",  "abfragestart()");
-		var sel = document.getElementById("bhinweisabfragebuttons");
-		sel.setAttribute("onclick",  "newhint()");
-		var sel = document.getElementById("bpruefenabfragebuttons");
-		sel.setAttribute("onclick",  "pruefenweiter()");
-		var sel = document.getElementById("bloesungabfragebuttons");
-		sel.setAttribute("onclick",  "zeigeloesung()");
-		var sel = document.getElementById("bbeendenabfragebuttons");
-		sel.setAttribute("onclick",  "abfragebeenden()");
-		var sel = document.getElementById("inwArtLektionen");
-		sel.setAttribute("onclick",  "lektionenauswahl()");
-		
-		
+    
 	}
-	
-	function splitValue(value, index) {
+function splitValue(value, index) {
 		if (index<0) index = value.length+index;
 		return [value.substring(0, index) ,value.substring(index)];
 	}
@@ -3856,7 +3362,9 @@ var ireereGerundiumDeklination = [{
 		else return false;
 	}
 	
-	function getWortstamm(s, w) {
+	function getWortstamm(w) {
+    console.log("getWortstamm");
+    var s=w.ltW;
 		var spl = s.split(/,\s*/); // /[ ,]+/ //s.replace(","," ")
 		var spl1 = "";
 		var spl2 = "";
@@ -3868,7 +3376,10 @@ var ireereGerundiumDeklination = [{
 		if (spl[3]!=null)spl4=spl[3];
 		var stamm1, stamm2, stamm3, praesstamm, perfstamm, ppp, pfa, pstamm, bindung, unpers;
 		var unpPass = false;
-		if (w.lt[0].pass=="3.Sg"|w.lt[0].pass=="3.") unpPass=true;
+    console.log("regexptest");
+    console.log(/kein Passiv([,;]+.*)?$/gm.test('kein Passiv'));
+    //ltCom:"kein Passiv", kein:"Passiv", pass:3.Sg
+		if (w.pass=="3.Sg"|w.pass=="3.") unpPass=true;
 		// a-Konjugation
 		if (unstress(spl1).endsWith("are") & unstress(spl2).endsWith("o")) { 
 			praesstamm = splitValue(spl1,-3)[0]; 
@@ -3897,6 +3408,7 @@ var ireereGerundiumDeklination = [{
 			if ((stamm2=="-" | (praesstamm==stamm2))) 
 				ausgeben(null, "ire", null, praesstamm, perfstamm, ppp,pfa,pstamm,bindung, unpPass); 
 		} else if (unstress(spl1).endsWith("ere") & unstress(spl2).endsWith("eo")) { //monēre, moneō, monuī, monitum
+    //  console.log("e-Deklination");
 			stamm2 = splitValue(spl2,-2)[0];
 			praesstamm = splitValue(spl1,-3)[0]; 
 			if (unstress(spl3).endsWith("i")) {
@@ -3907,6 +3419,8 @@ var ireereGerundiumDeklination = [{
 			pfa = pppobj[1];
 			pstamm=splitValue(spl1,-2)[0];
 			bindung="";
+     // console.log(stamm2)
+     // console.log(praesstamm)
 			if ((stamm2=="-" | (praesstamm==stamm2))) 
 				ausgeben(null, "ere,ui", null, praesstamm, perfstamm, ppp,pfa,pstamm,bindung, unpPass); 
 		} else if (unstress(spl1).endsWith("ere") & unstress(spl2).endsWith("io")) { //capere, capiō, cēpī, captum
@@ -3923,6 +3437,7 @@ var ireereGerundiumDeklination = [{
 			if ((stamm2=="-" | (praesstamm==stamm2))) 
 				ausgeben(null, "ere,gem", null, praesstamm, perfstamm, ppp,pfa,pstamm,bindung, unpPass); 
 		} else if (unstress(spl1).endsWith("ere") & unstress(spl2).endsWith("o")) { //regere, regō, rēxī, rēctum
+      console.log("konsonantische");
 			stamm2 = splitValue(spl2,-1)[0];
 			praesstamm = splitValue(spl1,-3)[0]; 
 			if (unstress(spl3).endsWith("i")) {
@@ -3933,10 +3448,12 @@ var ireereGerundiumDeklination = [{
 			pfa = pppobj[1];
 			pstamm=splitValue(spl2,-1)[0]; //=stamm2
 			bindung="ē";
+     // console.log(stamm2)
+     // console.log(praesstamm)
 			if ((stamm2=="-" | (praesstamm==stamm2))) 
 				ausgeben(null, "ere,kon", null, praesstamm, perfstamm, ppp,pfa,pstamm,bindung, unpPass); 
 		} else if ((unstress(spl1)=="esse" & unstress(spl2)=="sum")|s=="esse") {
-				ausgeben(null, "esse", null,"sum","fu","-","fu"); //ausgeben(s2[0], s2[1], spl1); //return [stamm1, "are"];
+				ausgeben(null, "esse", null,"sum","fu","-","fut"); //ausgeben(s2[0], s2[1], spl1); //return [stamm1, "are"];
 				
 		} else if (unstress(spl1)=="posse" & unstress(spl2)=="possum") {
 				ausgeben(null, "posse", null, "pussum", "potu", "","","posse",""); //ausgeben(s2[0], s2[1], spl1); //return [stamm1, "are"];
@@ -3978,7 +3495,7 @@ var ireereGerundiumDeklination = [{
 			stamm1 = splitValue(spl1,-2)[0]; 
 			stamm2 = splitValue(spl2,-3)[0];
 			//if (testeStamm(stamm1, stamm2)) {
-				w.lt[0]["nurplural"]="1";
+				w.["nurplural"]="1"; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				deklinationAusgeben(stamm1, "s,is", w);
 				return;
 			//	}
@@ -4190,7 +3707,7 @@ var ireereGerundiumDeklination = [{
 		} else if (spl1.endsWith("i") & unstress(spl2).endsWith("orum")) { //Plural, o-Konjugation
 			stamm1 = splitValue(spl1,-1)[0];
 			stamm2 = splitValue(spl2,-4)[0];
-			w.lt[0]["nurplural"]="1";
+			w.["nurplural"]="1"; //!!!!!!
 			if (testeStamm(stamm1, stamm2)) {
 				deklinationAusgeben(stamm1, "us,i", w); //return [stamm1, "us,i"];
 				return;
@@ -4265,39 +3782,28 @@ var ireereGerundiumDeklination = [{
 		//return [null,null];    
 	}
 	
-	function initLektionSelect(){
-		var sel = document.getElementById("inVokabelnLektionen");
-		sel.setAttribute("onchange",  "lWorliste(window[this.value])");
-		//sel.options.length = 0;
-		for (var i=1;i<19;i++) {			
-			var opt = document.createElement('option');
-			opt.appendChild( document.createTextNode("Wortliste "+i) );
-			opt.value = "wortliste"+i; 
-			sel.appendChild(opt); 
-		}
-		sel.selectedIndex = 0;
-		lWorliste(wortliste1);
-	}
-	
-	function lWorliste(wliste) {
+	function lWorliste(wliste) { console.log("lWorlliste --wann passiert das - nie??")
 		wortliste=wliste; //global var used in abfrage
 		var sel = document.getElementById("inVokabelnVokabeln"); //document.getElementById("mySelect");
-		sel.setAttribute("onchange",  "selDeklinieren(this)");
-		sel.options.length = 0;
+		//sel.setAttribute("onchange",  "selDeklinieren(this)");
+    sel.onchange = selDeklinieren(this);
+    var selul = document.getElementById("ulVokabelnVokabeln"); 
+    selul.innerHTML="";
+    console.log(wliste);
+    console.log("länge");
+    console.log(length(wliste));
+	//	sel.options.length = 0;
 		for (var id in wliste) {			
-			var opt = document.createElement('option');
-			opt.appendChild( document.createTextNode(wliste[id][0]["lt"][0]["w"]) );
+			var opt = document.createElement('li'); //var opt = document.createElement('option');
+		//	opt.appendChild( document.createTextNode(wliste[id][0]["lt"][0]["w"]+' - '+wliste[id][0]["de"][0]["w"]) );
+      opt.innerHTML='<div><table cellspacing="0"><tr><td width="50%" valign="top">'+wliste[id]["ltW"]+'</td><td width="15px"></td><td width="50%" valign="top">'+wliste[id]["deW"]+'</td></tr></table></div>';
+      opt.setAttribute("latin", wliste[id]["ltW"]);
 			opt.value = id; 
-			sel.appendChild(opt); 
-			//var de, lat;
-			//lat = ""
-			//for (var id in wliste[id][0]) {
-			//
-			//}
+			selul.appendChild(opt);  
 		}
+      //selectClickUpdate();
 	}
-
-	function hideTable(s) {
+function hideTable(s) {
 		var container;
 		container = document.getElementById(s);
 		container.style.display="none";
@@ -4339,26 +3845,27 @@ var ireereGerundiumDeklination = [{
 		} else return "<grundform>"+s.substring(0,s.indexOf(",")+1)+"</grundform>"+s.substring(s.indexOf(",")+1);
 	}
 	
-	function printWortinfo(i, wliste) {
-		if(wliste==null) wliste=wortliste;
+	function printWortinfo(w) {
+    console.log("printWortinfo(wortperm[worti], aworte):"+w)
+//		if(wliste==null) wliste=wortliste;
 		var container = document.getElementById("tabInfo");
-		var mkasus=wliste[i][0].lt[0].mit; 
-		if (mkasus==null) {
-			mkasus="";
-		} else mkasus=" "+mitKasus(mkasus); 
-		var hint=wliste[i][0].lt[0].hint; 
+		//var mkasus=w.ltmit; 
+		//if (mkasus==null) {
+		var	mkasus="";
+		//} else mkasus=" "+mitKasus(mkasus); 
+		var hint=w.ltCom; 
 		if (hint==null) {
 			hint="";
 		} else hint=" "+tagHint(hint); 
 		 
-		var deinfo=wliste[i][0].de[0].hinweis; 
+		var deinfo=w.deCom; 
 		if (deinfo==null) {
 			deinfo="";
 		} else deinfo=" "+tagDeHinweis(deinfo); 
-		container.querySelector("#outwArtlat" ).innerHTML=tagLatin(wortformat(wliste[i][0].lt[0].w))+mkasus+ hint;
-		container.querySelector("#outwArttype" ).innerHTML=tagWArt(wliste[i][0].typ);
-		container.querySelector("#outwArtde" ).innerHTML=tagDeutsch(formatArticle(wliste[i][0].de[0].w))+deinfo;
-		var genus = wliste[i][0].lt[0].genus;
+		container.querySelector("#outwArtlat" ).innerHTML=tagLatin(wortformat(w.ltW))+mkasus+ hint;
+		container.querySelector("#outwArttype" ).innerHTML=tagWArt(w.typ);
+		container.querySelector("#outwArtde" ).innerHTML=tagDeutsch(formatArticle(w.deW))+deinfo;
+		var genus = w.ltG;
 		if (genus==null) {
 			container.querySelector("#outwArtgenus" ).parentNode.style.display="none";
 		} else {
@@ -4425,22 +3932,21 @@ var ireereGerundiumDeklination = [{
 		var hinweis =  hintall(abfrageLoesung(),abfragehinweis);
 		var containerOut = document.getElementById("tabAbfrage"); 
 		containerOut.querySelector("#outabfragehinweis" ).innerHTML=hinweis;	
-				//if (genus==null) {
 		document.getElementById("outabfragerowHinweis").parentNode.style.display="";
-		//} else {
-		//	container.querySelector("#outabfragehinweis" ).innerHTML="";
-		//	container.querySelector("#outabfragerowHinweis" ).parentNode.style.display="";
-		//}
 	}
-	
+  
+
 	var abfragepausiert=false;
 	var tout;
-	var aworte=wortliste1;
+	var aworte=[]; //wortliste1;
 	var worti=0;
 	var wortperm;
 	var fantworten=[];
 	var rantworten=[];
 	var uantworten=[];
+	var fantworten_ind=[];
+	var rantworten_ind=[];
+	var uantworten_ind=[];
 	var abfrageversuch=1;
 	var abfragehinweis=0;
 	var abfragespoiled=false;
@@ -4458,7 +3964,8 @@ var ireereGerundiumDeklination = [{
 		} else {
 			containerOut.querySelector("#inabfrageantwort").style.backgroundColor="coral";
 		}
-		printWortinfo(wortperm[worti], aworte)
+		printWortinfo(aworte[wortperm[worti]]);  //printWortinfo(wortperm[worti], aworte)
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				
 		//showTable("tabInfo");
 		//var container = document.getElementById("tabInfo");
@@ -4470,20 +3977,36 @@ var ireereGerundiumDeklination = [{
 			[array[i], array[j]] = [array[j], array[i]];
 		}
 	}
-	function abfragestart() {
+	function abfragestart() { 
+    console.log("abfragestart");
 		worti=0;
+    ////
+    var voc_list = $('#ulVokabelnVokabeln');
+    //var wortliste = voc_list.children();
+    ////
+    
+    // Vokabeln ausgewählt?
+    if ($('#ulVokabelnVokabeln').children().first().attr("ltw")==undefined) {
+      console.log("keine Vokabeln ausgewählt!");
+       $('#msg').html('<span><strong>Keine Vokabeln ausgewählt!</strong></span>');
+      return;
+    }
+    
 		aworte=[...wortliste];//wortliste;
 		wortperm=[...Array(aworte.length).keys()];
 		shuffleArr(wortperm); //zufällige reihenfolge  
 		hideTables();
 		hideTable("tabVokabelliste");
-		//if (genus==null) {
+    
 		document.getElementById("outabfragerowHinweis").parentNode.style.display="none";
 		document.getElementById("hintabfrageantwort").innerHTML="";
-		//} else {
-		//	container.querySelector("#outabfragehinweis" ).innerHTML="";
-		//	container.querySelector("#outabfragerowHinweis" ).parentNode.style.display="";
-		//}
+    
+    // Resultate löschen
+    document.getElementById("inAntwortenResultAufAnhieb").innerHTML="";
+    document.getElementById("inAntwortenResultUnsicher").innerHTML="";
+    document.getElementById("inAntwortenResultNichtGewusst").innerHTML="";
+    
+
 		showTable("tabAbfrage");
 		abfragehinweis=0;
 		abfrageversuch=1;
@@ -4493,14 +4016,16 @@ var ireereGerundiumDeklination = [{
 		var containerOut = document.getElementById("ausgabe"); 
 		containerOut.querySelector("#inabfrageantwort").value="";
 		
-		var wort = aworte[[wortperm[worti]]][0]; 
+		var wort = aworte[wortperm[worti]]; //aworte[[wortperm[worti]]][0]; 
+    console.log("wort:"+wort);
+    console.log("worti:"+worti);
 		var containerOut = document.getElementById("ausgabe"); 
-		containerOut.querySelector("#outabfragefrage" ).innerHTML=tagLatin(wortformat(wort.lt[0].w))+mitKasus(wort.lt[0].mit)+ tagHint(wort.lt[0].hint);	
+		containerOut.querySelector("#outabfragefrage" ).innerHTML=tagLatin(wortformat(wort.ltW))+mitKasus(wort.ltCom)+ tagHint(wort.deCom);	
 		document.getElementById("inabfrageantwort").focus();	
 		abfragepausiert=false;	
 	}
 	function abfrageLoesung() {
-		return aworte[[wortperm[worti]]][0].de[0].w;
+		return aworte[wortperm[worti]].deW;
 	}
 	function pruefeloesungOne(x,y) {//alert(x+"-"+y);
 		//if (x==y) return true
@@ -4528,7 +4053,8 @@ var ireereGerundiumDeklination = [{
 		// clearTimeout(tout)
 		//abfragen();
 	}
-	function abfragecontinue(){
+	function abfragecontinue(){ 
+    console.log("abfragecontinue");
 		clearTimeout(tout)
 		abfragepausiert=false;
 		document.getElementById("ausgabe").querySelector("#inabfrageantwort").style.backgroundColor="";
@@ -4538,57 +4064,107 @@ var ireereGerundiumDeklination = [{
 		abfragehinweis=0;
 		abfrageversuch=1;
 		abfragespoiled=false;
-		if (worti<wortperm.length) {
+		if (worti<wortperm.length) { console.log("weiterabfragen - worti:" + worti+ "wortperm-length:"+wortperm.length);
 			hideTable("tabInfo");
 			abfragen();
-		} else {
-			hideTable("tabAbfrage")
+		} else { console.log("abfragebeenden");
+			abfragebeenden(); //hideTable("tabAbfrage")
 		}
 	}
 	function pruefen(o) {
 		var containerOut = document.getElementById("ausgabe"); 
 		if	(o==null) var o =containerOut.querySelector("#inabfrageantwort");
 		
-		var wort = aworte[[wortperm[worti]]][0];
+		var wort = aworte[[wortperm[worti]]];
 	    var s = o.value;
-		var w=wort.de[0].w;
+		var w=wort.deW;
 		if (wort.typ=="Substantiv") {
 		  w=formatREArtikel(w);
 		  }
 		 w=formatDots(w);
 		if (pruefeloesungAny(w,s)) {
-			if (abfragehinweis+abfrageversuch<=1) {
-				rantworten.push(wort);
-				var sel = document.getElementById("rAntwortenSelect");
+      /*
+      const index = array.indexOf(5);
+if (index > -1) {
+  array.splice(index, 1);
+}
+      */
+      // checke zuerst den Fall, dass das Wort vorher schon Falsch beantwortet wurde
+      const index = fantworten_ind.indexOf(wortperm[worti]);
+      if (index > -1) {
+        //fantworten_ind.splice(index, 1);
+        fantworten_ind = fantworten_ind.filter(function(item) {
+            return item !== wortperm[worti]
+        })
+      //  uantworten.push(wort);
+				uantworten_ind.push(wortperm[worti]);
+        var li_div = $("#inAntwortenResultUnsicher");
+      } else if (abfragehinweis+abfrageversuch<=1) {
+			//	rantworten.push(wort);
+				rantworten_ind.push(wortperm[worti]);
+        
+        var li_div = $("#inAntwortenResultAufAnhieb");
 			} else {
-				uantworten.push(wort);
-				var sel = document.getElementById("lAntwortenSelect");
+			//	uantworten.push(wort);
+				uantworten_ind.push(wortperm[worti]);
+        
+        var li_div = $("#inAntwortenResultUnsicher");
 			}
 			ergRichtig(true);
 		} else {
 			if (abfrageversuch<3&&abfragespoiled==false) {
+        console.log("abfrageversuch"+abfrageversuch);
 				abfrageversuch+=1;
 				document.getElementById("tabAbfrage").querySelector("#hintabfrageantwort").innerHTML=abfrageversuch+". Versuch";
 			} else {
-			fantworten.push(wort);
-			wortperm.push(wortperm[worti]);
-			var sel = document.getElementById("fAntwortenSelect");
-			showTable("tabInfo");
+        console.log("pruefen: fail")
+		//	fantworten.push(wort);
+			fantworten_ind.push(wortperm[worti]);
+        // Wort nochmal am Ende fragen
+			  wortperm.push(wortperm[worti]);
+        
+        var li_div = $("#inAntwortenResultNichtGewusst");
+			  showTable("tabInfo");
 			}
 			ergRichtig(false);
 			
 		}
-		if (sel!=null) {
+		/*if (sel!=null) {
 		var opt = document.createElement('option');
-		opt.appendChild( document.createTextNode(wort.lt[0].w) );
+		opt.appendChild( document.createTextNode(wort.ltW) );
 		opt.value = wortperm[worti]; 
 		sel.appendChild(opt); 
+		worti +=1;
+		abfragepause();
+		}*/
+    // neue variante mit neuem select
+		if (li_div!=null) { // Bedingung evtl ändern: (abfrageversuch<3+1&&abfragespoiled==false)
+  //    var opt = getVocListItem(wort);
+ //     li_div.append(opt);
 		worti +=1;
 		abfragepause();
 		}
 	}
 	
 	function abfragebeenden() {
+    // Wörter in Ergrbnistab füllen
+    var li_div = $("#inAntwortenResultAufAnhieb");
+    rantworten_ind.forEach(function(i) {
+      var opt = getVocListItem(aworte[[i]]);
+      li_div.append(opt);      
+    });
+    var li_div = $("#inAntwortenResultUnsicher");
+    uantworten_ind.forEach(function(i) {
+      var opt = getVocListItem(aworte[[i]]);
+      li_div.append(opt);      
+    });
+    var li_div = $("#inAntwortenResultNichtGewusst");
+    fantworten_ind.forEach(function(i) {
+      var opt = getVocListItem(aworte[[i]]);
+      li_div.append(opt);      
+    });
+    
+    
 		document.getElementById("tabAbfrage").style.display="none";
 		document.getElementById("tabErgebnis").style.display="";
 	}
@@ -4602,17 +4178,19 @@ var ireereGerundiumDeklination = [{
 	function pruefenweiter() {
 		var containerOut = document.getElementById("tabAbfrage"); 		
 		if (abfragepausiert==true) {
-			containerOut.querySelector("#bpruefenabfragebuttons").textContent="Prüfen";
+			//containerOut.querySelector("#bpruefenabfragebuttons").textContent="Prüfen";
+      containerOut.querySelector("#bpruefenabfragebuttons").value="Prüfen";
 			abfragecontinue();
 		} else {
-			containerOut.querySelector("#bpruefenabfragebuttons").textContent="Weiter";
+			//containerOut.querySelector("#bpruefenabfragebuttons").textContent="Weiter";
+			containerOut.querySelector("#bpruefenabfragebuttons").value="Weiter";
 			pruefen();
 		}
 	}
 	
 	function zeigeloesung() {
 		abfragespoiled=true;
-		document.getElementById("tabAbfrage").querySelector("#bpruefenabfragebuttons").textContent="Weiter";
+		document.getElementById("tabAbfrage").querySelector("#bpruefenabfragebuttons").value="Weiter"; //.textContent="Weiter";
 		document.getElementById("tabAbfrage").querySelector("#hintabfrageantwort").innerHTML=""; 
 		var o={value:""};
 		document.getElementById("bpruefenabfragebuttons").focus();	//inabfrageantwort
@@ -4787,33 +4365,25 @@ var ireereGerundiumDeklination = [{
 						container.querySelector("#out" +"Nom" + numerus.substr(0,4) + kasus.substr(0,3)).innerHTML=tagLatin(stamm+deklination[0].Formen[numerus][kasus]);
 					}
 				}
-				//deklination[0]["Formen"].forEach(function (m, i) { 
-					//for (prop in m["Kasus"]) {
-					//	container.querySelector("#out" +"Nom" + m["Numerus"].substr(0,4) + prop.substr(0,3)).innerHTML=tagLatin(stamm+m["Kasus"][prop]);
-					//}
-				//});
 			}
 		}
 	}
-	
-	
-
-
+  
 	function deklinationAusgeben(stamm, dekID, wort, nominativ) { 
 	var deklination = Deklinationen.filter(item => {
 		return item.id === dekID;
 	});
 	
 	//nur für substantive, nicht für adjektive
-	if (wort["lt"][0]["nursingular"]!=null) if (wort["lt"][0]["nursingular"]=="1")   var formen = patchFlektion(deklination[0]["Formen"],noplurDeklination);
-	if (wort["lt"][0]["nurplural"]!=null) if (wort["lt"][0]["nurplural"]=="1")   var formen = patchFlektion(deklination[0]["Formen"],nosingDeklination);
+	if (wort["nursingular"]!=null) if (wort["nursingular"]=="1")   var formen = patchFlektion(deklination[0]["Formen"],noplurDeklination);
+	if (wort["nurplural"]!=null) if (wort["nurplural"]=="1")   var formen = patchFlektion(deklination[0]["Formen"],nosingDeklination);
 	if (formen==null) var formen=deklination[0]["Formen"];
 	
-	if (wort["lt"][0]["flektion"]!=null) var formen = patchFlektion(deklination[0]["Formen"],wort["lt"][0]["flektion"]);
+	if (wort["flektion"]!=null) var formen = patchFlektion(deklination[0]["Formen"],wort["flektion"]);
 	
 	var deklinationTxt = deklination[0]["Deklination"];
-	if (wort["lt"][0].flektion!=null) if (wort["lt"][0].flektion.name!=null) {
-		var deklinationTxt = wort["lt"][0].flektion.name;
+	if (wort.flektion!=null) if (wort.flektion.name!=null) {
+		var deklinationTxt = wort.flektion.name;
 	} 
 	//wortliste5[11][0].lt[0]["nurplural"]
 	//var formen = patchFlektion(deklination[0]["Formen"],nosingDeklination);
@@ -4895,23 +4465,48 @@ var ireereGerundiumDeklination = [{
 	}
 	
 	function selDeklinieren(el) {
-		var i = el.selectedIndex;
-	//	var s = el.options[i].text;
-	//	var spl = s.split(/[ ,]+/); 
-	//	var spl1 = spl[0];
-		var sel = document.getElementById("inVokabelnLektionen");
-		var wlist = window[sel.options[sel.selectedIndex].value] 
-		
-		document.getElementById("fAntwortenSelect").selectedIndex=-1;
-		document.getElementById("lAntwortenSelect").selectedIndex=-1;
-		document.getElementById("rAntwortenSelect").selectedIndex=-1;
-		el.selectedIndex=i;
+    //console.log(el);
+    //console.log(el.attr('value'));
+		var i = el.attr('value'); //el.selectedIndex;
+    
+    var vokRs = leseVokabel(i, printWortinfo);
+    var nada = leseVokabel(i, getWortstamm);
+    // hole ausgewählten Wortschatz in wlist
+		//var sel = document.getElementById("inVokabelnLektionen");
+		//var wlist = window[sel.options[sel.selectedIndex].value];
+    //
+    //benutze einfach wortliste
+  //  window.wlist=wortliste;
+ //   console.log(wortliste);
+ //   console.log(wortliste.find(x => x.id === i)); 
+    console.log("cp1")
 		
 		hideTables();
 		showTable("tabInfo");
 		//wliste[i][0].lt[0].mit
-	  getWortstamm(el.options[i].text, wlist[i][0]);
-	  printWortinfo(el.options[i].value, wlist)
+//	  getWortstamm(el.options[i].text, wlist[i][0]);
+	//  printWortinfo(el.options[i].value, wlist)
+	}
+
+	function selectVokabel(el) {
+		var i = el.attr("value"); //el.selectedIndex;
+	//	var s = el.options[i].text;
+	//	var spl = s.split(/[ ,]+/); 
+	//	var spl1 = spl[0];
+		//var sel = document.getElementById("inVokabelnLektionen");
+		var wlist = window[sel.options[sel.selectedIndex].value] 
+		
+		/*document.getElementById("fAntwortenSelect").selectedIndex=-1;
+		document.getElementById("lAntwortenSelect").selectedIndex=-1;
+		document.getElementById("rAntwortenSelect").selectedIndex=-1;
+		el.selectedIndex=i;*/
+		
+		hideTables();
+		showTable("tabInfo");
+		//wliste[i][0].lt[0].mit
+	  getWortstamm(el.attr("latin"), wlist[i][0]); //getWortstamm(el.options[i].text, wlist[i][0]);
+    
+	  printWortinfo(i, wlist) //printWortinfo(el.options[i].value, wlist)
 	}
 
 
@@ -4923,7 +4518,11 @@ function showEl(el) {
   el.style.display = '';
 }
 
-function opMenu(el) {
+function opMenu(el) { 
+  console.log("opMenu");
+  console.log("...");
+  console.log("....");
+  console.log("..");
   el.parentElement.getElementsByTagName("ul")[0].style.visibility='visible';
 }
 
@@ -4997,9 +4596,656 @@ function selPartizip(el, sel) {
   kTab.querySelectorAll('tr[row="'+sel+'"]').forEach(element => showEl(element));
  //   var sel="rowPraesens"; //kTab.querySelectorAll('tr[row="'+sel+'"]').forEach(element => showEl(element));
 }
-
-
-	document.addEventListener(
+  
+  	document.addEventListener(
 		"DOMContentLoaded",
-		function () { init(); }
+		function () { init(); 
+                addEventListeners();}
 	);
+  
+  function openDb() {
+    console.log("openDb ...");
+    var req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onsuccess = function (evt) {
+      db = this.result;  // Equal to: db = req.result;
+      console.log("openDb DONE");
+      
+      displayVocList();
+      updateInputList();
+    };
+    req.onerror = function (evt) {
+      console.error("openDb:", evt.target.errorCode);
+    };
+
+    req.onupgradeneeded = function (evt) {
+      console.log("openDb.onupgradeneeded");
+      
+      db = req.result;
+      var storeVocList = evt.currentTarget.result.createObjectStore(
+        DB_STORE_UNITS, { autoIncrement: true });
+      storeVocList.createIndex('name', '', { unique: false });
+            // oncomplete to make sure the objectStore creation is finished
+      storeVocList.transaction.oncomplete = function(event) {
+        console.log("storeVocList.transaction.oncomplete  never happens?");
+      }
+      
+      var store = evt.currentTarget.result.createObjectStore(
+        DB_STORE_NAME, { keyPath: 'id', autoIncrement: true });
+      //store.createIndex('biblioid', 'biblioid', { unique: true });
+      store.createIndex('ltW', 'ltW', { unique: false });
+      store.createIndex('deW', 'deW', { unique: false });
+      store.createIndex('lVoc', 'lVoc', { unique: false });
+      store.createIndex('typ', 'typ', { unique: false });
+      store.transaction.oncomplete = function(event) { 
+        console.log("store.transaction.oncomplete");
+        
+        var lektionenObjectStore = db.transaction(DB_STORE_UNITS, "readwrite").objectStore(DB_STORE_UNITS);
+        for (var i = 1; i <= 18; i++) {
+          lektionenObjectStore.add("Lektion "+i);
+        }
+                          
+        // Store values in the newly created objectStore.
+        var customerObjectStore = db.transaction(DB_STORE_NAME, "readwrite").objectStore(DB_STORE_NAME);
+        var allvok = [lektion1a,lektion1b,lektion2,lektion3,lektion4,wortliste5,wortliste6,wortliste7,wortliste8,wortliste9,wortliste10,wortliste11,wortliste12,wortliste13,wortliste14,wortliste15,wortliste16,wortliste17,wortliste18]; 
+        var i = 1;
+        allvok.forEach(function(ws) {
+              ws.forEach(function(customer) {
+                customer.lVoc = "Lektion "+i;
+                customerObjectStore.add(customer);
+              });
+                i=i+1;
+          });
+        
+        
+      };
+      console.log("openDb.onupgradefinished");
+    };
+  }
+  /**
+   * @param {string} store_name
+   * @param {string} mode either "readonly" or "readwrite"
+   */
+  function getObjectStore(store_name, mode) {
+    var tx = db.transaction(store_name, mode);
+    return tx.objectStore(store_name);
+  }
+
+  function clearObjectStore() {
+    var store = getObjectStore(DB_STORE_NAME, 'readwrite');
+    var req = store.clear();
+    req.onsuccess = function(evt) {
+      displayActionSuccess("Store cleared");
+      displayVocList(store);
+      updateInputList(store);
+    };
+    req.onerror = function (evt) {
+      console.error("clearObjectStore:", evt.target.errorCode);
+      displayActionFailure(this.error);
+    };
+  }
+  function getBlob(key, store, success_callback) {
+    var req = store.get(key);
+    req.onsuccess = function(evt) {
+      var value = evt.target.result;
+      if (value)
+        success_callback(value.blob);
+    };
+  }
+  function updateInputList(store) {
+    console.log("updateInputList");
+    
+    if (typeof store == 'undefined')
+      store = getObjectStore(DB_STORE_NAME, 'readonly');
+    // zähle Anzahl Vokabeln
+    var req;
+    req = store.count();
+    req.onsuccess = function(evt) {
+      // zähle Anzahl Lektionen
+      const result = [];
+      store.index("lVoc").openKeyCursor(null,"nextunique").onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+              // cursor.key is index key, cursor.primaryKey is primary key,  // cursor.value is undefined because openKeyCursor, not openCursor.
+              result.push(cursor.key);
+              cursor.continue();
+          } else {
+            // sortiere Lektionen
+            var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+            result.sort(collator.compare);
+                    
+            $('#msg').html('');
+            var voc_msg = $('#voc-msg');
+            voc_msg.html('<p>Es sind <strong>' + evt.target.result +
+                           '</strong> Vokabeln in <strong>'+ result.length +'</strong>  Lektionen in der Datenbank.</p>');  
+            
+            //voc liste zufügen?
+            var voc_list = $('#voc-list');
+            //voc_list.empty();
+            //remember Lektion
+            var rememberLektion = voc_list.attr("value");
+            voc_list.html('<option value=""></option><option value="neu">Neue Lektion... </option>');
+            
+            $('#ulVokabelnLektionen').empty();
+            
+            console.log("updateInputList empty voclist");
+            
+            result.forEach(function(lektion) {
+              //Lektionsauswahl für Editor
+              var op = document.createElement('option');
+              op.innerHTML = lektion;
+              op.setAttribute("value",lektion);
+              // Lektionsauswahl an ulVokabelnLektionen zufügen
+              var li = document.createElement('li');
+              li.innerHTML = lektion;
+              $(li).click(function(event){
+                console.log("liclick");
+                var item = $(event.currentTarget);
+                var selVals = $('#inVokabelnLektionen').attr("value"); 
+                var selValSet = new Set(selVals.split("\n"));
+
+                if (!event.shiftKey) {
+                  // li attribute only for curr item selected
+                  item.siblings().removeClass('selected');
+                  item.addClass('selected');
+
+                  // input attribute
+                  selValSet.clear();
+                  selValSet.add(this.innerHTML);
+                } else {
+                  // li attribute - toggle curr item selected
+                  item.toggleClass('selected'); //
+
+                  // input attribute
+                  //if ($(item).hasClass( "selected" )) {
+                  if (!selValSet.has(this.innerHTML)) {
+                    // add to selected
+                    selValSet.add(this.innerHTML);
+                  } else {
+                    //remove from selected
+                    selValSet.delete(this.innerHTML);
+                  }
+                }
+                console.log(selValSet);
+                $('#inVokabelnLektionen').attr("value",[...selValSet].join('\n'));
+                console.log($('#inVokabelnLektionen').attr("value"));
+                displayVocList();
+                });   
+
+                $('#ulVokabelnLektionen').append(li);
+                voc_list.append(op);
+            });
+            voc_list.attr("value", rememberLektion);
+          }
+      };
+    };
+    req.onerror = function(evt) {
+      console.error("add error", this.error);
+      displayActionFailure(this.error);
+    }; 
+  }
+  function setEditorInputs(item) {
+            $('#active-key').val(item.attr("value")); // Number(item.attr("value"))
+            $('#voc-lat').val(item.attr("ltw"));
+            $('#voc-deu').val(item.attr("dew"));
+            $('#voc-typ').val(item.attr("typ"));
+            $('#voc-typ2').val(item.attr("typ"));
+            if (mainvoctypes.includes(item.attr("typ"))) {
+              $('#voc-typ2').hide();
+            } else {
+              $('#voc-typ2').show();
+            }
+            $('#voc-comment').val(item.attr("ltcom"));
+            $('#voc-decom').val(item.attr("decom"));
+            $('#voc-list').val(item.attr("lVoc"));
+            $('#voc-list2').val(item.attr("lVoc"));
+            $('#voc-list2').hide();
+    
+            $('#verb_unpers_check').prop("checked", item.attr("pass")=="3.Sg")
+    console.log("pass3Sg?:"+item.attr("pass"));
+
+            // show image?
+            setInViewer(item.attr("value"));
+  }
+  function getVocListItem(value) {    
+          var vlist_item = $('<li><div><table cellspacing="0"><tr><td width="50%" valign="top">' + value.ltW + '</td><td width="15px"></td><td width="50%" valign="top">' +
+                             value.deW +
+                             '</td></tr></table></div></li>');
+
+          vlist_item.attr("value", value.id);
+          vlist_item.attr("ltW", value.ltW);
+          vlist_item.attr("deW", value.deW);
+          vlist_item.attr("typ", value.typ);
+          vlist_item.attr("pass", value.pass);
+          vlist_item.attr("lVoc", value.lVoc);
+          vlist_item.attr("deCom", value.deCom);
+          vlist_item.attr("ltCom", value.ltCom);
+          vlist_item.attr("ltG", value.ltG);
+          // focusable, but not using tab:
+          vlist_item.attr("tabindex", "-1");
+          // navigate by up and down
+          vlist_item.keydown(function(e) {
+              if (e.keyCode == 38) { // up
+                  var selected = $(this);
+                  $(this).removeClass("selected"); // unselect this
+                  $(this).siblings().removeClass("selected"); // unselect siblings
+                  if (selected.prev().length == 0) {
+                      if (selected.parent().prevAll().find("li").length==0) {
+                        // springe zu letztem Abschnitt, letzter Eintrag
+                        selected.parent().nextAll().find("li").last().addClass("selected");
+                        selected.parent().nextAll().find("li").last().focus();
+                        var item = selected.parent().nextAll().find("li").last();
+                      } else { // springe zu vorigem Abschnitt, letzter Eintrag
+                        selected.parent().prevAll().find("li").first().siblings().addBack().last().addClass("selected");
+                        selected.parent().prevAll().find("li").first().siblings().addBack().last().focus();
+                        var item = selected.parent().prevAll().find("li").first().siblings().addBack().last();
+                      }
+                  } else {
+                      selected.prev().addClass("selected");
+                      selected.prev().focus();  // {preventScroll:true} geht nicht??
+                      var item = selected.prev();
+                  }
+                // show image?
+                setEditorInputs(item); //setInViewer(item.attr("value"));
+                 // Deklinationstabelle?
+                 selDeklinieren(item);
+                return false;
+              }
+              if (e.keyCode == 40) { // down
+                  var selected = $(this);
+                  $(this).removeClass("selected"); // unselect this
+                  $(this).siblings().removeClass("selected"); // unselect siblings
+                  if (selected.next().length == 0) { 
+                      if (selected.parent().nextAll().find("li").length==0) {
+                        selected.parent().prevAll().find("li").last().siblings().addBack().first().addClass("selected");
+                        selected.parent().prevAll().find("li").last().siblings().addBack().first().focus();
+                        var item = selected.parent().prevAll().find("li").last().siblings().addBack().first();
+                        
+                      } else { //experiment
+                        selected.parent().nextAll().find("li").first().addClass("selected");
+                        selected.parent().nextAll().find("li").first().focus();
+                        var item = selected.parent().nextAll().find("li").first();
+                      }
+                  } else { // nach unten innerhalb gleichem Abschnitt
+                      selected.next().addClass("selected");
+                      selected.next().focus();
+                      var item = selected.next();
+                  }
+                
+                // show image?
+                //setInViewer(item.attr("value"));
+                setEditorInputs(item)
+                 // Deklinationstabelle?
+                 selDeklinieren(item);
+                return false;
+              }
+          });
+          // clicks for list elements
+          vlist_item.click(function(event){
+            var item = $(event.currentTarget);
+            item.addClass('selected');
+            // siblings und cousins deselektieren
+            item.siblings().removeClass('selected');
+            item.siblings().parent().prevAll().find("li").removeClass("selected")
+            item.siblings().parent().nextAll().find("li").removeClass("selected")
+            //$('#'+item.closest(".select").attr("inputid")).val(item.text());
+       //     selectVokabel(item); 
+            setEditorInputs(item)
+             // Deklinationstabelle?
+             selDeklinieren(item); //this  item.attr("ltw")     
+    });
+
+    return vlist_item;
+  }
+  
+  function displayVocList(store) {
+    console.log("displayVocList");
+
+    if (typeof store == 'undefined')
+      store = getObjectStore(DB_STORE_NAME, 'readonly');
+
+    var voc_list = $('#ulVokabelnVokabeln');
+    wortliste = [];
+    voc_list.empty();
+    // Resetting the iframe, clear previous content
+    var delURL = document.querySelector('#testImage').getAttribute("src");
+    window.URL.revokeObjectURL(delURL);
+    document.querySelector('#testImage').setAttribute("src","");
+
+    var i = 0;
+      //set for cursor filter
+  //    if ($('#inVokabelnLektionen').length==1) {
+      var selVals = $('#inVokabelnLektionen').attr("value"); 
+      var selValSet = new Set(selVals.split("\n"));
+      var selSort = Array.from(selValSet).sort();
+    
+    if (selValSet.size==1 & selValSet.has("")) {
+      var empty_item = $('<li>keine Lektion ausgewählt</li>');
+      voc_list.append(empty_item);
+      console.log("updatevoclist:keine Lektion empty");
+    }
+        
+    var req;
+    var vocbin = [];
+    
+    selSort.forEach(function(key) {
+      vocbin[key] = [];
+      
+    req = store.index("lVoc").openCursor(key);
+    req.onsuccess = function(evt) {
+      var cursor = evt.target.result;
+      // If the cursor is pointing at something, ask for the data
+      if (cursor) { // & selValSet.has(cursor.key)
+        var value = cursor.value;
+        var vlist_item = getVocListItem(value);
+        wortliste.push(value);
+        vocbin[key].push(vlist_item)
+        cursor.continue();
+        i++; // counter to create distinct ids
+      } else {
+        selSort.forEach(function(akey) {
+          voc_list.append(vocbin[akey]);
+        }); 
+      }
+    };
+    })
+  }
+  
+  function setInViewer(key) {
+    console.log("setInViewer:", arguments);
+    
+    // altes Bild löschen
+    var delURL = document.querySelector('#testImage').getAttribute("src");
+    window.URL.revokeObjectURL(delURL);
+    document.querySelector('#testImage').setAttribute("src","");
+    
+    key = Number(key);
+
+    var store = getObjectStore(DB_STORE_NAME, 'readonly');
+    getBlob(key, store, function(blob) { 
+      console.log("setInViewer blob:", blob);
+      
+      if (blob===null || typeof blob === 'undefined') {
+        console.log("no blob");
+        return;
+      }
+      
+      if (blob.type.indexOf('image/') == 0) {
+          //$('*').css('cursor', 'wait');
+          var obj_url = window.URL.createObjectURL(blob);
+        var image = document.querySelector('#testImage');
+        image.setAttribute("src", obj_url);
+        image.setAttribute("width", "200px");
+        //window.URL.revokeObjectURL(obj_url);
+      }
+
+    });
+  }
+  /**
+    * @param {string} biblioid
+    * @param {string} title
+    * @param {number} year
+    * @param {Blob=} blob
+    */
+  function neueVokabel(latein, deutsch, wortart, genus, lKommentar, dKommentar, lektion, blob, key) {
+    console.log("neueVokabel arguments:", arguments);
+    var obj = { ltW: latein, deW: deutsch, typ: wortart, lVoc:lektion };
+    if (!(lKommentar == null))
+      obj.ltCom = lKommentar;
+    if (!(dKommentar == null))
+      obj.deCom = dKommentar;
+    if (!(genus == null))
+      obj.ltG = genus;
+    if (typeof blob != 'undefined')
+      obj.blob = blob;
+
+    var store = getObjectStore(DB_STORE_NAME, 'readwrite');
+    var req;
+    try {
+      if (key == null) {
+        req = store.add(obj);
+      } else {
+        obj.id = Number(key);
+        req = store.put(obj);
+      }
+    } catch (e) {
+      if (e.name == 'DataCloneError')
+        displayActionFailure("This engine doesn't know how to clone a Blob, " +
+                             "use Firefox");
+      throw e;
+    }
+    req.onsuccess = function (evt) {
+      console.log("Insertion in DB successful");
+      displayActionSuccess();
+      displayVocList(store);
+      updateInputList(store);
+    };
+    req.onerror = function() {
+      console.error("neueVokabel error", this.error);
+      displayActionFailure(this.error);
+    };
+  }
+  
+  function neueLektion(lektion) {
+    console.log("neueLektion arguments:", arguments);
+
+    var store = getObjectStore(DB_STORE_UNITS, 'readwrite');
+    var req;
+    try {
+      req = store.add(lektion);
+    } catch (e) {
+      if (e.name == 'DataCloneError')
+        displayActionFailure("This engine doesn't know how to clone a Blob, " +
+                             "use Firefox");
+      throw e;
+    }
+    req.onsuccess = function (evt) {
+      console.log("Insertion in DB successful");
+      displayActionSuccess();
+      displayVocList(store);
+      updateInputList(store);
+    };
+    req.onerror = function() {
+      console.error("neueVokabel error", this.error);
+      displayActionFailure(this.error);
+    };
+  }
+
+  function getLektionKey(lektion) {
+    console.log("getLektionKey:", arguments);
+    var store = getObjectStore(DB_STORE_UNITS, 'readwrite');
+    var req = store.index('name');
+    req.get(lektion).onsuccess = function(evt) {
+      if (typeof evt.target.result == 'undefined') {
+        displayActionFailure("No matching record found");
+        return;
+      }
+      alert(evt.target.result.id);
+      return evt.target.result.id;
+    };
+    req.onerror = function (evt) {
+      console.error("getLektionKey:", evt.target.errorCode);
+    };
+  }
+
+  function entferneVokabel(key, store) {
+    console.log("entferneVokabel:", arguments);
+
+    if (typeof store == 'undefined')
+      store = getObjectStore(DB_STORE_NAME, 'readwrite');
+
+    // As per spec http://www.w3.org/TR/IndexedDB/#object-store-deletion-operation
+    // the result of the Object Store Deletion Operation algorithm is undefined
+    var req = store.get(key);
+    req.onsuccess = function(evt) {
+      var record = evt.target.result;
+      console.log("record:", record);
+      if (typeof record == 'undefined') {
+        displayActionFailure("No matching record found");
+        return;
+      }
+      // Warning: The exact same key used for creation needs to be passed for
+      // the deletion.
+      var deleteReq = store.delete(key);
+      deleteReq.onsuccess = function(evt) {
+        console.log("evt:", evt);
+        console.log("evt.target:", evt.target);
+        console.log("evt.target.result:", evt.target.result);
+        console.log("delete successful");
+        displayActionSuccess("Vokabel entfernt");
+        displayVocList(store);
+        updateInputList(store);
+      };
+      deleteReq.onerror = function (evt) {
+        console.error("entferneVokabel:", evt.target.errorCode);
+      };
+    };
+    req.onerror = function (evt) {
+      console.error("entferneVokabel:", evt.target.errorCode);
+    };
+  }
+  
+  function leseVokabel(key, callback, store) {
+    console.log("leseVokabel:", arguments);
+
+    if (typeof store == 'undefined')
+      store = getObjectStore(DB_STORE_NAME, 'readonly');
+
+    var req = store.get(key);
+    req.onsuccess = function(evt) {
+      // Do something with the request.result!
+      //console.log("deW for the key is " + req.result.deW);
+      var record = evt.target.result;
+      console.log("record:", record);
+      if (typeof record == 'undefined') {
+        displayActionFailure("No matching record found");
+        return null;
+      }
+      callback(record);
+    };
+    req.onerror = function (evt) {
+      console.error("leseVokabel:", evt.target.errorCode);
+    };
+  }
+
+  function displayActionSuccess(msg) {
+    msg = typeof msg != 'undefined' ? "Erfolg: " + msg : "Erfolg";
+    $('#msg').html('<span class="action-success">' + msg + '</span>');
+  }
+  function displayActionFailure(msg) {
+    msg = typeof msg != 'undefined' ? "Fehler: " + msg : "Fehler";
+    $('#msg').html('<span class="action-failure">' + msg + '</span>');
+  }
+  function resetActionStatus() {
+    console.log("resetActionStatus ...");
+    $('#msg').empty();
+    document.querySelector('#testImage').setAttribute("src","");
+  }
+  function addEventListeners() {
+    console.log("addEventListeners");
+    
+    //listeners for app handling
+    $('#inVokabelnAbfragen').click(function(evt) {
+      abfragestart();
+    });
+    $('#bhinweisabfragebuttons').click(function(evt) {
+      newhint();
+    });
+    $('#bpruefenabfragebuttons').click(function(evt) {
+      pruefenweiter();
+    });
+    $('#bloesungabfragebuttons').click(function(evt) {
+      zeigeloesung();
+    });
+    $('#bbeendenabfragebuttons').click(function(evt) {
+      abfragebeenden();
+    });   
+    $('#inwArtLektionen').click(function(evt) {
+      lektionenauswahl();
+    });    
+    //  Button Neue Vokabel
+    $('#register-form-reset').click(function(evt) {
+      hideTables();
+		hideTable("tabVokabelliste");
+      $("#register-form")[0].reset();
+      showTable("verb-form-tab");
+      resetActionStatus();
+    });
+    //  Button Bearbeite Vokabel
+    $('#edit-voc-button').click(function(evt) {
+      hideTables();
+		  hideTable("tabVokabelliste");
+      showTable("verb-form-tab");
+    });
+    //  test
+    $('#test-button').click(function(evt) {
+      opMenu();
+    });
+    //discard-button
+     $('#discard-button').click(function(evt)     {
+      hideTable("verb-form-tab");
+      showTable("tabVokabelliste");
+    });
+   
+
+    $('#add-button').click(function(evt) {
+      console.log("add ...");
+      var latein = $('#voc-lat').val();
+      var deutsch = $('#voc-deu').val();
+      var wArt = $('#voc-typ2').val();
+      var genus = wArt=="Substantiv" ? genus = $('#voc-ltg').val() : null;
+      /*if (wArt="Substantiv") {
+        genus = $('#voc-ltg').val();
+      }*/
+      if (!latein || !deutsch) {
+        displayActionFailure("Erforderliche Eingabe fehlt");
+        return;
+      }
+      var file_input = $('#img-file');
+      var selected_file = file_input.get(0).files[0];
+      console.log("selected_file:", selected_file);
+      // Keeping a reference on how to reset the file input in the UI once we
+      // have its value, but instead of doing that we rather use a "reset" type
+      // input in the HTML form.
+      //file_input.val(null);
+      var ltComment = $('#voc-comment').val() != '' ? $('#voc-comment').val() : null;
+      var dtComment = $('#voc-decom').val() != '' ? $('#voc-decom').val() : null;
+      var lektion = $('#voc-list2').val();
+       if (lektion=="") {
+        displayActionFailure("Der Name der Vokabelliste fehlt");
+        return;
+      }
+      if ( $('#voc-list2').val() !=  $('#voc-list').val()) neueLektion(lektion);
+      var key = $('#active-key').val();
+      if (key == "") key = null; // if isNaN(Number(key))
+      if (selected_file) { //latein, deutsch, wortart, genus, lKommentar, dKommentar, blob
+        neueVokabel(latein, deutsch,wArt,genus,ltComment,dtComment,lektion, selected_file,key);
+      } else { //latein, deutsch, wortart, genus, lKommentar, dKommentar, blob
+        neueVokabel(latein, deutsch,wArt,genus,ltComment,dtComment,lektion,null,key);
+      }
+
+      //Anzeige aktualisieren
+      
+      hideTable("verb-form-tab");
+      showTable("tabVokabelliste");
+    });
+
+    $('#delete-button').click(function(evt) {
+      console.log("delete ...");
+      var key = $('#active-key').val();
+
+      if (key != '') {
+        // Better use Number.isInteger if the engine has EcmaScript 6
+        if (key == '' || isNaN(key))  {
+          displayActionFailure("Invalid key");
+          return;
+        }
+        key = Number(key);
+        entferneVokabel(key);
+      }
+    });
+
+  }
+
+  openDb();
+  //addEventListeners();
+})(); // Immediately-Invoked Function Expression (IIFE)
