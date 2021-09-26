@@ -3495,7 +3495,7 @@ function splitValue(value, index) {
 			stamm1 = splitValue(spl1,-2)[0]; 
 			stamm2 = splitValue(spl2,-3)[0];
 			//if (testeStamm(stamm1, stamm2)) {
-				w.["nurplural"]="1"; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				w["nurplural"]="1"; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				deklinationAusgeben(stamm1, "s,is", w);
 				return;
 			//	}
@@ -3707,7 +3707,7 @@ function splitValue(value, index) {
 		} else if (spl1.endsWith("i") & unstress(spl2).endsWith("orum")) { //Plural, o-Konjugation
 			stamm1 = splitValue(spl1,-1)[0];
 			stamm2 = splitValue(spl2,-4)[0];
-			w.["nurplural"]="1"; //!!!!!!
+			w["nurplural"]="1"; //!!!!!!
 			if (testeStamm(stamm1, stamm2)) {
 				deklinationAusgeben(stamm1, "us,i", w); //return [stamm1, "us,i"];
 				return;
