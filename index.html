@@ -53,14 +53,153 @@
         <hr class="my-4">
     </div>
 
-  <main>
-    <!-- <p>http://www.latein-imperium.de/include.php?path=content&type=&contentid=10 - http://www.irmer-inrete.de/latein/dekl.htm -- http://www.irmer-inrete.de/latein/dekl.htm -- https://www.albertmartin.de/latein/grammatik/doku.php/start</p> -->
-    <!-- <button type="button" id="button1", stamm="flamm", deklination=aDeklination, onclick="ausgeben('fili', 'a,ae')" >a-Deklination!</button> -->
-
+<main>
     <div id="ausgabe"></div>
 	<table id="tabelle">
     </table>
   </main>
+
+    <form id="register-form">
+      <table id=verb-form-tab  style="display: none;">
+        <caption>Wort bearbeiten/hinzufügen</caption>
+        <tbody>
+          <tr>
+            <td class="marginal" width="130px">
+              <label for="voc-typ">
+                Wortart:
+              </label>
+            </td>
+            <td>
+              <div class="select-editable">
+                  <input type="text" style="display: none;" id="voc-typ2" name="voc-typ2" oninput="this.nextElementSibling.options[0].value=this.value; this.nextElementSibling.options[0].innerHTML=this.value" onchange="this.nextElementSibling.selectedIndex=0" value="">
+                  <select  id="voc-typ" name="voc-typ" onchange="this.previousElementSibling.value=this.value">
+                    <option value=""></option>
+                    <option value="Substantiv">Substantiv</option>
+                    <option value="Adjektiv">Adjektiv</option>
+                    <option value="Verb">Verb</option>
+                    <option value="Pronomen">Pronomen</option>
+                    <option value="Adverb">Adverb</option>
+                    <option value="Sonstige">Sonstige... </option>
+                  </select>
+              </div>
+            </td>
+          </tr>
+          <tr id="form-genus" style="display: none;">
+            <td class="marginal">
+              <label for="voc-ltg">
+                Genus:
+              </label>
+            </td>
+            <td>
+              <select id="voc-ltg" name="voc-ltg"><option value="m">maskulinum</option><option value="f">femininum</option><option value="n">neutrum</option></select>
+            </td>
+          </tr>
+          <tr>
+            <td class="marginal">
+              <label for="voc-lat" class="required">
+                Vokabel:
+              </label>
+            </td>
+            <td>
+              <input type="text" id="voc-lat" name="voc-lat" /><br/>
+              <div id="verb_einstellung" style="display: none;">
+                <input type="checkbox" id="verb_unpers_check" name="verb_unpers_check">
+  <label for="verb_unpers_check">unpersönlich (nur 3. Person Sg.)</label>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="marginal">
+              <label for="voc-comment">
+                Bemerkung:
+              </label>
+            </td>
+            <td>
+              <input type="text" id="voc-comment" name="voc-comment" placeholder="(grammatikalische Besonderheiten)"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="marginal">
+              <label for="voc-deu" class="required">
+                Bedeutung:
+              </label>
+            </td>
+            <td>
+              <input type="text" id="voc-deu" name="voc-deu"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="marginal">
+              <label for="voc-decom">
+                Erläuterung:
+              </label>
+            </td>
+            <td>
+              <input type="text" id="voc-decom" name="voc-decom", placeholder="(Gebrauch, Beispiele,...)"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="marginal">
+              <label for="voc-list" class="required">
+                Lektion:
+              </label>
+            </td>
+            <td>
+              <div class="select-editable">
+                  <input type="text" style="display: none;" id="voc-list2" name="voc-list2" oninput="this.nextElementSibling.options[0].value=this.value; this.nextElementSibling.options[0].innerHTML=this.value" onchange="this.nextElementSibling.selectedIndex=0" value="">
+                  <select  id="voc-list" name="voc-list" onchange="this.previousElementSibling.value=this.value">
+                    <option value=""></option>
+                    <option value="neu">Neue Lektion... </option>
+                  </select>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="marginal">
+              <label for="img-file">
+                Datei:
+              </label>
+            </td>
+            <td>
+              <div id="img-viewer">
+                      <img id="testImage">
+              </div>
+              <input type="file" id="img-file"/>
+                <span class="note">(z.B. Bilder)</span>
+            </td>
+          </tr>
+          <tr  style="display: none;">
+            <td class="marginal">
+              <label for="voc-list" class="required">
+                unregelmäßige Formen:
+              </label>
+            </td>
+            <td>
+              <div><input type="text" id="voc-genitiv" name="voc-genitiv" required placeholder="ff "/></div>
+            </td>
+          </tr>
+          <tr hidden>
+            <td class="marginal">
+              <label for="active-key">
+                Key:
+              </label>
+            </td>
+            <td>
+              <input type="text" id="active-key"
+                     name="active-key" />
+            </td>
+          </tr>
+          <tr><td colspan="2">
+            
+      <div class="button-pane">
+        <input type="button" id="add-button" value="Speichern" />        
+        <input type="button" id="discard-button" value="Verwerfen" />
+      </div>
+        </td></tr>
+        </tbody>
+      </table>
+
+    </form>
 
 
 
