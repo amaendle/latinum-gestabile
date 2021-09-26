@@ -783,7 +783,7 @@ var DeklinationstabNomen = [
 	[{id:"Lektionen", text:'<div id="lektion-select"><input id="inVokabelnLektionen" type="hidden" name="events" value=""><ul class="select" id="ulVokabelnLektionen"  tabindex="1", inputid="inVokabelnLektionen">  <li>keine Einträge</li>  </ul></div>', type:1},       {id:"Vokabeln", text:'<div id="voc-select"><input id="inVokabelnVokabeln" type="hidden" name="events" value=""><ul class="select" id="ulVokabelnVokabeln"  tabindex="1", inputid="inVokabelnVokabeln">  <li>keine Einträge</li>  </ul></div>', type:1}],
      [{id:"VListSummary", text:'<div id="voc-msg"></div>', colspan:2}],
 /*	[{id:"Abfragen", text:'<div id="msg">dddd</div>', colspan:2, type:5}], */
-	[{id:"Abfragen", text:'<div class="button-pane"><input type="button" value="Abfragen" name="inVokabelnAbfragen" id="inVokabelnAbfragen"><input type="reset" id="register-form-reset" value="Neue Vokabel"/><input type="button" id="edit-voc-button" value="Vokabel bearbeiten"/><input type="button" class="destructive" id="delete-button" value="Vokabel entfernen" /></div><span  id="msg"></span><input type="button" id="test-button" value="Test"/>', colspan:2}],
+	[{id:"Abfragen", text:'<div class="button-pane"><input type="button" value="Abfragen" name="inVokabelnAbfragen" id="inVokabelnAbfragen"><input type="reset" id="register-form-reset" value="Neue Vokabel"/><input type="button" id="edit-voc-button" value="Vokabel bearbeiten"/><input type="button" class="destructive" id="delete-button" value="Vokabel entfernen" /></div><span  id="msg"></span>', colspan:2}],
   ];
 
   var Abfragetab = [
@@ -5175,10 +5175,6 @@ function selPartizip(el, sel) {
       hideTables();
 		  hideTable("tabVokabelliste");
       showTable("verb-form-tab");
-    });
-    //  test
-    $('#test-button').click(function(evt) {
-      opMenu();
     });
     //discard-button
      $('#discard-button').click(function(evt)     {
